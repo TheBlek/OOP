@@ -12,7 +12,7 @@ plugins {
 
 jacoco {
     toolVersion = "0.8.9"
-    reportsDirectory.set("build/reports/jacoco")
+    reportsDirectory.set(layout.buildDirectory.dir("reports/jacoco"))
 }
 
 repositories {
