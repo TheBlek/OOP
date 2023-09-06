@@ -6,7 +6,7 @@ package task_1_1_1;
 public class App {
     /**
      * Sorts array using heapsort
-     * @param Array to sort
+     * @param array Array to sort
      * @return Sorted array
      */
     public static int[] heapsort(int[] array) {
