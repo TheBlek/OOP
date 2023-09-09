@@ -2,7 +2,8 @@ package heapsort;
 
 public class App {
     /**
-     * Sorts array using heapsort
+     * Sorts array using heapsort.
+     *
      * @param array Array to sort
      * @return Sorted array
      */
@@ -21,16 +22,16 @@ public class App {
 
         // array is a heap now
         int[] result = new int[array.length];
-        int heap_len = array.length; for (int i = 0; i < array.length; i++, heap_len--) {
+        int heapLen = array.length; for (int i = 0; i < array.length; i++, heapLen--) {
             result[i] = array[0];
-            array[0] = array[heap_len - 1];
+            array[0] = array[heapLen - 1];
             // Sift down
             int cur = 0;
-            while (cur != heap_len && 2 * cur + 1 < heap_len) {
+            while (cur != heapLen && 2 * cur + 1 < heapLen) {
                 int left = 2 * cur + 1;
                 int childValue = array[left];
                 int child = left;
-                if (left + 1 < heap_len && array[left + 1] < childValue) {
+                if (left + 1 < heapLen && array[left + 1] < childValue) {
                     child = left + 1;
                 }
 
