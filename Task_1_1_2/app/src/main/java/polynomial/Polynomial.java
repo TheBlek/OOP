@@ -4,15 +4,17 @@ package polynomial;
 import java.util.Arrays;
 
 /**
- * Represents and manipulates a mathematical polynomial 
+ * Represents and manipulates a mathematical polynomial.
  *
  */
 public class Polynomial {
     public int[] coeffs;
 
     /**
+     * Create a polynomial with given coefficients.
+     *
      * @param cs Coefficients for the polynomial: a0 + a1*x^1 + ... + an*x^n
-     * Power of x for coeff is equal to coeff's index in an array
+     *  Power of x for coeff is equal to coeff's index in an array
      */
     public Polynomial(int[] cs) {
         coeffs = cs;
@@ -29,7 +31,7 @@ public class Polynomial {
     }
 
     /**
-     * Evaluate polynomial at a given point
+     * Evaluate polynomial at a given point.
      *
      * @param x Point to evaluate at
      */
@@ -121,11 +123,10 @@ public class Polynomial {
         
         if (diff.length > 0) {
             System.arraycopy(coeffs, power, diff, 0, diff.length);
-            for (int value : diff)
-                System.out.println(value);
             for (int i = 0; i < diff.length; i++) {
-                for (int j = i + 1; j <= i + power; j++)
+                for (int j = i + 1; j <= i + power; j++) {
                     diff[i] *= j;
+                }
             }
         }
 
@@ -143,10 +144,11 @@ public class Polynomial {
         String res = "";
         if (coeffs.length > 0) {
             for (int i = coeffs.length - 1; i > 0; i--) {
-                if (i != 1)
+                if (i != 1) {
                     res += String.format("%dx^%d + ", coeffs[i], i);
-                else
+                } else {
                     res += String.format("%dx + ", coeffs[i]);
+                }
             }
             res += String.valueOf(coeffs[0]);
         }
