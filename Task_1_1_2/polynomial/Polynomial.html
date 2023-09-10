@@ -95,6 +95,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Polynomial</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Represents and manipulates a mathematical polynomial</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -139,22 +140,32 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Polynomial.html" title="class in polynomial">Polynomial</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#differentiate(int)" class="member-name-link">differentiate</a><wbr>(int&nbsp;power)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Create a new polynomial resulting from taking a power-th derivative.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(polynomial.Polynomial)" class="member-name-link">equals</a><wbr>(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;other)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#evaluate(double)" class="member-name-link">evaluate</a><wbr>(double&nbsp;x)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Evaluate polynomial at a given point</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Polynomial.html" title="class in polynomial">Polynomial</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#minus(polynomial.Polynomial)" class="member-name-link">minus</a><wbr>(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;rhs)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Create a new polynomial resulting from a subtraction.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Polynomial.html" title="class in polynomial">Polynomial</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#plus(polynomial.Polynomial)" class="member-name-link">plus</a><wbr>(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;rhs)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Create a new polynomial resulting from an addition.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Polynomial.html" title="class in polynomial">Polynomial</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#times(polynomial.Polynomial)" class="member-name-link">times</a><wbr>(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;rhs)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Create a new polynomial resulting from a multiplication.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -193,6 +204,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(int[])">
 <h3>Polynomial</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Polynomial</span><wbr><span class="parameters">(int[]&nbsp;cs)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cs</code> - Coefficients for the polynomial: a0 + a1*x^1 + ... + an*x^n
+ Power of x for coeff is equal to coeff's index in an array</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -207,30 +223,55 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="evaluate(double)">
 <h3>evaluate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">evaluate</span><wbr><span class="parameters">(double&nbsp;x)</span></div>
+<div class="block">Evaluate polynomial at a given point</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - Point to evaluate at</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="plus(polynomial.Polynomial)">
 <h3>plus</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Polynomial.html" title="class in polynomial">Polynomial</a></span>&nbsp;<span class="element-name">plus</span><wbr><span class="parameters">(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;rhs)</span></div>
+<div class="block">Create a new polynomial resulting from an addition.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rhs</code> - Polynomial to add with</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="minus(polynomial.Polynomial)">
 <h3>minus</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Polynomial.html" title="class in polynomial">Polynomial</a></span>&nbsp;<span class="element-name">minus</span><wbr><span class="parameters">(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;rhs)</span></div>
+<div class="block">Create a new polynomial resulting from a subtraction.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rhs</code> - Polynomial to subtract from caller</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="times(polynomial.Polynomial)">
 <h3>times</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Polynomial.html" title="class in polynomial">Polynomial</a></span>&nbsp;<span class="element-name">times</span><wbr><span class="parameters">(<a href="Polynomial.html" title="class in polynomial">Polynomial</a>&nbsp;rhs)</span></div>
+<div class="block">Create a new polynomial resulting from a multiplication.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rhs</code> - Polynomial to multiply with</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="differentiate(int)">
 <h3>differentiate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Polynomial.html" title="class in polynomial">Polynomial</a></span>&nbsp;<span class="element-name">differentiate</span><wbr><span class="parameters">(int&nbsp;power)</span></div>
+<div class="block">Create a new polynomial resulting from taking a power-th derivative.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>power</code> - Number of derivatives to take</dd>
+</dl>
 </section>
 </li>
 <li>
