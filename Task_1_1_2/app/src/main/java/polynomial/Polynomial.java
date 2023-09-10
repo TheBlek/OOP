@@ -1,10 +1,19 @@
+
 package polynomial;
 
 import java.util.Arrays;
 
+/**
+ * Represents and manipulates a mathematical polynomial 
+ *
+ */
 public class Polynomial {
     public int[] coeffs;
 
+    /**
+     * @param cs Coefficients for the polynomial: a0 + a1*x^1 + ... + an*x^n
+     * Power of x for coeff is equal to coeff's index in an array
+     */
     public Polynomial(int[] cs) {
         coeffs = cs;
     }
@@ -19,6 +28,11 @@ public class Polynomial {
         coeffs = trimmed;
     }
 
+    /**
+     * Evaluate polynomial at a given point
+     *
+     * @param x Point to evaluate at
+     */
     public double evaluate(double x) {
         double res = 0;
         for (int i = 0; i < coeffs.length; i++) {
@@ -27,6 +41,11 @@ public class Polynomial {
         return res;
     }
 
+    /**
+     * Create a new polynomial resulting from an addition.
+     *
+     * @param rhs Polynomial to add with
+     */
     public Polynomial plus(Polynomial rhs) {
         int[] summed;
         int[] other;
@@ -48,6 +67,11 @@ public class Polynomial {
         return res;
     }
 
+    /**
+     * Create a new polynomial resulting from a subtraction.
+     *
+     * @param rhs Polynomial to subtract from caller
+     */
     public Polynomial minus(Polynomial rhs) {
         int[] diff;
         if (coeffs.length >= rhs.coeffs.length) {
@@ -67,6 +91,11 @@ public class Polynomial {
         return res;
     }
 
+    /**
+     * Create a new polynomial resulting from a multiplication.
+     *
+     * @param rhs Polynomial to multiply with
+     */
     public Polynomial times(Polynomial rhs) {
         int[] mul = new int[rhs.coeffs.length + coeffs.length];
 
@@ -82,6 +111,11 @@ public class Polynomial {
         return res;
     }
 
+    /**
+     * Create a new polynomial resulting from taking a power-th derivative.
+     *
+     * @param power Number of derivatives to take
+     */
     public Polynomial differentiate(int power) {
         int[] diff = new int[coeffs.length - power < 0 ? 0 : coeffs.length - power];
         
