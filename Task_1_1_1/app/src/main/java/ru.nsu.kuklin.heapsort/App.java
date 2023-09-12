@@ -47,4 +47,11 @@ public class App {
 
         return result;
     }
+
+    /**
+     * Stub main function
+     *
+     * @param args Cmd args
+     */
+    public static void main(String[] args) {}
 }
