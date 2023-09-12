@@ -1,5 +1,7 @@
 package ru.nsu.kuklin.heapsort;
 
+import java.util.Random;
+import java.util.Arrays;
 /**
  * Main class with heapsort function.
  */
@@ -10,42 +12,51 @@ public class App {
      * @param array Array to sort
      * @return Sorted array
      */
-    public static int[] heapsort(int[] array) {
+    public static void heapsort(int[] array) {
+        int[] heap = array.clone();
         for (int i = 0; i < array.length; i++) {
             // Sift up
             int cur = i;
-            while (cur != 0 && array[(cur - 1) / 2] > array[cur]) {
+            while (cur != 0 && heap[(cur - 1) / 2] > heap[cur]) {
                 int parent = (cur - 1) / 2;
-                int tmp = array[cur];
-                array[cur] = array[parent];
-                array[parent] = tmp;
+                int tmp = heap[cur];
+                heap[cur] = heap[parent];
+                heap[parent] = tmp;
                 cur = parent;
             }
         }
 
+
+        // for (int j = 0; j < heap.length; j++) {
+        //     System.out.print(heap[j] + " ");
+        // }
+        // System.out.println(" len = " + heap.length);
+
         // array is a heap now
-        int[] result = new int[array.length];
-        int heapLen = array.length; for (int i = 0; i < array.length; i++, heapLen--) {
-            result[i] = array[0];
-            array[0] = array[heapLen - 1];
+        int heapLen = heap.length; 
+        for (int i = 0; i < heap.length; i++, heapLen--) {
+            array[i] = heap[0];
+            heap[0] = heap[heapLen - 1];
             // Sift down
             int cur = 0;
-            while (cur != heapLen && 2 * cur + 1 < heapLen) {
+            while (cur < heapLen - 1 && 2 * cur + 1 < heapLen) {
                 int left = 2 * cur + 1;
-                int childValue = array[left];
+                int childValue = heap[left];
                 int child = left;
-                if (left + 1 < heapLen && array[left + 1] < childValue) {
+                if (left + 1 < heapLen && heap[left + 1] < childValue) {
                     child = left + 1;
+                    childValue = heap[left + 1];
+                }
+                if (childValue >= heap[cur]) {
+                    break;
                 }
 
-                int tmp = array[child];
-                array[child] = array[cur];
-                array[cur] = tmp;
+                int tmp = heap[child];
+                heap[child] = heap[cur];
+                heap[cur] = tmp;
                 cur = child;
             }
         }
-
-        return result;
     }
 
     /**
@@ -53,5 +64,7 @@ public class App {
      *
      * @param args Cmd args
      */
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+        System.out.println("Hello world");
+    }
 }
