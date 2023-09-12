@@ -1,7 +1,7 @@
 package ru.nsu.kuklin.heapsort;
 
-import java.util.Random;
 import java.util.Arrays;
+import java.util.Random;
 /**
  * Main class with heapsort function.
  */
