@@ -5,12 +5,12 @@ import java.util.Arrays;
 /**
  * Main class with heapsort function.
  */
+
 public class App {
     /**
      * Sorts array using heapsort.
      *
      * @param array Array to sort
-     * @return Sorted array
      */
     public static void heapsort(int[] array) {
         int[] heap = array.clone();
