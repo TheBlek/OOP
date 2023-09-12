@@ -37,7 +37,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("heapsort.App")
+    mainClass.set("ru.nsu.kuklin.heapsort.App")
 }
 
 tasks.test {

@@ -1,5 +1,5 @@
 
-package heapsort;
+package ru.nsu.kuklin.heapsort;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

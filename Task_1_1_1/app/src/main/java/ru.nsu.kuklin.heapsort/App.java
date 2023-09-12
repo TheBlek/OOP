@@ -1,4 +1,4 @@
-package heapsort;
+package ru.nsu.kuklin.heapsort;
 
 /**
  * Main class with heapsort function
