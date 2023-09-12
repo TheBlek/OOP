@@ -49,7 +49,7 @@ public class App {
     }
 
     /**
-     * Stub main function
+     * Stub main function.
      *
      * @param args Cmd args
      */
