@@ -1,1 +1,1 @@
-memberSearchIndex = [{"p":"ru.nsu.kuklin.heapsort","c":"App","l":"App()","u":"%3Cinit%3E()"},{"p":"ru.nsu.kuklin.heapsort","c":"App","l":"heapsort(int[])"}];updateSearchResults();
+memberSearchIndex = [{"p":"ru.nsu.kuklin.heapsort","c":"App","l":"App()","u":"%3Cinit%3E()"},{"p":"ru.nsu.kuklin.heapsort","c":"App","l":"heapsort(int[])"},{"p":"ru.nsu.kuklin.heapsort","c":"App","l":"main(String[])","u":"main(java.lang.String[])"}];updateSearchResults();
