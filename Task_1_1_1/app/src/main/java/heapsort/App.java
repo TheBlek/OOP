@@ -1,5 +1,8 @@
 package heapsort;
 
+/**
+ * Main class with heapsort function
+ */
 public class App {
     /**
      * Sorts array using heapsort.
