@@ -26,12 +26,6 @@ public class App {
             }
         }
 
-
-        // for (int j = 0; j < heap.length; j++) {
-        //     System.out.print(heap[j] + " ");
-        // }
-        // System.out.println(" len = " + heap.length);
-
         // array is a heap now
         int heapLen = heap.length; 
         for (int i = 0; i < heap.length; i++, heapLen--) {
