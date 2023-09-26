@@ -38,7 +38,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("polynomial.App")
+    mainClass.set("ru.nsu.kuklin.polynomial.App")
 }
 
 tasks.test {

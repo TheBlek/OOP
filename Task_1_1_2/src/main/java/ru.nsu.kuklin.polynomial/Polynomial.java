@@ -1,5 +1,5 @@
 
-package polynomial;
+package ru.nsu.kuklin.polynomial;
 
 import java.util.Arrays;
 
@@ -136,10 +136,18 @@ public class Polynomial {
         return res;
     }
 
+    /**
+     * Checks on equality with another polynomial
+     *
+     * @param cs Polynomial to check against 
+     */
     public boolean equals(Polynomial other) {
         return Arrays.equals(coeffs, other.coeffs); 
     }
 
+    /**
+     * Convert polynomial to string 
+     */
     public String toString() {
         String res = "";
         if (coeffs.length > 0) {
