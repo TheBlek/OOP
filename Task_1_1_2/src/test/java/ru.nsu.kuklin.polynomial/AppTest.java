@@ -11,20 +11,20 @@ class AppTest {
     void testFromDef() {
         Polynomial p1 = new Polynomial(new int[] {4, 3, 6, 7});
         Polynomial p2 = new Polynomial(new int[] {3, 2, 8});
-        assertTrue(p1.plus(p2.differentiate(1)).toString().equals("7x^3 + 6x^2 + 19x + 6"));
-        assertTrue(p1.times(p2).evaluate(2) == 3510);
+        assertEquals("7x^3 + 6x^2 + 19x + 6", p1.plus(p2.differentiate(1)).toString());
+        assertEquals(3510, p1.times(p2).evaluate(2));
     }
 
     @Test 
     void testLongDiff() {
         Polynomial p = new Polynomial(new int[] {1290, 1, 2, 5, 3});
-        assertTrue(p.differentiate(3).toString().equals("72x + 30"));
+        assertEquals("72x + 30", p.differentiate(3).toString());
     }
 
     @Test 
     void testDiffIntoOblivion() {
         Polynomial p = new Polynomial(new int[] {1290, 1, 2, 5, 3});
-        assertTrue(p.differentiate(15).toString().equals(""));
+        assertEquals("", p.differentiate(15).toString());
     }
 
     @Test 
