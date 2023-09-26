@@ -14,7 +14,7 @@ public class Polynomial {
      * Create a polynomial with given coefficients.
      *
      * @param cs Coefficients for the polynomial: a0 + a1*x^1 + ... + an*x^n
-     *  Power of x for coeff is equal to coeff's index in an array
+     * Power of x for coeff is equal to coeff's index in an array
      */
     public Polynomial(int[] cs) {
         coeffs = cs;
@@ -137,16 +137,14 @@ public class Polynomial {
     }
 
     /**
-     * Checks on equality with another polynomial
-     *
-     * @param cs Polynomial to check against 
+     * Checks on equality with another polynomial.
      */
     public boolean equals(Polynomial other) {
         return Arrays.equals(coeffs, other.coeffs); 
     }
 
     /**
-     * Convert polynomial to string 
+     * Convert polynomial to string.
      */
     public String toString() {
         String res = "";
