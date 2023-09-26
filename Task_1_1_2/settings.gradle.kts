@@ -11,4 +11,3 @@ plugins {
 }
 
 rootProject.name = "polynomial"
-include("app")
