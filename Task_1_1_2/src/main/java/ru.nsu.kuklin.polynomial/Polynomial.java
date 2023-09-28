@@ -14,7 +14,7 @@ public class Polynomial {
      * Create a polynomial with given coefficients.
      *
      * @param cs Coefficients for the polynomial: a0 + a1*x^1 + ... + an*x^n
-     * Power of x for coeff is equal to coeff's index in an array
+     *     Power of x for coeff is equal to coeff's index in an array
      */
     public Polynomial(int[] cs) {
         coeffs = cs;
@@ -153,7 +153,7 @@ public class Polynomial {
         if (this.getClass() != other.getClass()) {
             return false;
         }
-        Polynomial otherPoly = (Polynomial)other;
+        Polynomial otherPoly = (Polynomial) other;
         return Arrays.equals(coeffs, otherPoly.coeffs); 
     }
 

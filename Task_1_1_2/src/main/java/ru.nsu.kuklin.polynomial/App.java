@@ -7,6 +7,7 @@ package ru.nsu.kuklin.polynomial;
 public class App {
     /**
      * Stub description. FUN.
+     *
      * @param args Stub. FUN.
      */
     public static void main(String[] args) {
