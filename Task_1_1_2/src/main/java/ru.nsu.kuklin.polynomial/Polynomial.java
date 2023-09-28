@@ -8,7 +8,7 @@ import java.util.Arrays;
  *
  */
 public class Polynomial {
-    public int[] coeffs;
+    private int[] coeffs;
 
     /**
      * Create a polynomial with given coefficients.
@@ -18,6 +18,7 @@ public class Polynomial {
      */
     public Polynomial(int[] cs) {
         coeffs = cs;
+        trim();
     }
 
     private void trim() {
@@ -137,15 +138,37 @@ public class Polynomial {
     }
 
     /**
-     * Checks on equality with another polynomial.
+     * Checks on equality with another object.
+     *
+     * @param other Object to compare to.
      */
-    public boolean equals(Polynomial other) {
-        return Arrays.equals(coeffs, other.coeffs); 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        if (this.getClass() != other.getClass()) {
+            return false;
+        }
+        Polynomial otherPoly = (Polynomial)other;
+        return Arrays.equals(coeffs, otherPoly.coeffs); 
+    }
+
+    /**
+     * Returns hashcode of a polynomial. Returns coefficients hashcode.
+     */
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(coeffs);
     }
 
     /**
      * Convert polynomial to string.
      */
+    @Override
     public String toString() {
         String res = "";
         if (coeffs.length > 0) {
