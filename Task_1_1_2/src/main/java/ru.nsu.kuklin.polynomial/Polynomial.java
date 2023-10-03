@@ -120,6 +120,9 @@ public class Polynomial {
      * @param power Number of derivatives to take
      */
     public Polynomial differentiate(int power) {
+        if (power < 0) {
+            return null;
+        }
         int[] diff = new int[coeffs.length - power < 0 ? 0 : coeffs.length - power];
         
         if (diff.length > 0) {
