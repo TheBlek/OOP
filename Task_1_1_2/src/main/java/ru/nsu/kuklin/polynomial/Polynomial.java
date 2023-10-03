@@ -65,7 +65,6 @@ public class Polynomial {
         }
 
         Polynomial res = new Polynomial(summed);
-        res.trim();
 
         return res;
     }
@@ -89,7 +88,6 @@ public class Polynomial {
         }
 
         Polynomial res = new Polynomial(diff);
-        res.trim();
 
         return res;
     }
@@ -109,7 +107,6 @@ public class Polynomial {
         }
 
         Polynomial res = new Polynomial(mul);
-        res.trim();
 
         return res;
     }
@@ -135,7 +132,6 @@ public class Polynomial {
         }
 
         Polynomial res = new Polynomial(diff);
-        res.trim();
 
         return res;
     }
@@ -173,17 +169,17 @@ public class Polynomial {
      */
     @Override
     public String toString() {
+        if (coeffs.length <= 0) return "";
+
         String res = "";
-        if (coeffs.length > 0) {
-            for (int i = coeffs.length - 1; i > 0; i--) {
-                if (i != 1) {
-                    res += String.format("%dx^%d + ", coeffs[i], i);
-                } else {
-                    res += String.format("%dx + ", coeffs[i]);
-                }
+        for (int i = coeffs.length - 1; i > 0; i--) {
+            if (i != 1) {
+                res += String.format("%dx^%d + ", coeffs[i], i);
+            } else {
+                res += String.format("%dx + ", coeffs[i]);
             }
-            res += String.valueOf(coeffs[0]);
         }
+        res += String.valueOf(coeffs[0]);
         return res;
     }
 }
