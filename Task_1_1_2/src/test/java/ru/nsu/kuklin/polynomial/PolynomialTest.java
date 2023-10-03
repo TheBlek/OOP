@@ -60,7 +60,7 @@ class PolynomialTest {
 
     @Test
     void testArithmeticWithBigger() {
-        Polynomial p1 = new Polynomial(new int[] {1290, 1, 2,});
+        Polynomial p1 = new Polynomial(new int[] {1290, 1, 2});
         Polynomial p2 = new Polynomial(new int[] {1290, 1, 2, 5, 3, 10});
 
         assertEquals(p1.plus(p2), new Polynomial(new int[] {2580, 2, 4, 5, 3, 10}));

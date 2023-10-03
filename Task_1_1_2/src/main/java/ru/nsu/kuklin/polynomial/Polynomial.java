@@ -169,7 +169,9 @@ public class Polynomial {
      */
     @Override
     public String toString() {
-        if (coeffs.length <= 0) return "";
+        if (coeffs.length <= 0) {
+            return "";
+        }
 
         String res = "";
         for (int i = coeffs.length - 1; i > 0; i--) {
