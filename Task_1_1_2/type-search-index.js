@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.polynomial","l":"App"},{"p":"ru.nsu.kuklin.polynomial","l":"Polynomial"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.polynomial","l":"Polynomial"}];updateSearchResults();
