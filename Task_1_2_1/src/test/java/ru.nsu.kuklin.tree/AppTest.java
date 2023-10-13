@@ -1,13 +1,13 @@
 package ru.nsu.kuklin.tree;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Random;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test
@@ -56,7 +56,7 @@ class AppTest {
     }
 
     @Test
-    void testBFSIteration() {
+    void testBfsIteration() {
         var root = new Tree<>("Root");
         var child = root.addChild("Child");
         root.addChild("Child2");
@@ -72,7 +72,7 @@ class AppTest {
     }
 
     @Test
-    void testBFSConcurrentModification() {
+    void testBfsConcurrentModification() {
         var root = new Tree<>("Root");
         var child = root.addChild("Child");
         root.addChild("Child2");
@@ -91,7 +91,7 @@ class AppTest {
     }
 
     @Test
-    void testDFSIteration() {
+    void testDfsIteration() {
         var root = new Tree<>("Root");
         var child = root.addChild("Child");
         root.addChild("Child2");
@@ -108,7 +108,7 @@ class AppTest {
     }
 
     @Test
-    void testDFSConcurrentModification() {
+    void testDfsConcurrentModification() {
         var root = new Tree<>("Root");
         var child = root.addChild("Child");
         root.addChild("Child2");
@@ -130,18 +130,18 @@ class AppTest {
     void testEquality() {
         int size = 10000;
         var original = new Tree<>(0);
-        var diff_root = new Tree<>(20);
-        var diff_children = new Tree<>(0);
+        var diffRoot = new Tree<>(20);
+        var diffChildren = new Tree<>(0);
         Random rng = new Random();
         for (int i = 0; i < size; i++) {
             original.addChild(rng.nextInt()); 
-            diff_root.addChild(rng.nextInt()); 
+            diffRoot.addChild(rng.nextInt()); 
             if (i % 2 == 0) {
-                diff_children.addChild(rng.nextInt()); 
+                diffChildren.addChild(rng.nextInt()); 
             }
         }
-        assertNotEquals(original, diff_root); 
-        assertNotEquals(original, diff_children); 
+        assertNotEquals(original, diffRoot); 
+        assertNotEquals(original, diffChildren);
     } 
 
     @Test

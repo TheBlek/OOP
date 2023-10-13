@@ -3,8 +3,8 @@ package ru.nsu.kuklin.tree;
 import java.util.*;
 
 /**
- *
  * Generic tree implementation. 
+ *
  * Supports iteration through bfs and dfs,
  * children manipulation and etc.
  */
@@ -24,7 +24,7 @@ public class Tree<T> implements Iterable<T> {
     /**
      * Get current value.
      *
-     * @returns value
+     * @return value
      */
     public T value() {
         return value;
@@ -66,7 +66,7 @@ public class Tree<T> implements Iterable<T> {
      * Add a given child.
      * Returns Optional.empty()
      *
-     * @param child 
+     * @param child child to add
      * @return new child, if addition does not cause cycles
      */
     public Optional<Tree<T>> addChild(Tree<T> child) {
@@ -119,7 +119,7 @@ public class Tree<T> implements Iterable<T> {
      *
      * @param value Whether to iterate in bfs
      */
-    public void setBFSIteration(boolean value) {
+    public void setBfsIteration(boolean value) {
         isBFS = value;
     }
 
