@@ -99,7 +99,7 @@ class AppTest {
         child.addChild("GrandChild2"); 
 
         var actual = new ArrayList<String>();
-        root.setBFSIteration(false);
+        root.setBfsIteration(false);
         for (var value : root) {
             actual.add(value);
         }
@@ -118,7 +118,7 @@ class AppTest {
         assertThrows(
             new ConcurrentModificationException().getClass(),
             () -> {
-                root.setBFSIteration(false);
+                root.setBfsIteration(false);
                 for (var value : root) {
                     root.removeChildren(value);
                 }
