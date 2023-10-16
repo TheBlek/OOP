@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.tree","l":"Tree"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.tree","l":"Tree.IterationOrder"},{"p":"ru.nsu.kuklin.tree","l":"Tree"}];updateSearchResults();

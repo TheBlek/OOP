@@ -41,7 +41,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Summary:</p>
 <ul>
-<li>Nested</li>
+<li><a href="#nested-class-summary">Nested</a></li>
 <li>Field</li>
 <li><a href="#constructor-summary">Constr</a></li>
 <li><a href="#method-summary">Method</a></li>
@@ -61,7 +61,7 @@ loadScripts(document, 'script');</script>
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -101,12 +101,28 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;T&gt;</span></div>
 <div class="block">Generic tree implementation. 
-
  Supports iteration through bfs and dfs,
  children manipulation and etc.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="Tree.IterationOrder.html" class="type-name-link" title="enum class in ru.nsu.kuklin.tree">Tree.IterationOrder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Iteration order for tree traversal.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -175,7 +191,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <div class="block">Remove all children with given value.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBfsIteration(boolean)" class="member-name-link">setBfsIteration</a><wbr>(boolean&nbsp;value)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIterationOrder(ru.nsu.kuklin.tree.Tree.IterationOrder)" class="member-name-link">setIterationOrder</a><wbr>(<a href="Tree.IterationOrder.html" title="enum class in ru.nsu.kuklin.tree">Tree.IterationOrder</a>&nbsp;order)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set iteration order.</div>
 </div>
@@ -322,13 +338,13 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="setBfsIteration(boolean)">
-<h3>setBfsIteration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setBfsIteration</span><wbr><span class="parameters">(boolean&nbsp;value)</span></div>
+<section class="detail" id="setIterationOrder(ru.nsu.kuklin.tree.Tree.IterationOrder)">
+<h3>setIterationOrder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setIterationOrder</span><wbr><span class="parameters">(<a href="Tree.IterationOrder.html" title="enum class in ru.nsu.kuklin.tree">Tree.IterationOrder</a>&nbsp;order)</span></div>
 <div class="block">Set iteration order.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>value</code> - Whether to iterate in bfs</dd>
+<dd><code>order</code> - Whether to iterate in bfs</dd>
 </dl>
 </section>
 </li>
@@ -336,7 +352,16 @@ implements <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base
 <section class="detail" id="iterator()">
 <h3>iterator</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</span>&nbsp;<span class="element-name">iterator</span>()</div>
-<div class="block">Iterator.</div>
+<div class="block">Iterator.
+ This is fail-fast iterator. HOWEVER. 
+ It's possible that it would not detect a change because
+ it uses hashcodes to record state. Which can collide, hence not throwing.
+ It is a design decision that allows us to achieve 
+ 1. O(1) vs O(parent count) state change
+ 2. 0bytes and awareness of parents vs 8bytes (pbbly) for parent link
+ 3. Same tree in multiple hierarchies without additional nonsense 
+ or
+ 2. O(1) vs O(tree size) state change check</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Iterable.html#iterator()" title="class or interface in java.lang" class="external-link">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;</code></dd>
