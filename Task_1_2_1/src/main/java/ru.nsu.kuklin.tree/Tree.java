@@ -132,7 +132,8 @@ public class Tree<T> implements Iterable<T> {
      * 2. 0bytes and awareness of parents vs 8bytes (pbbly) for parent link
      * 3. Same tree in multiple hierarchies without additional nonsense 
      * or
-     * 2. O(1) vs O(tree size) state change check
+     * 1. O(1) vs O(tree size) state change check
+     * 2. O(1) vs O(tree size) state snapshot memory footprint
      *
      * @return iterator over a collection
      */
