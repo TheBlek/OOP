@@ -104,34 +104,44 @@ public class Tree<T> implements Iterable<T> {
         return children.removeIf(t -> t.value == value);
     }
 
+    /**
+     * Iteration order for tree traversal.
+     * Dfs is on exit order.
+     */
     public enum IterationOrder {
         Bfs,
         Dfs
     }
+
     /**
      * Set iteration order.
      *
-     * @param value Whether to iterate in bfs
+     * @param order Whether to iterate in bfs
      */
     public void setIterationOrder(IterationOrder order) {
         this.order = order;
     }
 
     /**
-     * Iterator. 
+     * Iterator.
+     * This is fail-fast iterator. HOWEVER. 
+     * It's possible that it would not detect a change because
+     * it uses hashcodes to record state. Which can collide, hence not throwing.
+     * It is a design decision that allows us to achieve 
+     * 1. O(1) vs O(parent count) state change
+     * 2. 0bytes and awareness of parents vs 8bytes (pbbly) for parent link
+     * 3. Same tree in multiple hierarchies without additional nonsense 
+     * or
+     * 2. O(1) vs O(tree size) state change check
      *
      * @return iterator over a collection
      */
     public Iterator<T> iterator() {
-        reset();
-        switch (order) {
-            case Bfs:
-                return new BfsIterator<T>(this);
-            case Dfs:
-                return new DfsIterator<T>(this);
-        }
-        assert false : "IterationOrder enum expanded but this case is not exhaustive";
-        return null;
+        return switch (order) {
+            case Bfs -> new BfsIterator<T>(this);
+            case Dfs -> new DfsIterator<T>(this);
+            default -> throw new IllegalStateException("Invalid iteration order: " + order);
+        };
     }
 
     @Override
@@ -172,12 +182,6 @@ public class Tree<T> implements Iterable<T> {
         }
         state.put(this, NodeColor.Visited);
         return false;
-    }
-
-    private void reset() {
-        for (var child : children) {
-            child.reset();
-        }
     }
 
     private class BfsIterator<T> implements Iterator<T> {
