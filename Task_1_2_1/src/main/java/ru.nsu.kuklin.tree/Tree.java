@@ -4,7 +4,6 @@ import java.util.*;
 
 /**
  * Generic tree implementation. 
- *
  * Supports iteration through bfs and dfs,
  * children manipulation and etc.
  */
@@ -17,8 +16,7 @@ public class Tree<T> implements Iterable<T> {
     public Tree(T value) {
         this.value = value;
         this.children = new ArrayList<>();
-        this.modified = false;
-        this.isBFS = true;
+        this.order = IterationOrder.Bfs;
     }
 
     /**
@@ -36,7 +34,6 @@ public class Tree<T> implements Iterable<T> {
      * @param value Value to set
      */
     public void setValue(T value) {
-        modified = true;
         this.value = value; 
     }
 
@@ -58,7 +55,6 @@ public class Tree<T> implements Iterable<T> {
     public Tree<T> addChild(T value) {
         var child = new Tree<>(value);
         children.add(child);
-        modified = true;
         return child;
     }
 
@@ -78,7 +74,6 @@ public class Tree<T> implements Iterable<T> {
             children.remove(children.size() - 1);
             return Optional.empty();
         }
-        modified = true;
         return Optional.of(child);
     }
 
@@ -86,7 +81,6 @@ public class Tree<T> implements Iterable<T> {
      * Remove all children.
      */
     public void clearChildren() {
-        modified = children.isEmpty();
         children.clear();
     }
 
@@ -97,9 +91,7 @@ public class Tree<T> implements Iterable<T> {
      * @return whether the child was present
      */
     public boolean removeChild(Tree<T> child) {
-        boolean res = children.remove(child);
-        modified = res;
-        return res;
+        return children.remove(child);
     }
 
     /**
@@ -109,18 +101,20 @@ public class Tree<T> implements Iterable<T> {
      * @return whether the any child was present
      */
     public boolean removeChildren(T value) {
-        boolean res = children.removeIf(t -> t.value == value);
-        modified = res;
-        return res;
+        return children.removeIf(t -> t.value == value);
     }
 
+    public enum IterationOrder {
+        Bfs,
+        Dfs
+    }
     /**
      * Set iteration order.
      *
      * @param value Whether to iterate in bfs
      */
-    public void setBfsIteration(boolean value) {
-        isBFS = value;
+    public void setIterationOrder(IterationOrder order) {
+        this.order = order;
     }
 
     /**
@@ -130,11 +124,14 @@ public class Tree<T> implements Iterable<T> {
      */
     public Iterator<T> iterator() {
         reset();
-        if (isBFS) {
-            return new BFSIterator<T>(this);
-        } else {
-            return new DFSIterator<T>(this);
+        switch (order) {
+            case Bfs:
+                return new BfsIterator<T>(this);
+            case Dfs:
+                return new DfsIterator<T>(this);
         }
+        assert false : "IterationOrder enum expanded but this case is not exhaustive";
+        return null;
     }
 
     @Override
@@ -158,19 +155,6 @@ public class Tree<T> implements Iterable<T> {
         return Arrays.hashCode(values);
     }
 
-    private boolean modified() {
-        if (modified) {
-            return true;
-        }
-        for (var child : children) {
-            if (child.modified()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     private enum NodeColor {
         Visiting,
         Visited,
@@ -191,32 +175,32 @@ public class Tree<T> implements Iterable<T> {
     }
 
     private void reset() {
-        modified = false;
         for (var child : children) {
             child.reset();
         }
     }
 
-    private class BFSIterator<T> implements Iterator<T> {
-        public BFSIterator(Tree<T> tree) {
+    private class BfsIterator<T> implements Iterator<T> {
+        public BfsIterator(Tree<T> tree) {
             root = tree;
+            initHash = root.hashCode();
             searchQueue = new ArrayDeque<>(2);
             searchQueue.add(tree); 
         }
 
         public boolean hasNext() {
-            if (root.modified()) {
+            if (root.hashCode() != initHash) {
                 throw new ConcurrentModificationException();
             }
             return !searchQueue.isEmpty();
         }
 
         public T next() {
-            if (root.modified()) {
+            if (root.hashCode() != initHash) {
                 throw new ConcurrentModificationException();
             }
             // Exception 
-            assert !searchQueue.isEmpty();
+            assert !searchQueue.isEmpty() : "next() was called without checking hasNext()";
             var current = searchQueue.remove();
             for (int i = 0; i < current.children.size(); i++) {
                 searchQueue.add(current.children.get(i));
@@ -225,58 +209,60 @@ public class Tree<T> implements Iterable<T> {
         }
 
         private Tree<T> root;
+        private int initHash;
         private ArrayDeque<Tree<T>> searchQueue;
     }
 
-    private class DFSIterator<T> implements Iterator<T> {
-        public DFSIterator(Tree<T> tree) {
+    private class DfsIterator<T> implements Iterator<T> {
+        public DfsIterator(Tree<T> tree) {
             root = tree;
+            initHash = root.hashCode();
             searchStack = new ArrayList<>(2);
             searchStack.add(new SearchState<>(tree)); 
         }
 
         public boolean hasNext() {
-            if (root.modified()) {
+            if (root.hashCode() != initHash) {
                 throw new ConcurrentModificationException();
             }
             return !searchStack.isEmpty();
         }
 
         public T next() {
-            if (root.modified()) {
+            if (root.hashCode() != initHash) {
                 throw new ConcurrentModificationException();
             }
-            assert(!searchStack.isEmpty());
+            assert !searchStack.isEmpty() : "next() was called without checking hasNext()";
             var state = searchStack.get(searchStack.size() - 1);
-            if (state.CurrentChild < state.Node.children.size()) {
+            if (state.currentChild < state.node.children.size()) {
                 searchStack.add(
-                    new SearchState<>(state.Node.children.get(state.CurrentChild))
+                    new SearchState<>(state.node.children.get(state.currentChild))
                 );
                 return next();
             }
-            var res = searchStack.remove(searchStack.size() - 1).Node.value();
+            var res = searchStack.remove(searchStack.size() - 1).node.value();
             if (!searchStack.isEmpty()) {
-                searchStack.get(searchStack.size() - 1).CurrentChild += 1;
+                searchStack.get(searchStack.size() - 1).currentChild += 1;
             }
             return res;
         }
 
-        private Tree<T> root;
-        private ArrayList<SearchState<T>> searchStack;
         private class SearchState<T> {
-            public Tree<T> Node;
-            public int CurrentChild;
+            public Tree<T> node;
+            public int currentChild;
             
             public SearchState(Tree<T> node) {
-                this.Node = node;
-                CurrentChild = 0;
+                this.node = node;
+                currentChild = 0;
             }
         }
 
+        private Tree<T> root;
+        private int initHash;
+        private ArrayList<SearchState<T>> searchStack;
     }
 
     private T value;
     private List<Tree<T>> children;
-    private boolean modified;
-    private boolean isBFS;
+    private IterationOrder order;
 }

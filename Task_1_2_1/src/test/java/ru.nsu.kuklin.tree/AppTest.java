@@ -91,6 +91,25 @@ class AppTest {
     }
 
     @Test
+    void testBfsDoubleIteration() {
+        var root = new Tree<>("Root");
+        var child = root.addChild("Child");
+        root.addChild("Child2");
+        child.addChild("GrandChild1"); 
+        child.addChild("GrandChild2"); 
+
+        assertThrows(
+            new ConcurrentModificationException().getClass(),
+            () -> {
+                for (var value : root) {
+                    root.removeChildren(value);
+                    for (var var : root) {}
+                }
+            }
+        );
+    }
+
+    @Test
     void testDfsIteration() {
         var root = new Tree<>("Root");
         var child = root.addChild("Child");
@@ -99,7 +118,7 @@ class AppTest {
         child.addChild("GrandChild2"); 
 
         var actual = new ArrayList<String>();
-        root.setBfsIteration(false);
+        root.setIterationOrder(Tree.IterationOrder.Dfs);
         for (var value : root) {
             actual.add(value);
         }
@@ -118,9 +137,30 @@ class AppTest {
         assertThrows(
             new ConcurrentModificationException().getClass(),
             () -> {
-                root.setBfsIteration(false);
+                root.setIterationOrder(Tree.IterationOrder.Dfs);
                 for (var value : root) {
                     root.removeChildren(value);
+                }
+            }
+        );
+    }
+
+    @Test
+    void testDfsDoubleIteration() {
+        var root = new Tree<>("Root");
+        var child = root.addChild("Child");
+        root.addChild("Child2");
+        child.addChild("GrandChild1"); 
+        child.addChild("GrandChild2"); 
+
+        root.setIterationOrder(Tree.IterationOrder.Dfs);
+        assertThrows(
+            new ConcurrentModificationException().getClass(),
+            () -> {
+                for (var value : root) {
+                    root.removeChildren(value);
+                    for (var another : root) {
+                    }
                 }
             }
         );
