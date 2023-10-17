@@ -155,9 +155,8 @@ public class Tree<T> implements Iterable<T> {
             return false;
         }
         var otherTree = (Tree<?>) other;
-        if (
-            this.value != otherTree.value 
-            || this.childrenCount() != otherTree.childrenCount()
+        if (this.value != otherTree.value 
+                || this.childrenCount() != otherTree.childrenCount()
         ) {
             return false;
         }
