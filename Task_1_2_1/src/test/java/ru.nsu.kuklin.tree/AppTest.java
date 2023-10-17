@@ -213,6 +213,20 @@ class AppTest {
     } 
 
     @Test
+    void testEqualityMultipleChildren() {
+        var left = new Tree<>(0);
+        var right = new Tree<>(0);
+        left.addChild(10);
+        left.addChild(10);
+        left.addChild(20);
+
+        right.addChild(20);
+        right.addChild(10);
+        right.addChild(20);
+
+        assertNotEquals(left, right);
+    } 
+    @Test
     void testEqualityReflexivity() {
         int size = 10000;
         var tree = new Tree<>(0);

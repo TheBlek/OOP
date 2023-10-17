@@ -154,20 +154,25 @@ public class Tree<T> implements Iterable<T> {
         if (this.getClass() != other.getClass()) {
             return false;
         }
-        Tree otherTree = (Tree<?>) other;
+        var otherTree = (Tree<?>) other;
         if (
             this.value != otherTree.value || 
             this.childrenCount() != otherTree.childrenCount()
         ) {
             return false;
         }
-        var childrenSet = new HashSet<>(this.children);
-        for (var child : otherTree.children) {
-            if (!childrenSet.contains(child)) {
+        var childrenMap = new HashMap<Object, Integer>();
+        for (var child : this.children) {
+            childrenMap.putIfAbsent(child, 0);
+            childrenMap.compute(child, (k, ovalue) -> ovalue + 1);
+        }
+        for (Object child : otherTree.children) {
+            if (!childrenMap.containsKey(child)) {
                 return false;
             }
+            childrenMap.compute(child, (k, ovalue) -> ovalue - 1);
         }
-        return true;
+        return childrenMap.values().stream().allMatch(v -> v == 0);
     }
 
     @Override

@@ -46,6 +46,9 @@ tasks.test {
 	testLogging {
 		events("passed", "skipped", "failed")
 	}
+    this.testLogging {
+        this.showStandardStreams = true
+    }
     finalizedBy(tasks.jacocoTestReport)
 }
 
