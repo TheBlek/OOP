@@ -185,6 +185,34 @@ class AppTest {
     } 
 
     @Test
+    void testEqualityUnorderedness() {
+        var left = new Tree<>(0);
+        var right = new Tree<>(0);
+        left.addChild(10);
+        left.addChild(20);
+        right.addChild(20);
+        right.addChild(10);
+        assertEquals(left, right);
+    } 
+
+    @Test
+    void testEqualityDifferentStructure() {
+        var left = new Tree<>(0);
+        var right = new Tree<>(0);
+        left.addChild(10);
+        var lchild2 = left.addChild(20);
+        lchild2.addChild(1);
+        lchild2.addChild(2);
+
+        var rchild1 = right.addChild(10);
+        right.addChild(20);
+
+        rchild1.addChild(1);
+        rchild1.addChild(2);
+        assertNotEquals(left, right);
+    } 
+
+    @Test
     void testEqualityReflexivity() {
         int size = 10000;
         var tree = new Tree<>(0);

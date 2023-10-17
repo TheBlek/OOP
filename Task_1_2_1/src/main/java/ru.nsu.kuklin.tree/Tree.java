@@ -140,7 +140,6 @@ public class Tree<T> implements Iterable<T> {
         return switch (order) {
             case Bfs -> new BfsIterator<T>(this);
             case Dfs -> new DfsIterator<T>(this);
-            default -> throw new IllegalStateException("Invalid iteration order: " + order);
         };
     }
 
@@ -156,7 +155,19 @@ public class Tree<T> implements Iterable<T> {
             return false;
         }
         Tree otherTree = (Tree<?>) other;
-        return this.value == otherTree.value && this.children.equals(otherTree.children);
+        if (
+            this.value != otherTree.value || 
+            this.childrenCount() != otherTree.childrenCount()
+        ) {
+            return false;
+        }
+        var childrenSet = new HashSet<>(this.children);
+        for (var child : otherTree.children) {
+            if (!childrenSet.contains(child)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -217,14 +228,13 @@ public class Tree<T> implements Iterable<T> {
 
     private class DfsIterator<T> implements Iterator<T> {
         public DfsIterator(Tree<T> tree) {
-            root = tree;
-            initHash = root.hashCode();
+            initHash = Tree.this.hashCode();
             searchStack = new ArrayList<>(2);
             searchStack.add(new SearchState<>(tree)); 
         }
 
         public boolean hasNext() {
-            if (root.hashCode() != initHash) {
+            if (Tree.this.hashCode() != initHash) {
                 throw new ConcurrentModificationException();
             }
             return !searchStack.isEmpty();
@@ -248,7 +258,7 @@ public class Tree<T> implements Iterable<T> {
             return res;
         }
 
-        private class SearchState<T> {
+        private static class SearchState<T> {
             public Tree<T> node;
             public int currentChild;
             
