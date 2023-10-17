@@ -200,10 +200,7 @@ public class Tree<T> implements Iterable<T> {
         }
 
         public T next() {
-            if (root.hashCode() != initHash) {
-                throw new ConcurrentModificationException();
-            }
-            if (!searchQueue.isEmpty()) {
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             }
             var current = searchQueue.remove();
@@ -234,10 +231,7 @@ public class Tree<T> implements Iterable<T> {
         }
 
         public T next() {
-            if (root.hashCode() != initHash) {
-                throw new ConcurrentModificationException();
-            }
-            if (!searchStack.isEmpty()) {
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             }
             var state = searchStack.get(searchStack.size() - 1);
