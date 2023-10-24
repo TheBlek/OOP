@@ -176,13 +176,11 @@ public class Tree<T> implements Iterable<T> {
 
     @Override
     public int hashCode() {
-        var childrenMap = new HashMap<Object, Integer>();
+        var childrenHash = 0;
         for (var child : this.children) {
-            childrenMap.putIfAbsent(child, 0);
-            childrenMap.compute(child, (k, ovalue) -> ovalue + 1);
+            childrenHash += child.hashCode();
         }
-        var values = new int[] {value.hashCode(), childrenMap.hashCode()};
-        return Arrays.hashCode(values);
+        return value.hashCode() + childrenHash;
     }
 
     private enum NodeColor {
@@ -206,14 +204,13 @@ public class Tree<T> implements Iterable<T> {
 
     private class BfsIterator<T> implements Iterator<T> {
         public BfsIterator(Tree<T> tree) {
-            root = tree;
-            initHash = root.hashCode();
+            initHash = Tree.this.hashCode();
             searchQueue = new ArrayDeque<>(2);
             searchQueue.add(tree); 
         }
 
         public boolean hasNext() {
-            if (root.hashCode() != initHash) {
+            if (Tree.this.hashCode() != initHash) {
                 throw new ConcurrentModificationException();
             }
             return !searchQueue.isEmpty();
@@ -230,7 +227,6 @@ public class Tree<T> implements Iterable<T> {
             return current.value();
         }
 
-        private Tree<T> root;
         private int initHash;
         private ArrayDeque<Tree<T>> searchQueue;
     }
