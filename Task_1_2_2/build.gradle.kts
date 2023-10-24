@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
+    // Use JUnit test framework. 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // This dependency is used by the application.
@@ -45,6 +45,7 @@ tasks.test {
 	useJUnitPlatform()
 	testLogging {
 		events("passed", "skipped", "failed")
+        showStandardStreams = true
 	}
     finalizedBy(tasks.jacocoTestReport)
 }
