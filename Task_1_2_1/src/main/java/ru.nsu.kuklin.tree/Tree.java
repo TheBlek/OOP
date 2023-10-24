@@ -176,7 +176,12 @@ public class Tree<T> implements Iterable<T> {
 
     @Override
     public int hashCode() {
-        var values = new int[] {value.hashCode(), new HashSet<>(children).hashCode()};
+        var childrenMap = new HashMap<Object, Integer>();
+        for (var child : this.children) {
+            childrenMap.putIfAbsent(child, 0);
+            childrenMap.compute(child, (k, ovalue) -> ovalue + 1);
+        }
+        var values = new int[] {value.hashCode(), childrenMap.hashCode()};
         return Arrays.hashCode(values);
     }
 
