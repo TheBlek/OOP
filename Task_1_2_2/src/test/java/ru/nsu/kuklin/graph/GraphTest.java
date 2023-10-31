@@ -170,6 +170,7 @@ public abstract class GraphTest<T extends Graph> {
         var id2 = graph.addVertex(3.);
         var id1 = graph.addVertex(1.5);
         id1 = id1; // FUCK LINTER
+        id2 = id2; // FUCK LINTER
         graph.removeVertex(id3);
         assertEquals(Optional.empty(), graph.setVertex(id3, 123.3));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
@@ -314,7 +315,9 @@ public abstract class GraphTest<T extends Graph> {
         assertEquals(Optional.of(new Edge<>(id2, id2, 15.4f)), graph.getEdge(id2, id2));
     }
 
-    @Test
+    /**
+     * HEY LOOK. A. TEST!1!!
+     */
     @ParameterizedTest
     @ValueSource(strings = {"invalid-graph-1.txt", "invalid-graph-2.txt"})
     public void testInvalidFormat(String file) {
@@ -362,7 +365,9 @@ public abstract class GraphTest<T extends Graph> {
         assertTrue(Arrays.equals(expected, actual));
     }
 
-    @Test
+    /**
+     * HEY LOOK. A. TEST!1!!
+     */
     @ParameterizedTest
     @DisplayName("Equals reflexivity")
     @ValueSource(strings = {"test_graph.txt", "dijkstra_test.txt", "dijkstra_test2.txt"})
@@ -372,7 +377,9 @@ public abstract class GraphTest<T extends Graph> {
         assertEquals(graph, graph);
     }
 
-    @Test
+    /**
+     * HEY LOOK. A. TEST!1!!
+     */
     @ParameterizedTest
     @DisplayName("Equals value check")
     @ValueSource(strings = {"test_graph.txt", "dijkstra_test.txt", "dijkstra_test2.txt"})
@@ -385,7 +392,9 @@ public abstract class GraphTest<T extends Graph> {
         assertNotEquals(graph1, graph2);
     }
 
-    @Test
+    /**
+     * HEY LOOK. A. TEST!1!!
+     */
     @ParameterizedTest
     @DisplayName("Isomorfic equals")
     @CsvSource(
@@ -409,7 +418,9 @@ public abstract class GraphTest<T extends Graph> {
         assertEquals(shouldEqual, graph.equals(graph2));
     }
 
-    @Test
+    /**
+     * HEY LOOK. A. TEST!1!!
+     */
     @ParameterizedTest
     @DisplayName("Hashcode contract")
     @CsvSource(
