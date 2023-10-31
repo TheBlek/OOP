@@ -12,7 +12,6 @@ import java.text.ParseException;
 /** 
  * Graph base class. 
  * Defines a bunch of useful functions using API as slim as possible
- *
  */
 public abstract class Graph<V, E extends Edge<VertexIndex>> {
     /** 
@@ -77,7 +76,6 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Adds vertex to the graph and returns a handle to it.
      *
      * @parameter vertex Vertex value
-     * @return Handle
      */
     abstract VertexIndex addVertex(V vertex);
 
@@ -94,8 +92,6 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Get a vertex value with given handle.
      *
      * @parameter id Vertex handle
-     *
-     * @return Vertex value
      */
     abstract Optional<V> getVertex(VertexIndex id);
 
@@ -104,16 +100,11 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Does nothing on invalid handle.
      *
      * @parameter id Vertex handle
-     *
-     * @return Previous vertex value
      */
     abstract Optional<V> removeVertex(VertexIndex id);
 
     /**
      * Get vertex count in graph.
-     *
-     * 
-     * @return Vertex count.
      */
     abstract int getVertexCount();
 
@@ -121,9 +112,6 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Returns dense index from handle.
      * Dense indecies are guaranteed to stay in range [0; getVertexCount()).
      * However, the order is not guaranteed.
-     *
-     * 
-     * @return Dense index, if handle is valid.
      */
     abstract Optional<Integer> getDenseIndex(VertexIndex id);
     
@@ -131,68 +119,47 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Returns a handle from a dense index.
      * Dense indecies are guaranteed to stay in range [0; getVertexCount()).
      * However, the order is not guaranteed.
-     *
-     * 
-     * @return Handle, if dense index is valid.
      */
     abstract Optional<VertexIndex> fromDenseIndex(int id);
 
     /**
      * Tests whether there's an edge with given ends.
-     *
-     * 
-     * @return Existence of edge
      */
     abstract boolean hasEdge(VertexIndex from, VertexIndex to);
 
     /**
      * Set the weight of edge between from and to to weight.
      * Creates an edge, if it didn't exist.
-     *
-     * 
-     * @return Previous edge, if it existed
      */
     abstract Optional<E> setEdge(VertexIndex from, VertexIndex to, float weight);
 
     /**
      * Remove an edge with given ends.
-     * 
-     * @return Previous edge, if it existed
      */
     abstract Optional<E> removeEdge(VertexIndex from, VertexIndex to);
 
     /**
      * Get an edge with given ends.
-     * 
-     * @return Previous edge, if it exists
      */
     abstract Optional<E> getEdge(VertexIndex from, VertexIndex to);
 
     /**
      * Get a number of outgoing edges.
-     * 
-     * @return Number of outgoing edges
      */
     abstract int getOutNeighborCount(VertexIndex id);
 
     /**
      * Get a number of incoming edges.
-     * 
-     * @return Number of incoming edges
      */
     abstract int getInNeighborCount(VertexIndex id);
 
     /**
      * Iterable over all outgoing neighbors.
-     * 
-     * @return Iterable over all outgoing neighbors.
      */
     abstract Iterable<VertexIndex> getOutNeighbors(VertexIndex id);
 
     /**
      * Iterable over all incoming neighbors.
-     * 
-     * @return Iterable over all incoming neighbors.
      */
     abstract Iterable<VertexIndex> getInNeighbors(VertexIndex id);
 

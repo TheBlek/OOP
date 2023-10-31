@@ -169,10 +169,11 @@ public abstract class GraphTest<T extends Graph> {
         var id3 = graph.addVertex(9.);
         var id2 = graph.addVertex(3.);
         var id1 = graph.addVertex(1.5);
+        id1 = id1; // FUCK LINTER
         graph.removeVertex(id3);
         assertEquals(Optional.empty(), graph.setVertex(id3, 123.3));
-        assertEquals(Optional.of(1.5), graph.getVertex(id1));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
+        assertEquals(Optional.of(1.5), graph.getVertex(id1));
         assertEquals(Optional.empty(), graph.getVertex(id3));
     }
 
@@ -292,9 +293,9 @@ public abstract class GraphTest<T extends Graph> {
 
     @Test
     @DisplayName("Load graph from file")
-    public void testloadFromFilee() throws ParseException, FileNotFoundException {
+    public void testloadFromFile() throws ParseException, FileNotFoundException {
         Graph<Double, ?> graph = getInstance();
-        graph.loadFromFilee("test_graph.txt", 0.0);
+        graph.loadFromFile("test_graph.txt", 0.0);
 
         var id0 = new VertexIndex(0);
         var id1 = new VertexIndex(1);
@@ -321,7 +322,7 @@ public abstract class GraphTest<T extends Graph> {
             new ParseException("", 0).getClass(),
             () -> {
                 var graph = getInstance();
-                graph.loadFromFilee(file, "sample");
+                graph.loadFromFile(file, "sample");
             }
         );
     }
@@ -330,7 +331,7 @@ public abstract class GraphTest<T extends Graph> {
     @DisplayName("Test dijkstra from the problem statement")
     public void testDijkstra() throws ParseException, FileNotFoundException {
         Graph<Double, ?> graph = getInstance();
-        graph.loadFromFilee("dijkstra_test.txt", 0.0);
+        graph.loadFromFile("dijkstra_test.txt", 0.0);
 
         var expected = new DistanceData[7];
         expected[0] = new DistanceData(new VertexIndex(2), 0.f);
@@ -349,7 +350,7 @@ public abstract class GraphTest<T extends Graph> {
     @DisplayName("Test dijkstra with zero edge")
     public void testDijkstraZeroEdge() throws ParseException, FileNotFoundException {
         Graph<Double, ?> graph = getInstance();
-        graph.loadFromFilee("dijkstra_test2.txt", 0.0);
+        graph.loadFromFile("dijkstra_test2.txt", 0.0);
 
         var expected = new DistanceData[4];
         expected[0] = new DistanceData(new VertexIndex(3), 0.f);
@@ -367,7 +368,7 @@ public abstract class GraphTest<T extends Graph> {
     @ValueSource(strings = {"test_graph.txt", "dijkstra_test.txt", "dijkstra_test2.txt"})
     public void testEqualsReflexivity(String file) throws ParseException, FileNotFoundException {
         var graph = getInstance();
-        graph.loadFromFilee(file, 8);
+        graph.loadFromFile(file, 8);
         assertEquals(graph, graph);
     }
 
@@ -377,10 +378,10 @@ public abstract class GraphTest<T extends Graph> {
     @ValueSource(strings = {"test_graph.txt", "dijkstra_test.txt", "dijkstra_test2.txt"})
     public void testEqualsValueCheck(String file) throws ParseException, FileNotFoundException {
         var graph1 = getInstance();
-        graph1.loadFromFilee(file, 8);
+        graph1.loadFromFile(file, 8);
 
         var graph2 = getInstance();
-        graph2.loadFromFilee(file, 9);
+        graph2.loadFromFile(file, 9);
         assertNotEquals(graph1, graph2);
     }
 
@@ -401,10 +402,10 @@ public abstract class GraphTest<T extends Graph> {
         boolean shouldEqual
     ) throws ParseException, FileNotFoundException {
         var graph = getInstance();
-        graph.loadFromFilee(one, 1.0);
+        graph.loadFromFile(one, 1.0);
 
         var graph2 = getInstance();
-        graph2.loadFromFilee(two, 1.0);
+        graph2.loadFromFile(two, 1.0);
         assertEquals(shouldEqual, graph.equals(graph2));
     }
 
@@ -426,10 +427,10 @@ public abstract class GraphTest<T extends Graph> {
         boolean equal
     ) throws ParseException, FileNotFoundException {
         var graph1 = getInstance();
-        graph1.loadFromFilee(file1, 8);
+        graph1.loadFromFile(file1, 8);
 
         var graph2 = getInstance();
-        graph2.loadFromFilee(file2, 8);
+        graph2.loadFromFile(file2, 8);
 
         if (equal) {
             assertEquals(graph1.hashCode(), graph2.hashCode());
