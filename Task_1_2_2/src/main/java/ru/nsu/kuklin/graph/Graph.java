@@ -10,14 +10,12 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 /** 
- *
  * Graph base class. 
  * Defines a bunch of useful functions using API as slim as possible
  *
  */
 public abstract class Graph<V, E extends Edge<VertexIndex>> {
     /** 
-     *
      * Load graph from file. By default in adjacency matrix format.
      *
      * @param filename  filename.
@@ -25,7 +23,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * @throws  ParseException - if adjecency matrix is broken
      * @throws  FileNotFoundException  - if no file :)
      */
-    void LoadFromFile(String filename, V standin) throws ParseException, FileNotFoundException { 
+    void loadFromFile(String filename, V standin) throws ParseException, FileNotFoundException {
         clear();
 
         var classLoader = getClass().getClassLoader();
@@ -43,14 +41,22 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
                 line = reader.nextLine(); 
             } catch (NoSuchElementException e) {
                 throw new ParseException(
-                    "File does not have enough vertices data. Expected: " + vertexCount + ". Found: " + i,
+                    "File does not have enough vertices data. Expected: " 
+                    + vertexCount 
+                    + ". Found: " 
+                    + i,
                     i
                 );
             }
             var atoms = line.split("\\s+");
             if (atoms.length != vertexCount) {
                 throw new ParseException(
-                    "Vertex #" + i + " have a different number of vertices. Found: " + atoms.length + " Expected: " + vertexCount,
+                    "Vertex #" 
+                    + i 
+                    + " have a different number of vertices. Found: " 
+                    + atoms.length 
+                    + " Expected: " 
+                    + vertexCount,
                     i
                 );
             }
@@ -60,7 +66,8 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
                     float weight = Float.parseFloat(atoms[j]);
                     setEdge(indices[i], indices[j], weight);
                 }
-                catch (Exception e) {}
+                catch (Exception e) {
+                }
             }
         }
         reader.close();
@@ -87,6 +94,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Get a vertex value with given handle.
      *
      * @parameter id Vertex handle
+     *
      * @return Vertex value
      */
     abstract Optional<V> getVertex(VertexIndex id);
@@ -96,6 +104,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Does nothing on invalid handle.
      *
      * @parameter id Vertex handle
+     *
      * @return Previous vertex value
      */
     abstract Optional<V> removeVertex(VertexIndex id);
@@ -128,56 +137,57 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
     /**
      * Tests whether there's an edge with given ends.
      * 
-     * @returns Existence of edge
+     * @return Existence of edge
      */
     abstract boolean hasEdge(VertexIndex from, VertexIndex to);
-    // Create edge if it didn't exist otherwise replace edge with given weight and return the previous one 
+
     /**
      * Set the weight of edge between from and to to weight.
      * Creates an edge, if it didn't exist.
      * 
-     * @returns Previous edge, if it existed
+     * @return Previous edge, if it existed
      */
     abstract Optional<E> setEdge(VertexIndex from, VertexIndex to, float weight);
-    // Return previous one, if it existed
+
     /**
      * Remove an edge with given ends.
      * 
-     * @returns Previous edge, if it existed
+     * @return Previous edge, if it existed
      */
     abstract Optional<E> removeEdge(VertexIndex from, VertexIndex to);
+
     /**
      * Get an edge with given ends.
      * 
-     * @returns Previous edge, if it exists
+     * @return Previous edge, if it exists
      */
     abstract Optional<E> getEdge(VertexIndex from, VertexIndex to);
 
     /**
      * Get a number of outgoing edges.
      * 
-     * @returns Number of outgoing edges
+     * @return Number of outgoing edges
      */
     abstract int getOutNeighborCount(VertexIndex id);
 
     /**
      * Get a number of incoming edges.
      * 
-     * @returns Number of incoming edges
+     * @return Number of incoming edges
      */
     abstract int getInNeighborCount(VertexIndex id);
 
     /**
      * Iterable over all outgoing neighbors.
      * 
-     * @returns Iterable over all outgoing neighbors.
+     * @return Iterable over all outgoing neighbors.
      */
     abstract Iterable<VertexIndex> getOutNeighbors(VertexIndex id);
 
     /**
      * Iterable over all incoming neighbors.
      * 
-     * @returns Iterable over all incoming neighbors.
+     * @return Iterable over all incoming neighbors.
      */
     abstract Iterable<VertexIndex> getInNeighbors(VertexIndex id);
 
@@ -236,7 +246,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Uses dijkstra algorithm to do so.
      * Hence BEHAVIOUR IS UNDEFINED ON GRAPHS WITH NEGATIVE WEIGHTS.
      *
-     * @returns A sorted (from near to far) array of vertex handles and their distances
+     * @return A sorted (from near to far) array of vertex handles and their distances
      */
     public ArrayList<DistanceData> calculateDistances(VertexIndex from) {
         var vertexCount = getVertexCount();

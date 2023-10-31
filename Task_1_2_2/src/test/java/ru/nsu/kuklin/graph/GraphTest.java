@@ -166,9 +166,9 @@ public abstract class GraphTest<T extends Graph> {
     @DisplayName("Reassign non-existent vertex")
     public void testReassignNonExistentVertex() {
         Graph<Double, ?> graph = getInstance();
-        var id1 = graph.addVertex(1.5);
         var id3 = graph.addVertex(9.);
         var id2 = graph.addVertex(3.);
+        var id1 = graph.addVertex(1.5);
         graph.removeVertex(id3);
         assertEquals(Optional.empty(), graph.setVertex(id3, 123.3));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
@@ -293,9 +293,9 @@ public abstract class GraphTest<T extends Graph> {
 
     @Test
     @DisplayName("Load graph from file")
-    public void testLoadFromFile() throws ParseException, FileNotFoundException {
+    public void testloadFromFilee() throws ParseException, FileNotFoundException {
         Graph<Double, ?> graph = getInstance();
-        graph.LoadFromFile("test_graph.txt", 0.0);
+        graph.loadFromFilee("test_graph.txt", 0.0);
 
         var id0 = new VertexIndex(0);
         var id1 = new VertexIndex(1);
@@ -314,6 +314,7 @@ public abstract class GraphTest<T extends Graph> {
         assertEquals(Optional.of(new Edge<>(id2, id2, 15.4f)), graph.getEdge(id2, id2));
     }
 
+    @Test
     @ParameterizedTest
     @ValueSource(strings = {"invalid-graph-1.txt", "invalid-graph-2.txt"})
     public void testInvalidFormat(String file) {
@@ -321,7 +322,7 @@ public abstract class GraphTest<T extends Graph> {
             new ParseException("", 0).getClass(),
             () -> {
                 var graph = getInstance();
-                graph.LoadFromFile(file, "sample");
+                graph.loadFromFilee(file, "sample");
             }
         );
     }
@@ -330,7 +331,7 @@ public abstract class GraphTest<T extends Graph> {
     @DisplayName("Test dijkstra from the problem statement")
     public void testDijkstra() throws ParseException, FileNotFoundException {
         Graph<Double, ?> graph = getInstance();
-        graph.LoadFromFile("dijkstra_test.txt", 0.0);
+        graph.loadFromFilee("dijkstra_test.txt", 0.0);
 
         var expected = new DistanceData[7];
         expected[0] = new DistanceData(new VertexIndex(2), 0.f);
@@ -349,7 +350,7 @@ public abstract class GraphTest<T extends Graph> {
     @DisplayName("Test dijkstra with zero edge")
     public void testDijkstraZeroEdge() throws ParseException, FileNotFoundException {
         Graph<Double, ?> graph = getInstance();
-        graph.LoadFromFile("dijkstra_test2.txt", 0.0);
+        graph.loadFromFilee("dijkstra_test2.txt", 0.0);
 
         var expected = new DistanceData[4];
         expected[0] = new DistanceData(new VertexIndex(3), 0.f);
@@ -361,27 +362,30 @@ public abstract class GraphTest<T extends Graph> {
         assertTrue(Arrays.equals(expected, actual));
     }
 
+    @Test
     @ParameterizedTest
     @DisplayName("Equals reflexivity")
     @ValueSource(strings = {"test_graph.txt", "dijkstra_test.txt", "dijkstra_test2.txt"})
     public void testEqualsReflexivity(String file) throws ParseException, FileNotFoundException {
         var graph = getInstance();
-        graph.LoadFromFile(file, 8);
+        graph.loadFromFilee(file, 8);
         assertEquals(graph, graph);
     }
 
+    @Test
     @ParameterizedTest
     @DisplayName("Equals value check")
     @ValueSource(strings = {"test_graph.txt", "dijkstra_test.txt", "dijkstra_test2.txt"})
     public void testEqualsValueCheck(String file) throws ParseException, FileNotFoundException {
         var graph1 = getInstance();
-        graph1.LoadFromFile(file, 8);
+        graph1.loadFromFilee(file, 8);
 
         var graph2 = getInstance();
-        graph2.LoadFromFile(file, 9);
+        graph2.loadFromFilee(file, 9);
         assertNotEquals(graph1, graph2);
     }
 
+    @Test
     @ParameterizedTest
     @DisplayName("Isomorfic equals")
     @CsvSource(
@@ -392,15 +396,20 @@ public abstract class GraphTest<T extends Graph> {
         }, 
         delimiter = ':'
     )
-    public void testIsomorficGraph(String one, String two, boolean shouldEqual) throws ParseException, FileNotFoundException {
+    public void testIsomorficGraph(
+        String one,
+        String two,
+        boolean shouldEqual
+    ) throws ParseException, FileNotFoundException {
         var graph = getInstance();
-        graph.LoadFromFile(one, 1.0);
+        graph.loadFromFilee(one, 1.0);
 
         var graph2 = getInstance();
-        graph2.LoadFromFile(two, 1.0);
+        graph2.loadFromFilee(two, 1.0);
         assertEquals(shouldEqual, graph.equals(graph2));
     }
 
+    @Test
     @ParameterizedTest
     @DisplayName("Hashcode contract")
     @CsvSource(
@@ -412,12 +421,16 @@ public abstract class GraphTest<T extends Graph> {
         }, 
         delimiter = ':'
     )
-    public void testHashCodeReflexivity(String file1, String file2, boolean equal) throws ParseException, FileNotFoundException {
+    public void testHashCodeReflexivity(
+        String file1,
+        String file2,
+        boolean equal
+    ) throws ParseException, FileNotFoundException {
         var graph1 = getInstance();
-        graph1.LoadFromFile(file1, 8);
+        graph1.loadFromFilee(file1, 8);
 
         var graph2 = getInstance();
-        graph2.LoadFromFile(file2, 8);
+        graph2.loadFromFilee(file2, 8);
 
         if (equal) {
             assertEquals(graph1.hashCode(), graph2.hashCode());

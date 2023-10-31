@@ -11,7 +11,7 @@ import java.text.ParseException;
 
 
 /**
- *  Implemetation of Graph interface using incidence matrix
+ *  Implemetation of Graph interface using incidence matrix.
  */ 
 public class IncidenceMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
     /** 
@@ -83,7 +83,7 @@ public class IncidenceMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
         denseToIndex.remove(deleted);
         for (int i = 0; i < indexToDense.size(); i++) {
             if (indexToDense.get(i) > deleted) {
-                indexToDense.set(i, indexToDense.get(i)-1);
+                indexToDense.set(i, indexToDense.get(i) - 1);
             }
         }
         return vertices.set(id.id(), Optional.empty());
@@ -163,7 +163,7 @@ public class IncidenceMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
         var res = incidenceMatrix.get(getDenseIndex(from).get()).get(edge.get());
 
         for (int i = 0; i < incidenceMatrix.size(); i++) {
-            incidenceMatrix.get(i).remove((int)edge.get());
+            incidenceMatrix.get(i).remove((int) edge.get());
         }
         return res;
     }
@@ -261,6 +261,7 @@ public class IncidenceMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
             next++;
             return res;
         }
+
         private int modStart;
         private int next;
         private VertexIndex from;

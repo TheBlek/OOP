@@ -11,9 +11,9 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 
- /**
-  * Implementation of Graph interface using adjacency lists.
-  */ 
+/**
+ * Implementation of Graph interface using adjacency lists.
+ */ 
 public class AdjacencyListGraph<V> extends Graph<V, Edge<VertexIndex>> {
     /** 
      * Constructor.
@@ -72,7 +72,7 @@ public class AdjacencyListGraph<V> extends Graph<V, Edge<VertexIndex>> {
         denseToIndex.remove(deleted);
         for (int i = 0; i < indexToDense.size(); i++) {
             if (indexToDense.get(i) > deleted) {
-                indexToDense.set(i, indexToDense.get(i)-1);
+                indexToDense.set(i, indexToDense.get(i) - 1);
             }
         }
         return vertices.set(id.id(), Optional.empty());
@@ -131,7 +131,7 @@ public class AdjacencyListGraph<V> extends Graph<V, Edge<VertexIndex>> {
         }
         modCount += 1;
         var list = adjacencyLists.get(getDenseIndex(from).get());
-        return findEdge(from, to).map(i -> list.remove((int)i));
+        return findEdge(from, to).map(i -> list.remove((int) i));
     }
 
     @Override
@@ -229,8 +229,8 @@ public class AdjacencyListGraph<V> extends Graph<V, Edge<VertexIndex>> {
 
         @Override
         public boolean hasNext() {
-            while (next < getVertexCount() && 
-                    !findEdge(fromDenseIndex(next).get(), to).isPresent()) {
+            while (next < getVertexCount() 
+                    && !findEdge(fromDenseIndex(next).get(), to).isPresent()) {
                 next++;
             }
             return next < getVertexCount();

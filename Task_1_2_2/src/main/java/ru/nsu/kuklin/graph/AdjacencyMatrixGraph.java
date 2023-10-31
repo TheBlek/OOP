@@ -81,7 +81,7 @@ public class AdjacencyMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
         }
         for (int i = 0; i < indexToDense.size(); i++) {
             if (indexToDense.get(i) > deleted) {
-                indexToDense.set(i, indexToDense.get(i)-1);
+                indexToDense.set(i, indexToDense.get(i) - 1);
             }
         }
         return vertices.set(id.id(), Optional.empty());
@@ -207,7 +207,7 @@ public class AdjacencyMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
         @Override
         public boolean hasNext() {
             while (next < vertices.size() && !adjecencyMatrix.get(from).get(next).isPresent()) {
-               next++;
+                next++;
             }
             return next < vertices.size();
         }
@@ -224,6 +224,7 @@ public class AdjacencyMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
             next++;
             return res;
         }
+
         private int modStart;
         private int next;
         private int from;
@@ -239,7 +240,7 @@ public class AdjacencyMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
         @Override
         public boolean hasNext() {
             while (next < vertices.size() && !adjecencyMatrix.get(next).get(from).isPresent()) {
-               next++;
+                next++;
             }
             return next < vertices.size();
         }
