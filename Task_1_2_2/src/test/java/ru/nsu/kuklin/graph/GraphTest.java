@@ -171,9 +171,8 @@ public abstract class GraphTest<T extends Graph> {
         var id1 = graph.addVertex(1.5);
         graph.removeVertex(id3);
         assertEquals(Optional.empty(), graph.setVertex(id3, 123.3));
-        assertEquals(Optional.of(3.), graph.getVertex(id2));
-        
         assertEquals(Optional.of(1.5), graph.getVertex(id1));
+        assertEquals(Optional.of(3.), graph.getVertex(id2));
         assertEquals(Optional.empty(), graph.getVertex(id3));
     }
 

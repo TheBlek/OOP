@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 
-
 /**
  * Implementation of Graph interface using adjacency lists.
  */ 
@@ -215,6 +214,7 @@ public class AdjacencyListGraph<V> extends Graph<V, Edge<VertexIndex>> {
             next++;
             return res;
         }
+
         private int modStart;
         private int next;
         private ArrayList<Edge<VertexIndex>> list;

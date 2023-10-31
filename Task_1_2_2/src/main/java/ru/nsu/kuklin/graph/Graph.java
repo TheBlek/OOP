@@ -65,8 +65,8 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
                 try {
                     float weight = Float.parseFloat(atoms[j]);
                     setEdge(indices[i], indices[j], weight);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
+                    continue; 
                 }
             }
         }
@@ -111,6 +111,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
 
     /**
      * Get vertex count in graph.
+     *
      * 
      * @return Vertex count.
      */
@@ -120,6 +121,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Returns dense index from handle.
      * Dense indecies are guaranteed to stay in range [0; getVertexCount()).
      * However, the order is not guaranteed.
+     *
      * 
      * @return Dense index, if handle is valid.
      */
@@ -129,6 +131,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Returns a handle from a dense index.
      * Dense indecies are guaranteed to stay in range [0; getVertexCount()).
      * However, the order is not guaranteed.
+     *
      * 
      * @return Handle, if dense index is valid.
      */
@@ -136,6 +139,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
 
     /**
      * Tests whether there's an edge with given ends.
+     *
      * 
      * @return Existence of edge
      */
@@ -144,6 +148,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
     /**
      * Set the weight of edge between from and to to weight.
      * Creates an edge, if it didn't exist.
+     *
      * 
      * @return Previous edge, if it existed
      */
@@ -208,7 +213,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
             return false;
         }
 
-        var otherGraph = (Graph)other;
+        var otherGraph = (Graph) other;
 
         if (otherGraph.getVertexCount() != getVertexCount()) {
             return false;

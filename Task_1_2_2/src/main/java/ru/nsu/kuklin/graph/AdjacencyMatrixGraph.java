@@ -10,8 +10,8 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 
- /**
-  *  Implementation of Graph interface using adjacency matrix
+/**
+ *  Implementation of Graph interface using adjacency matrix.
  */ 
 public class AdjacencyMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
     /** 
