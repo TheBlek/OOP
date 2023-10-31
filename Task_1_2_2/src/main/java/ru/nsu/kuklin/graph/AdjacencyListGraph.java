@@ -16,10 +16,7 @@ import java.text.ParseException;
   */ 
 public class AdjacencyListGraph<V> extends Graph<V, Edge<VertexIndex>> {
     /** 
-     *
-     * Adjacency graph
-     *
-     * @return public
+     * Constructor.
      */
     public AdjacencyListGraph() { 
         modCount = 0;

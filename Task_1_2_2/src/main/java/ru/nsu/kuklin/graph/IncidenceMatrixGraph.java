@@ -15,10 +15,7 @@ import java.text.ParseException;
  */ 
 public class IncidenceMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
     /** 
-     *
      * Constructor.
-     *
-     * @return public
      */
     public IncidenceMatrixGraph() { 
         modCount = 0;

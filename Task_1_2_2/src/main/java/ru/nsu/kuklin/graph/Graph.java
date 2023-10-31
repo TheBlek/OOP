@@ -70,7 +70,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Adds vertex to the graph and returns a handle to it.
      *
      * @parameter vertex Vertex value
-     * @returns Handle
+     * @return Handle
      */
     abstract VertexIndex addVertex(V vertex);
 
@@ -87,7 +87,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Get a vertex value with given handle.
      *
      * @parameter id Vertex handle
-     * @returns Vertex value
+     * @return Vertex value
      */
     abstract Optional<V> getVertex(VertexIndex id);
 
@@ -96,14 +96,14 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Does nothing on invalid handle.
      *
      * @parameter id Vertex handle
-     * @returns Previous vertex value
+     * @return Previous vertex value
      */
     abstract Optional<V> removeVertex(VertexIndex id);
 
     /**
      * Get vertex count in graph.
      * 
-     * @returns Vertex count.
+     * @return Vertex count.
      */
     abstract int getVertexCount();
 
@@ -112,7 +112,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Dense indecies are guaranteed to stay in range [0; getVertexCount()).
      * However, the order is not guaranteed.
      * 
-     * @returns Dense index, if handle is valid.
+     * @return Dense index, if handle is valid.
      */
     abstract Optional<Integer> getDenseIndex(VertexIndex id);
     
@@ -121,7 +121,7 @@ public abstract class Graph<V, E extends Edge<VertexIndex>> {
      * Dense indecies are guaranteed to stay in range [0; getVertexCount()).
      * However, the order is not guaranteed.
      * 
-     * @returns Handle, if dense index is valid.
+     * @return Handle, if dense index is valid.
      */
     abstract Optional<VertexIndex> fromDenseIndex(int id);
 

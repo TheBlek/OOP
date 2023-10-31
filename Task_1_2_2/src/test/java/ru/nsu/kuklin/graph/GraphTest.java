@@ -1,14 +1,13 @@
 package ru.nsu.kuklin.graph;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-
 import java.util.*;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
-
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -106,14 +105,13 @@ public abstract class GraphTest<T extends Graph> {
         Graph<Double, ?> graph = getInstance();
         var id1 = graph.addVertex(1.5);
         var id2 = graph.addVertex(3.);
-        var id3 = graph.addVertex(9.);
         graph.setEdge(id1, id2, 0f);
-        var e1 = graph.getEdge(id1, id2);
         
+        var id3 = graph.addVertex(9.);
         assertEquals(Optional.empty(), graph.removeVertex(new VertexIndex(9)));
+        assertEquals(Optional.of(9.), graph.getVertex(id3));
         assertEquals(Optional.of(1.5), graph.getVertex(id1));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
-        assertEquals(Optional.of(9.), graph.getVertex(id3));
         assertEquals(Optional.of(new Edge<>(id1, id2, 0f)), graph.getEdge(id1, id2));
     }
 
@@ -123,15 +121,14 @@ public abstract class GraphTest<T extends Graph> {
         Graph<Double, ?> graph = getInstance();
         var id1 = graph.addVertex(1.5);
         var id2 = graph.addVertex(3.);
-        var id3 = graph.addVertex(9.);
         graph.setEdge(id1, id2, 0f);
-        var e1 = graph.getEdge(id1, id2);
         
+        var id3 = graph.addVertex(9.);
         assertEquals(Optional.empty(), graph.removeEdge(id1, new VertexIndex(9)));
         assertEquals(Optional.empty(), graph.removeEdge(id2, id1));
+        assertEquals(Optional.of(9.), graph.getVertex(id3));
         assertEquals(Optional.of(1.5), graph.getVertex(id1));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
-        assertEquals(Optional.of(9.), graph.getVertex(id3));
         assertEquals(Optional.of(new Edge<>(id1, id2, 0f)), graph.getEdge(id1, id2));
     }
 
@@ -141,7 +138,6 @@ public abstract class GraphTest<T extends Graph> {
         Graph<Double, ?> graph = getInstance();
         var id1 = graph.addVertex(1.5);
         var id2 = graph.addVertex(3.);
-        var id3 = graph.addVertex(9.);
         graph.setEdge(id1, id2, 0f);
         graph.setEdge(id1, new VertexIndex(9), 0f);
         graph.setEdge(new VertexIndex(123), new VertexIndex(9), 0f);
@@ -149,7 +145,6 @@ public abstract class GraphTest<T extends Graph> {
         
         assertEquals(Optional.of(1.5), graph.getVertex(id1));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
-        assertEquals(Optional.of(9.), graph.getVertex(id3));
         assertEquals(Optional.of(new Edge<>(id1, id2, 0f)), graph.getEdge(id1, id2));
     }
 
@@ -159,9 +154,9 @@ public abstract class GraphTest<T extends Graph> {
         Graph<Double, ?> graph = getInstance();
         var id1 = graph.addVertex(1.5);
         var id2 = graph.addVertex(3.);
-        var id3 = graph.addVertex(9.);
         assertEquals(Optional.of(1.5), graph.setVertex(id1, 123.3));
         
+        var id3 = graph.addVertex(9.);
         assertEquals(Optional.of(123.3), graph.getVertex(id1));
         assertEquals(Optional.of(3.), graph.getVertex(id2));
         assertEquals(Optional.of(9.), graph.getVertex(id3));
@@ -172,13 +167,13 @@ public abstract class GraphTest<T extends Graph> {
     public void testReassignNonExistentVertex() {
         Graph<Double, ?> graph = getInstance();
         var id1 = graph.addVertex(1.5);
-        var id2 = graph.addVertex(3.);
         var id3 = graph.addVertex(9.);
+        var id2 = graph.addVertex(3.);
         graph.removeVertex(id3);
         assertEquals(Optional.empty(), graph.setVertex(id3, 123.3));
+        assertEquals(Optional.of(3.), graph.getVertex(id2));
         
         assertEquals(Optional.of(1.5), graph.getVertex(id1));
-        assertEquals(Optional.of(3.), graph.getVertex(id2));
         assertEquals(Optional.empty(), graph.getVertex(id3));
     }
 
@@ -337,7 +332,6 @@ public abstract class GraphTest<T extends Graph> {
         Graph<Double, ?> graph = getInstance();
         graph.LoadFromFile("dijkstra_test.txt", 0.0);
 
-        var actual = graph.calculateDistances(new VertexIndex(2)).toArray();
         var expected = new DistanceData[7];
         expected[0] = new DistanceData(new VertexIndex(2), 0.f);
         expected[1] = new DistanceData(new VertexIndex(3), 2.f);
@@ -346,6 +340,8 @@ public abstract class GraphTest<T extends Graph> {
         expected[4] = new DistanceData(new VertexIndex(6), 9.f);
         expected[5] = new DistanceData(new VertexIndex(1), 10.f);
         expected[6] = new DistanceData(new VertexIndex(0), 14.f);
+
+        var actual = graph.calculateDistances(new VertexIndex(2)).toArray();
         assertTrue(Arrays.equals(expected, actual));
     }
     
@@ -355,12 +351,13 @@ public abstract class GraphTest<T extends Graph> {
         Graph<Double, ?> graph = getInstance();
         graph.LoadFromFile("dijkstra_test2.txt", 0.0);
 
-        var actual = graph.calculateDistances(new VertexIndex(3)).toArray();
         var expected = new DistanceData[4];
         expected[0] = new DistanceData(new VertexIndex(3), 0.f);
         expected[1] = new DistanceData(new VertexIndex(0), 0.f);
         expected[2] = new DistanceData(new VertexIndex(1), 1.f);
         expected[3] = new DistanceData(new VertexIndex(2), 2.f);
+
+        var actual = graph.calculateDistances(new VertexIndex(3)).toArray();
         assertTrue(Arrays.equals(expected, actual));
     }
 
