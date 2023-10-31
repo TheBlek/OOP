@@ -9,6 +9,8 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     jacoco
+    `java-library`
+    id("me.champeau.jmh") version "0.7.1"
 }
 
 jacoco {
@@ -17,7 +19,6 @@ jacoco {
 }
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
@@ -25,6 +26,8 @@ dependencies {
     // Use JUnit test framework. 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
 }
@@ -55,4 +58,11 @@ tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
     }
+}
+
+jmh {
+    includes.addAll(listOf(".*"))
+    warmupIterations = 2
+    fork = 1
+    verbosity = "EXTRA"
 }
