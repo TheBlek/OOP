@@ -8,6 +8,9 @@ import org.openjdk.jmh.infra.Blackhole;
  */
 @State(Scope.Benchmark)
 public class Dijkstra {
+    /**
+     * AdjacencyMatrix benchmark of dijkstra.
+     */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void adjacencyMatrixDijkstra(Blackhole bh) throws Exception {
@@ -17,6 +20,9 @@ public class Dijkstra {
         bh.consume(graph.calculateDistances(new VertexIndex(2)).toArray());
     }
 
+    /**
+     * AdjacencyList benchmark of dijkstra.
+     */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void adjacencyListsDijkstra(Blackhole bh) throws Exception {
@@ -26,6 +32,9 @@ public class Dijkstra {
         bh.consume(graph.calculateDistances(new VertexIndex(2)).toArray());
     }
 
+    /**
+     * IncidenceMatrix benchmark of dijkstra.
+     */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void incidenceMatrixDijkstra(Blackhole bh) throws Exception {

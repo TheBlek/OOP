@@ -92,7 +92,7 @@ public class AdjacencyMatrixGraph<V> extends Graph<V, Edge<VertexIndex>> {
 
     @Override
     public int getVertexCount() {
-        return vertices.size();
+        return adjecencyMatrix.size();
     }
 
     @Override
