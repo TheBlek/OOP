@@ -66,7 +66,7 @@ public class SubstringTest {
 結局のところ、私たちは禁止された組織ですランクにいます
                     """;
         String filename = "BFFile.txt";
-        try (var writer = new PrintWriter("src/main/resources/" + filename)) {
+        try (var writer = new PrintWriter("./src/main/resources/" + filename)) {
             int kiloBytes = 15 * 1024 * 1024;
             for (int i = 0; i < kiloBytes; i++) {
                 writer.println(kiloByte);
