@@ -73,6 +73,9 @@ public class App {
             var classLoader = getClass().getClassLoader();
             System.out.println(classLoader);
             var stream = classLoader.getResourceAsStream(filename);
+            if (stream == null) {
+                throw new FileNotFoundException(filename);
+            }
             this.file = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 
             // For a moment, there could be one more element
