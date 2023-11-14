@@ -19,7 +19,7 @@ public class SubstringTest {
         var expected = new int[] {0, 4};
         int i = 0;
         var classLoader = getClass().getClassLoader();
-        try(var stream = classLoader.getResourceAsStream(file)) {
+        try (var stream = classLoader.getResourceAsStream(file)) {
             var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
@@ -41,7 +41,7 @@ public class SubstringTest {
         var expected = new int[] {};
         int i = 0;
         var classLoader = getClass().getClassLoader();
-        try(var stream = classLoader.getResourceAsStream(file)) {
+        try (var stream = classLoader.getResourceAsStream(file)) {
             var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
@@ -63,7 +63,7 @@ public class SubstringTest {
         var expected = new int[] {0, 29};
         int i = 0;
         var classLoader = getClass().getClassLoader();
-        try(var stream = classLoader.getResourceAsStream(file)) {
+        try (var stream = classLoader.getResourceAsStream(file)) {
             var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
