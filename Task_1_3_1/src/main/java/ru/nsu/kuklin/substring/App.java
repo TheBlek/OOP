@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -20,62 +21,22 @@ public class App {
      * Returns an iterable over matches found in a file.
      * Each number is a start index of a match
      */
-    public static SubstringIterable findSubstrings(String filename, String pattern) {
-        return new SubstringIterable(filename, pattern);
-    }
-
-    /**
-     * Iterable over all occurrences of pattern in filename.
-     * Can return only one iterator at a time.
-     */
-    public static class SubstringIterable implements Iterable<Long>, AutoCloseable {
-        /**
-         * Create iterable over all occurrences of pattern in filename.
-         */
-        public SubstringIterable(String filename, String pattern) {
-            this.filename = filename;
-            this.pattern = pattern;
-        }
-
-        /**
-         * Create iterator over all occurrences of pattern in filename.
-         */
-        public Iterator<Long> iterator() {
-            if (iter == null) {
+    public static Iterable<Long> findSubstrings(InputStream stream, String pattern) {
+        return new Iterable<Long>() {
+            public Iterator<Long> iterator() {
                 try {
-                    iter = new App.SubstringIterator(filename, pattern);
+                    return new SubstringIterator(stream, pattern);
                 } catch (Exception e) {
-                    System.out.println(e);
                     return null;
                 }
             }
-            return iter;
-        }
-
-        /**
-         * Close iterator over all occurrences of pattern in filename.
-         */
-        public void close() {
-            if (iter != null) {
-                iter.close();
-            }
-        }
-
-        private String filename;
-        private String pattern;
-        private App.SubstringIterator iter;
+        };
     }
 
     private static class SubstringIterator implements Iterator<Long>, AutoCloseable {
-        public SubstringIterator(String filename, String pattern) 
-                throws FileNotFoundException, UnsupportedEncodingException  {
+        public SubstringIterator(InputStream stream, String pattern)
+                throws UnsupportedEncodingException  {
             this.pattern = pattern;
-            var classLoader = getClass().getClassLoader();
-            System.out.println(classLoader);
-            var stream = classLoader.getResourceAsStream(filename);
-            if (stream == null) {
-                throw new FileNotFoundException(filename);
-            }
             this.file = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 
             // For a moment, there could be one more element

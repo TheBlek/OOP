@@ -18,13 +18,17 @@ public class SubstringTest {
         String pattern = "ab";
         var expected = new int[] {0, 4};
         int i = 0;
-        try (var sub = App.findSubstrings(file, pattern)) {
+        var classLoader = getClass().getClassLoader();
+        try(var stream = classLoader.getResourceAsStream(file)) {
+            var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
                 assertTrue(i < expected.length);
                 assertEquals(expected[i], el);
                 i++;
             }
+        } catch (Exception e) {
+            assertTrue(false);
         }
         assertEquals(expected.length, i); 
     }
@@ -36,12 +40,19 @@ public class SubstringTest {
         String pattern = "あ";
         var expected = new int[] {};
         int i = 0;
-        try (var sub = App.findSubstrings(file, pattern)) {
+        var classLoader = getClass().getClassLoader();
+        try(var stream = classLoader.getResourceAsStream(file)) {
+            var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
-                assertTrue(i < expected.length); // Should fail at first find
+                assertTrue(i < expected.length);
+                assertEquals(expected[i], el);
+                i++;
             }
+        } catch (Exception e) {
+            assertTrue(false);
         }
+        assertEquals(expected.length, i); 
     }
 
     @Test
@@ -51,13 +62,17 @@ public class SubstringTest {
         String pattern = "あ";
         var expected = new int[] {0, 29};
         int i = 0;
-        try (var sub = App.findSubstrings(file, pattern)) {
+        var classLoader = getClass().getClassLoader();
+        try(var stream = classLoader.getResourceAsStream(file)) {
+            var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
                 assertTrue(i < expected.length);
                 assertEquals(expected[i], el);
                 i++;
             }
+        } catch (Exception e) {
+            assertTrue(false);
         }
         assertEquals(expected.length, i); 
     }
@@ -85,7 +100,7 @@ public class SubstringTest {
 結局のところ、私たちは禁止された組織ですランクにいます
                     """;
         String filename = "BFFile.txt";
-        try (var writer = new PrintWriter("./src/main/resources/" + filename)) {
+        try (var writer = new PrintWriter(filename)) {
             int kiloBytes = 15 * 1024 * 1024;
             for (int i = 0; i < kiloBytes; i++) {
                 writer.println(kiloByte);
@@ -95,11 +110,14 @@ public class SubstringTest {
         }
 
         String pattern = "秘密の握手のない兄弟は、チャーターを構成";
-        try (var sub = App.findSubstrings(filename, pattern)) {
+        try (var stream = new FileInputStream(new File(filename))) {
+            var sub = App.findSubstrings(stream, pattern);
             assertNotEquals(null, sub);
             for (var el : sub) {
                 assertEquals(el, el);
             }
+        } catch (Exception e) {
+            assertTrue(false);
         }
     }
 }
