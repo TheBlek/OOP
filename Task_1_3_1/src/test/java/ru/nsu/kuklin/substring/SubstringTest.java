@@ -18,11 +18,13 @@ public class SubstringTest {
         String pattern = "ab";
         var expected = new int[] {0, 4};
         int i = 0;
-        assertNotEquals(null, App.findSubstrings(file, pattern));
-        for (var el : App.findSubstrings(file, pattern)) {
-            assertTrue(i < expected.length);
-            assertEquals(expected[i], el);
-            i++;
+        try (var sub = App.findSubstrings(file, pattern)) {
+            assertNotEquals(null, sub);
+            for (var el : sub) {
+                assertTrue(i < expected.length);
+                assertEquals(expected[i], el);
+                i++;
+            }
         }
         assertEquals(expected.length, i); 
     }
@@ -34,11 +36,13 @@ public class SubstringTest {
         String pattern = "あ";
         var expected = new int[] {0, 29};
         int i = 0;
-        assertNotEquals(null, App.findSubstrings(file, pattern));
-        for (var el : App.findSubstrings(file, pattern)) {
-            assertTrue(i < expected.length);
-            assertEquals(expected[i], el);
-            i++;
+        try (var sub = App.findSubstrings(file, pattern)) {
+            assertNotEquals(null, sub);
+            for (var el : sub) {
+                assertTrue(i < expected.length);
+                assertEquals(expected[i], el);
+                i++;
+            }
         }
         assertEquals(expected.length, i); 
     }
@@ -76,11 +80,12 @@ public class SubstringTest {
         }
 
         String pattern = "秘密の握手のない兄弟は、チャーターを構成";
-        assertNotEquals(null, App.findSubstrings(filename, pattern));
-        for (var el : App.findSubstrings(filename, pattern)) {
-            assertEquals(el, el);
+        try (var sub = App.findSubstrings(filename, pattern)) {
+            assertNotEquals(null, sub);
+            for (var el : sub) {
+                assertEquals(el, el);
+            }
         }
     }
 }
-
 

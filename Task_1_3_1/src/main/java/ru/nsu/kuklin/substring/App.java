@@ -2,6 +2,7 @@ package ru.nsu.kuklin.substring;
 
 import java.lang.Iterable;
 import java.lang.Readable;
+import java.lang.AutoCloseable;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,19 +20,46 @@ public class App {
      * Returns an iterable over matches found in a file.
      * Each number is a start index of a match
      */
-    public static Iterable<Long> findSubstrings(String filename, String pattern) {
-        return new Iterable<Long>() {
-            public Iterator<Long> iterator() {
+    public static SubstringIterable findSubstrings(String filename, String pattern) {
+        return new SubstringIterable(filename, pattern);
+    }
+
+    /**
+     * Iterable over all occurrences of pattern in filename.
+     * Can return only one iterator at a time.
+     */
+    public static class SubstringIterable implements Iterable<Long>, AutoCloseable {
+        /**
+         * Create iterable over all occurrences of pattern in filename.
+         */
+        public SubstringIterable(String filename, String pattern) {
+            this.filename = filename;
+            this.pattern = pattern;
+        }
+
+        public Iterator<Long> iterator() {
+            if (iter == null) {
                 try {
-                    return new App.SubstringIterator(filename, pattern);
+                    iter = new App.SubstringIterator(filename, pattern);
                 } catch (Exception e) {
                     return null;
                 }
             }
-        };
+            return iter;
+        }
+
+        public void close() {
+            if (iter != null) {
+                iter.close();
+            }
+        }
+
+        private String filename;
+        private String pattern;
+        private App.SubstringIterator iter;
     }
 
-    private static class SubstringIterator implements Iterator<Long> {
+    private static class SubstringIterator implements Iterator<Long>, AutoCloseable {
         public SubstringIterator(String filename, String pattern) 
                 throws FileNotFoundException, UnsupportedEncodingException  {
             this.pattern = pattern;
@@ -71,9 +99,6 @@ public class App {
                     assert current.push(next) : "Failed to push element";
                     if (current.size() > pattern.length()) {
                         currentPos++;
-                        if (currentPos % 1000000 == 0) {
-                            System.out.println(currentPos);
-                        }
                         currentHash -= current.pop() * biggestPower;
                     } else if (current.size() < pattern.length()) {
                         // Skip to next iteration without checking equality
@@ -98,6 +123,14 @@ public class App {
             var res = nextFound;
             nextFound = -1;
             return res;
+        }
+
+        public void close() {
+            try {
+                file.close(); 
+            } catch (Exception e) {
+                return;
+            }
         }
 
         private boolean compare() {
@@ -126,5 +159,3 @@ public class App {
         private BufferedReader file;
     }
 }
-
-
