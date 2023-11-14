@@ -30,6 +30,21 @@ public class SubstringTest {
     }
 
     @Test
+    @DisplayName("Empty find")
+    public void testEmptyFind() {
+        String file = "simple.txt";
+        String pattern = "あ";
+        var expected = new int[] {};
+        int i = 0;
+        try (var sub = App.findSubstrings(file, pattern)) {
+            assertNotEquals(null, sub);
+            for (var el : sub) {
+                assertTrue(i < expected.length); // Should fail at first find
+            }
+        }
+    }
+
+    @Test
     @DisplayName("UTF-8 test")
     public void testUtf8() {
         String file = "utf8.txt";

@@ -37,6 +37,9 @@ public class App {
             this.pattern = pattern;
         }
 
+        /**
+         * Create iterator over all occurrences of pattern in filename.
+         */
         public Iterator<Long> iterator() {
             if (iter == null) {
                 try {
@@ -49,6 +52,9 @@ public class App {
             return iter;
         }
 
+        /**
+         * Close iterator over all occurrences of pattern in filename.
+         */
         public void close() {
             if (iter != null) {
                 iter.close();
@@ -65,6 +71,7 @@ public class App {
                 throws FileNotFoundException, UnsupportedEncodingException  {
             this.pattern = pattern;
             var classLoader = getClass().getClassLoader();
+            System.out.println(classLoader);
             var stream = classLoader.getResourceAsStream(filename);
             this.file = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 
