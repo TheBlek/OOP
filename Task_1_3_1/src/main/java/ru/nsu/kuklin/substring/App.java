@@ -42,6 +42,7 @@ public class App {
                 try {
                     iter = new App.SubstringIterator(filename, pattern);
                 } catch (Exception e) {
+                    System.out.println(e);
                     return null;
                 }
             }
