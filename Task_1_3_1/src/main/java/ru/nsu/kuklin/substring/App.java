@@ -11,7 +11,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Stub docs.
+ */
 public class App {
+    /**
+     * Returns an iterable over matches found in a file.
+     * Each number is a start index of a match
+     */
     public static Iterable<Long> findSubstrings(String filename, String pattern) {
         return new Iterable<Long>() {
             public Iterator<Long> iterator() {
@@ -24,12 +31,9 @@ public class App {
         };
     }
 
-    public static void main() {
-        
-    }
-
     private static class SubstringIterator implements Iterator<Long> {
-        public SubstringIterator(String filename, String pattern) throws FileNotFoundException, UnsupportedEncodingException  {
+        public SubstringIterator(String filename, String pattern) 
+                throws FileNotFoundException, UnsupportedEncodingException  {
             this.pattern = pattern;
             var classLoader = getClass().getClassLoader();
             var stream = classLoader.getResourceAsStream(filename);
@@ -80,7 +84,8 @@ public class App {
                     return false;
                 }
             } while (currentHash != patternHash || !compare());
-            assert !(compare() && currentHash != patternHash) : "Different hashes for equal strings";
+            assert !(compare() && currentHash != patternHash) 
+                : "Different hashes for equal strings";
 
             nextFound = currentPos;
             return true;
@@ -96,7 +101,8 @@ public class App {
         }
 
         private boolean compare() {
-            assert current.size() == pattern.length() : "Current is of different length than pattern";
+            assert current.size() == pattern.length() 
+                : "Current is of different length than pattern";
             for (int i = 0; i < pattern.length(); i++) {
                 if (current.getAt(i) != pattern.charAt(i)) {
                     return false;

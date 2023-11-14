@@ -2,10 +2,14 @@ package ru.nsu.kuklin.substring;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.nio.file.*;
 import java.io.*;
 import java.util.*;
 import org.junit.jupiter.api.*;
 
+/**
+ * Stub docs.
+ */
 public class SubstringTest {
     @Test
     @DisplayName("Simple Finds")
@@ -25,7 +29,7 @@ public class SubstringTest {
 
     @Test
     @DisplayName("UTF-8 test")
-    public void testUTF8() {
+    public void testUtf8() {
         String file = "utf8.txt";
         String pattern = "あ";
         var expected = new int[] {0, 29};
@@ -42,8 +46,8 @@ public class SubstringTest {
 
     @Test
     @DisplayName("Read BFFile")
-    public void testBFFileReadOnly() {
-        var kByte = """
+    public void testBfFileReadOnly() {
+        var kiloByte = """
 すべてが私たちの前ですでに起こっています、あなたは恐怖を吐き出して空を見つめることができます
 あなたが周囲の売春婦に抵抗するならば、それから悲しい顔ではありません
 すべてが何度も何度も起こりますが、私たちは今生きています、私たちと一緒にチェルノゼムを肥やすには時期尚早です
@@ -60,16 +64,15 @@ public class SubstringTest {
 
 秘密の握手のない兄弟は、チャーターを構成
 結局のところ、私たちは禁止された組織ですランクにいます
-""";
+                    """;
         String filename = "BFFile.txt";
-        String file = getClass().getResource(filename).getPath();
-        try (var writer = new PrintWriter(new File(file))) {
-            int kBytes = 15 * 1024 * 1024;
-            for (int i = 0; i < kBytes; i++) {
-                writer.println(kByte);
+        try (var writer = new PrintWriter("src/main/resources/" + filename)) {
+            int kiloBytes = 15 * 1024 * 1024;
+            for (int i = 0; i < kiloBytes; i++) {
+                writer.println(kiloByte);
             }
         } catch (Exception e) {
-            return;
+            assertTrue(false);
         }
 
         String pattern = "秘密の握手のない兄弟は、チャーターを構成";
