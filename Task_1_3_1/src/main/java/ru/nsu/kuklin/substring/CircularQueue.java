@@ -34,16 +34,6 @@ public class CircularQueue<T> {
     }
 
     /**
-     * Returns next element without removing it.
-     */
-    public T peek() {
-        if (length == 0) {
-            return null;
-        }
-        return storage[head];
-    }
-
-    /**
      * Returns next element and removes it.
      */
     public T pop() {

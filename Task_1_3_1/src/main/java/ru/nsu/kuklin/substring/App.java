@@ -2,7 +2,6 @@ package ru.nsu.kuklin.substring;
 
 import java.lang.Iterable;
 import java.lang.Readable;
-import java.lang.AutoCloseable;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class App {
         };
     }
 
-    private static class SubstringIterator implements Iterator<Long>, AutoCloseable {
+    private static class SubstringIterator implements Iterator<Long> {
         public SubstringIterator(InputStream stream, String pattern)
                 throws UnsupportedEncodingException  {
             this.pattern = pattern;
@@ -95,14 +94,6 @@ public class App {
             var res = nextFound;
             nextFound = -1;
             return res;
-        }
-
-        public void close() {
-            try {
-                file.close(); 
-            } catch (Exception e) {
-                return;
-            }
         }
 
         private boolean compare() {
