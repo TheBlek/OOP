@@ -42,21 +42,21 @@ public class GradeBook {
             }
             count += subject.marks.size();
         }
-        return (float)sum / count;
+        return (float) sum / count;
     }
 
     public boolean canGetHonorsDiploma() {
         if (subjects.size() == 0) {
             return false;
         }
-        int aCount = 0;
+        int fiveCount = 0;
         for (var subject : subjects) {
             var marks = subject.marks;
             if (marks.get(marks.size() - 1).mark.equals(Mark.FIVE)) {
-                aCount++;
+                fiveCount++;
             }
         }
-        return aCount >= subjects.size() * 3.0f / 4.0f;
+        return fiveCount >= subjects.size() * 3.0f / 4.0f;
     }
 
     public boolean canGetBiggerScholarship() {
@@ -83,8 +83,8 @@ public class GradeBook {
         public Subject() {
             marks = new ArrayList<SubjectMark>();
         }
-
     }
+
     private static record SubjectMark(Mark mark, int semestr) {};
 
     private Map<String, Integer> subjectMapping;

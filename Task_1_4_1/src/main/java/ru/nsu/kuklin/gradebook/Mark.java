@@ -8,7 +8,7 @@ public enum Mark {
 
     public int getMark() {
         return mark;
-    };
+    }
 
     Mark(int m) {
         mark = m;
