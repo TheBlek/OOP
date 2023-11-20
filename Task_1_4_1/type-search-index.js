@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.gradebook","l":"GradeBook"},{"p":"ru.nsu.kuklin.gradebook","l":"Mark"}];updateSearchResults();
