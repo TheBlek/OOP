@@ -95,6 +95,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GradeBook</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Gradebook implementation designed for FIT.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -107,7 +108,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">GradeBook</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Create empty gradebook.</div>
+</div>
 </div>
 </section>
 </li>
@@ -124,20 +127,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#average()" class="member-name-link">average</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Return total average of all marks recieved before.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canGetBiggerScholarship()" class="member-name-link">canGetBiggerScholarship</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Calculate whether student with this gradebook will receive bigger scholarship in current semester.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canGetHonorsDiploma()" class="member-name-link">canGetHonorsDiploma</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Calculates whether student with this gradebook will receive honors diploma.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="GradeBook.html" title="class in ru.nsu.kuklin.gradebook">GradeBook</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextSemestr()" class="member-name-link">nextSemestr</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextSemester()" class="member-name-link">nextSemester</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Starts new semestr.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="GradeBook.html" title="class in ru.nsu.kuklin.gradebook">GradeBook</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withMark(java.lang.String,ru.nsu.kuklin.gradebook.Mark)" class="member-name-link">withMark</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subject,
  <a href="Mark.html" title="enum class in ru.nsu.kuklin.gradebook">Mark</a>&nbsp;mark)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a mark for the subject in a current semester.</div>
+</div>
 </div>
 </div>
 </div>
@@ -159,6 +172,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>GradeBook</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GradeBook</span>()</div>
+<div class="block">Create empty gradebook.</div>
 </section>
 </li>
 </ul>
@@ -170,9 +184,11 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="nextSemestr()">
-<h3>nextSemestr</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="GradeBook.html" title="class in ru.nsu.kuklin.gradebook">GradeBook</a></span>&nbsp;<span class="element-name">nextSemestr</span>()</div>
+<section class="detail" id="nextSemester()">
+<h3>nextSemester</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="GradeBook.html" title="class in ru.nsu.kuklin.gradebook">GradeBook</a></span>&nbsp;<span class="element-name">nextSemester</span>()</div>
+<div class="block">Starts new semestr.
+ All mark for the current semester are cemented and you won't be able to change.</div>
 </section>
 </li>
 <li>
@@ -180,24 +196,32 @@ loadScripts(document, 'script');</script>
 <h3>withMark</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="GradeBook.html" title="class in ru.nsu.kuklin.gradebook">GradeBook</a></span>&nbsp;<span class="element-name">withMark</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subject,
  <a href="Mark.html" title="enum class in ru.nsu.kuklin.gradebook">Mark</a>&nbsp;mark)</span></div>
+<div class="block">Adds a mark for the subject in a current semester.
+ This will override the mark if it is already been defined before.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="average()">
 <h3>average</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">average</span>()</div>
+<div class="block">Return total average of all marks recieved before.
+ Returns Float.NaN if gradebook is empty.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="canGetHonorsDiploma()">
 <h3>canGetHonorsDiploma</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canGetHonorsDiploma</span>()</div>
+<div class="block">Calculates whether student with this gradebook will receive honors diploma.
+ Honors diploma requires student to have >= 75% of marks for all subjects to be 5</div>
 </section>
 </li>
 <li>
 <section class="detail" id="canGetBiggerScholarship()">
 <h3>canGetBiggerScholarship</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canGetBiggerScholarship</span>()</div>
+<div class="block">Calculate whether student with this gradebook will receive bigger scholarship in current semester.
+ This requires student to have all 5s for the previous semeter.</div>
 </section>
 </li>
 </ul>
