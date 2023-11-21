@@ -85,7 +85,7 @@ public class GradeBook {
     }
 
     /**
-     * Calculate whether student with this gradebook will receive bigger scholarship in current semester.
+     * Whether student with this gradebook will receive bigger scholarship in current semester.
      * This requires student to have all 5s for the previous semeter.
      */
     // Пересдача
@@ -116,7 +116,7 @@ public class GradeBook {
         }
     }
 
-    private static record SubjectMark(Mark mark, int semestr, boolean retest) {};
+    private static record SubjectMark(Mark mark, int semestr, boolean retest) {}
 
     private Map<String, Integer> subjectMapping;
     private List<Subject> subjects;
