@@ -1,5 +1,8 @@
 package ru.nsu.kuklin.gradebook;
 
+/**
+ * Enum representing a mark that student can receive.
+ */
 public enum Mark {
     TWO(2),
     THREE(3),

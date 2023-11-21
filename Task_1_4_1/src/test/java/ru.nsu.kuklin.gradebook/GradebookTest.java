@@ -25,7 +25,7 @@ public class GradebookTest {
             .withMark("Дискретка", Mark.THREE)
             .withMark("Императивка", Mark.TWO)
             .withMark("Декларативка", Mark.FOUR)
-            .nextSemestr();
+            .nextSemester();
 
         assertEquals(false, book.canGetBiggerScholarship());
         assertEquals(false, book.canGetHonorsDiploma());
@@ -39,7 +39,7 @@ public class GradebookTest {
             .withMark("Дискретка", Mark.FIVE)
             .withMark("Императивка", Mark.FIVE)
             .withMark("Декларативка", Mark.FIVE)
-            .nextSemestr();
+            .nextSemester();
 
         assertEquals(true, book.canGetBiggerScholarship());
         assertEquals(true, book.canGetHonorsDiploma());
@@ -52,9 +52,9 @@ public class GradebookTest {
             .withMark("Матан", Mark.TWO)
             .withMark("Дискретка", Mark.TWO)
             .withMark("Императивка", Mark.TWO)
-            .nextSemestr()
+            .nextSemester()
             .withMark("Декларативка", Mark.FIVE)
-            .nextSemestr();
+            .nextSemester();
 
         assertEquals(true, book.canGetBiggerScholarship());
         assertEquals(false, book.canGetHonorsDiploma());
@@ -67,9 +67,9 @@ public class GradebookTest {
             .withMark("Матан", Mark.FIVE)
             .withMark("Дискретка", Mark.FIVE)
             .withMark("Императивка", Mark.FIVE)
-            .nextSemestr()
+            .nextSemester()
             .withMark("Декларативка", Mark.TWO)
-            .nextSemestr();
+            .nextSemester();
 
         assertEquals(false, book.canGetBiggerScholarship());
         assertEquals(true, book.canGetHonorsDiploma());
@@ -82,10 +82,10 @@ public class GradebookTest {
             .withMark("Матан", Mark.TWO)
             .withMark("Дискретка", Mark.FIVE)
             .withMark("Императивка", Mark.FIVE)
-            .nextSemestr()
+            .nextSemester()
             .withMark("Декларативка", Mark.TWO)
             .withMark("Матан", Mark.FIVE)
-            .nextSemestr();
+            .nextSemester();
 
         assertEquals(false, book.canGetBiggerScholarship());
         assertEquals(true, book.canGetHonorsDiploma());
@@ -98,14 +98,31 @@ public class GradebookTest {
             .withMark("Матан", Mark.TWO)
             .withMark("Дискретка", Mark.FIVE)
             .withMark("Императивка", Mark.FIVE)
-            .nextSemestr()
+            .nextSemester()
             .withMark("Декларативка", Mark.TWO)
             .withMark("Матан", Mark.TWO)
             .withMark("Матан", Mark.FIVE)
-            .nextSemestr();
+            .nextSemester();
 
         assertEquals(false, book.canGetBiggerScholarship());
         assertEquals(true, book.canGetHonorsDiploma());
         assertEquals(19.0f / 5.0f, book.average());
+    }
+
+    @Test
+    public void testNoScholarshipButDiplomaRetest() {
+        var book = new GradeBook()
+            .withMark("Матан", Mark.FIVE)
+            .withMark("Дискретка", Mark.FIVE)
+            .withMark("Императивка", Mark.FIVE)
+            .nextSemester()
+            .withMark("Декларативка", Mark.FIVE)
+            .withMark("Матан", Mark.TWO)
+            .withMark("Матан", Mark.FIVE)
+            .nextSemester();
+
+        assertEquals(false, book.canGetBiggerScholarship());
+        assertEquals(true, book.canGetHonorsDiploma());
+        assertEquals(25.0f / 5.0f, book.average());
     }
 }
