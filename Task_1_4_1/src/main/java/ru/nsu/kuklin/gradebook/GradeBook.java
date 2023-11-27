@@ -72,7 +72,7 @@ public class GradeBook {
         if (subjects.size() == 0) {
             return false;
         }
-        int fiveCount = (int)subjects
+        int fiveCount = (int) subjects
             .stream()
             .map((subj) -> subj.marks.get(subj.marks.size() - 1))
             .filter((m) -> m.mark == Mark.FIVE)
