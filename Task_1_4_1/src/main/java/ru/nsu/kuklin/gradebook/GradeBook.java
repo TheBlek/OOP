@@ -55,14 +55,12 @@ public class GradeBook {
      * Returns Float.NaN if gradebook is empty.
      */
     public float average() {
-        int sum = 0;
-        int count = 0;
-        for (var subject : subjects) {
-            for (var mark : subject.marks) {
-                sum += mark.mark.getMark();
-            }
-            count += subject.marks.size();
-        }
+        int sum = subjects
+            .stream()
+            .flatMap((subj) -> subj.marks.stream())
+            .mapToInt((m) -> m.mark.getMark())
+            .sum();
+        int count = subjects.stream().mapToInt((subj) -> subj.marks.size()).sum();
         return (float) sum / count;
     }
 
@@ -74,13 +72,11 @@ public class GradeBook {
         if (subjects.size() == 0) {
             return false;
         }
-        int fiveCount = 0;
-        for (var subject : subjects) {
-            var marks = subject.marks;
-            if (marks.get(marks.size() - 1).mark.equals(Mark.FIVE)) {
-                fiveCount++;
-            }
-        }
+        int fiveCount = (int)subjects
+            .stream()
+            .map((subj) -> subj.marks.get(subj.marks.size() - 1))
+            .filter((m) -> m.mark == Mark.FIVE)
+            .count();
         return fiveCount >= subjects.size() * 3.0f / 4.0f;
     }
 
@@ -88,24 +84,24 @@ public class GradeBook {
      * Whether student with this gradebook will receive bigger scholarship in current semester.
      * This requires student to have all 5s for the previous semeter.
      */
-    // Пересдача
     public boolean canGetBiggerScholarship() {
         if (currentSemester == 0) {
             return false;
         }
         int sem = currentSemester - 1;
-        for (var subject : subjects) {
-            var mark = subject
-                .marks
-                .stream()
-                .filter((m) -> m.semestr == sem)
-                .findFirst();
-            if (mark.isPresent() 
-                && (mark.get().retest || mark.get().mark != Mark.FIVE)) {
-                return false;
-            }
-        }
-        return true;
+        return subjects
+            .stream()
+            .allMatch(
+                (subj) -> {
+                    return subj
+                        .marks
+                        .stream()
+                        .filter((m) -> m.semestr == sem)
+                        .filter((m) -> m.retest || m.mark != Mark.FIVE)
+                        .findFirst()
+                        .isEmpty();
+                }
+            );
     }
 
     private static class Subject {
