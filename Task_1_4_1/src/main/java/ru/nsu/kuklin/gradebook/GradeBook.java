@@ -1,5 +1,6 @@
 package ru.nsu.kuklin.gradebook;
 
+import com.google.common.collect.Streams;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,8 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Streams;
 
 /**
  * Gradebook implementation designed for FIT.
@@ -137,7 +136,7 @@ public class GradeBook {
             Streams.mapWithIndex(subjects
                 .stream(),
                 (subj, index) -> {
-                    int tabCount = (int)(columnWidths[(int)index] / 8) + 1;
+                    int tabCount = (int) (columnWidths[(int) index] / 8) + 1;
                     return subj
                         .marks
                         .stream()

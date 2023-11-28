@@ -141,6 +141,6 @@ public class GradebookTest {
         var bookHeader = "Semester\tМатан\tДискретка\tИмперативка\tДекларативка\n";
         var bookStr1 = "1\t\tFIVE\tFIVE\t\tFIVE\t\t-\t\t\n";
         var bookStr2 = "2\t\tFIVE\t-\t\t-\t\tFIVE\t\t\n";
-        assertEquals(bookHeader+bookStr1+bookStr2, book.toString());
+        assertEquals(bookHeader + bookStr1 + bookStr2, book.toString());
     }
 }
