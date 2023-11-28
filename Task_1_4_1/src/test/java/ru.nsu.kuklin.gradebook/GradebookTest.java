@@ -125,4 +125,22 @@ public class GradebookTest {
         assertEquals(true, book.canGetHonorsDiploma());
         assertEquals(25.0f / 5.0f, book.average());
     }
+
+    @Test
+    public void testToString() {
+        var book = new GradeBook()
+            .withMark("Матан", Mark.FIVE)
+            .withMark("Дискретка", Mark.FIVE)
+            .withMark("Императивка", Mark.FIVE)
+            .nextSemester()
+            .withMark("Декларативка", Mark.FIVE)
+            .withMark("Матан", Mark.TWO)
+            .withMark("Матан", Mark.FIVE)
+            .nextSemester();
+
+        var bookHeader = "Semester\tМатан\tДискретка\tИмперативка\tДекларативка\n";
+        var bookStr1 = "1\t\tFIVE\tFIVE\t\tFIVE\t\t-\t\t\n";
+        var bookStr2 = "2\t\tFIVE\t-\t\t-\t\tFIVE\t\t\n";
+        assertEquals(bookHeader+bookStr1+bookStr2, book.toString());
+    }
 }

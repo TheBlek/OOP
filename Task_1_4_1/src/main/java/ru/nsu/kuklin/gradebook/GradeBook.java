@@ -1,10 +1,14 @@
 package ru.nsu.kuklin.gradebook;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Collection;
+import java.util.Map.Entry;
 import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Streams;
 
 /**
  * Gradebook implementation designed for FIT.
@@ -39,7 +43,7 @@ public class GradeBook {
         }
         var id = subjectMapping.get(subject);
         var marks = subjects.get(id).marks;
-        if (marks.size() > 0 && marks.get(marks.size() - 1).semestr == currentSemester) {
+        if (marks.size() > 0 && marks.get(marks.size() - 1).semester == currentSemester) {
             marks.set(
                 marks.size() - 1,
                 new SubjectMark(mark, currentSemester, true)
@@ -96,12 +100,58 @@ public class GradeBook {
                     return subj
                         .marks
                         .stream()
-                        .filter((m) -> m.semestr == sem)
+                        .filter((m) -> m.semester == sem)
                         .filter((m) -> m.retest || m.mark != Mark.FIVE)
                         .findFirst()
                         .isEmpty();
                 }
             );
+    }
+
+    /**
+     * Convert a gradebook to string representation.
+     * This function will assume 8-space tab character
+     */
+    public String toString() {
+        var header = "Semester\t" + subjectMapping
+            .entrySet()
+            .stream()
+            .sorted(Entry.<String, Integer>comparingByValue())
+            .map((e1) -> e1.getKey())
+            .collect(Collectors.joining("\t"));
+
+        int[] columnWidths = subjectMapping
+            .entrySet()
+            .stream()
+            .sorted(Entry.<String, Integer>comparingByValue())
+            .mapToInt((e1) -> e1.getKey().length())
+            .toArray();
+
+        var body = new StringBuilder();
+        for (int i = 0; i < currentSemester; i++) {
+            // Need to copy the value for lambda in streams
+            final int sem = i;
+            body.append(sem + 1);
+            body.append("\t\t");
+
+            Streams.mapWithIndex(subjects
+                .stream(),
+                (subj, index) -> {
+                    int tabCount = (int)(columnWidths[(int)index] / 8) + 1;
+                    return subj
+                        .marks
+                        .stream()
+                        .filter(m -> m.semester == sem)
+                        .map(m -> m.mark.toString())
+                        .findFirst()
+                        .orElse("-") + "\t".repeat(tabCount);
+                })
+                .forEach(mark -> body.append(mark));
+
+            body.append("\n");
+        }
+ 
+        return header + "\n" + body;
     }
 
     private static class Subject {
@@ -112,7 +162,7 @@ public class GradeBook {
         }
     }
 
-    private static record SubjectMark(Mark mark, int semestr, boolean retest) {}
+    private static record SubjectMark(Mark mark, int semester, boolean retest) {}
 
     private Map<String, Integer> subjectMapping;
     private List<Subject> subjects;
