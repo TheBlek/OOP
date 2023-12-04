@@ -17,9 +17,9 @@ public class Calculator {
         int stackSize = 0;
 
         var ops = new Operation[] {
-            new Operation("+", (args) -> Either.left(args[0] + args[1]), () -> 2),
-            new Operation("*", (args) -> Either.left(args[0] * args[1]), () -> 2),
-            new Operation("-", (args) -> Either.left(args[0] - args[1]), () -> 2),
+            new Operation("+", (args) -> Either.left(args[0] + args[1]), 2),
+            new Operation("*", (args) -> Either.left(args[0] * args[1]), 2),
+            new Operation("-", (args) -> Either.left(args[0] - args[1]), 2),
             new Operation(
                 "/", 
                 (args) -> {
@@ -28,10 +28,10 @@ public class Calculator {
                     else 
                         return Either.right("Division by zero");
                 },
-                () -> 2
+                2
             ),
-            new Operation("sin", (args) -> Either.left(Math.sin(args[0])), () -> 1),
-            new Operation("cos", (args) -> Either.left(Math.cos(args[0])), () -> 1),
+            new Operation("sin", (args) -> Either.left(Math.sin(args[0])), 1),
+            new Operation("cos", (args) -> Either.left(Math.cos(args[0])), 1),
             new Operation(
                 "ln",
                 (args) -> {
@@ -40,17 +40,17 @@ public class Calculator {
                     else
                         return Either.right("Logarithm of non-positive number");
                 },
-                () -> 1
+                1
             ),
             new Operation(
                 "pow",
                 (args) -> {
-                    if (Math.floor(args[1]).equals(args[1]) || args[0] >= 0)
+                    if (Math.floor(args[1]) == args[1] || args[0] >= 0)
                         return Either.left(Math.pow(args[0], args[1]));
                     else
                         return Either.right("Raising negative number to non-integral power");
                 },
-                () -> 2
+                2
             ),
         };
 
@@ -83,7 +83,7 @@ public class Calculator {
                         System.out.println("Operation \"" + ops[k] + "\" failed: " + res.getRight().get());
                     }
                 } else {
-                    System.out.println("Parse exception at pos " + i);
+                    System.out.println("Unrecognised expression: \"" + lexems[i] + "\"");
                     return;
                 }
             }
@@ -94,7 +94,7 @@ public class Calculator {
     }
 
     private static class Operation {
-        Operation(String p, Function<double[], Either<Double, String>> f, IntSupplier r) {
+        Operation(String p, Function<double[], Either<Double, String>> f, int r) {
             pattern = p;
             operation = f;
             arity = r;
@@ -105,11 +105,11 @@ public class Calculator {
         }
 
         public int getArity() {
-            return arity.getAsInt();
+            return arity;
         }
 
         public Either<Double, String> call(double[] args) {
-            assert args.length == arity.getAsInt() : "Wrong number of arguments";
+            assert args.length == arity : "Wrong number of arguments";
             return operation.apply(args);
         }
 
@@ -119,7 +119,7 @@ public class Calculator {
          
         private String pattern;
         private Function<double[], Either<Double, String>> operation;
-        private IntSupplier arity;
+        private int arity;
     }
 }
 
