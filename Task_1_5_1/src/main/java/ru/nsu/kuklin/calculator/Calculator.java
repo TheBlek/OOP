@@ -7,10 +7,7 @@ import java.text.*;
 import io.jbock.util.*;
 
 public class Calculator {
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
-
-        var input = scanner.nextLine();
+    public Either<Double, String> execute(String input) {
         var lexems = input.split(" ");
         
         double[] stack = new double[lexems.length];
@@ -52,6 +49,16 @@ public class Calculator {
                 },
                 2
             ),
+            new Operation(
+                "sqrt",
+                (args) -> {
+                    if (args[0] >= 0)
+                        return Either.left(Math.sqrt(args[0]));
+                    else
+                        return Either.right("Root of a negative number");
+                },
+                1
+            ),
         };
 
         for (int i = lexems.length - 1; i >= 0; i--) {
@@ -61,36 +68,36 @@ public class Calculator {
                 stack[stackSize] = result;
                 stackSize++;
             } catch (NumberFormatException e) {
-                int k = 0; while (k < ops.length && !ops[k].match(lexems[i])) {
+                int k = 0;
+                while (k < ops.length && !ops[k].match(lexems[i])) {
                     k++;
                 }
-                if (k < ops.length) {
-                    double[] args = new double[ops[k].getArity()];
-                    for (int j = 0; j < args.length; j++) {
-                        if (stackSize == 0) {
-                            System.out.println("Unbalanced operator \"" + ops[k] + "\" at pos " + i);
-                            return;
-                        }
-                        args[j] = stack[stackSize-1];
-                        stackSize--;
+                if (k == ops.length) {
+                    return Either.right("Unrecognised operator: \"" + lexems[i] + "\"");
+                }
+
+                double[] args = new double[ops[k].getArity()];
+                for (int j = 0; j < args.length; j++) {
+                    if (stackSize == 0) {
+                        return Either.right("Unbalanced operator \"" + ops[k] + "\" at pos " + i);
                     }
-                    var res = ops[k].call(args);
-                    if (res.isLeft()) {
-                        double value = res.getLeft().get();
-                        stack[stackSize] = value;
-                        stackSize++;
-                    } else {
-                        System.out.println("Operation \"" + ops[k] + "\" failed: " + res.getRight().get());
-                    }
+                    args[j] = stack[stackSize-1];
+                    stackSize--;
+                }
+                var res = ops[k].call(args);
+                if (res.isLeft()) {
+                    double value = res.getLeft().get();
+                    stack[stackSize] = value;
+                    stackSize++;
                 } else {
-                    System.out.println("Unrecognised expression: \"" + lexems[i] + "\"");
-                    return;
+                    return Either.right("Operation \"" + ops[k] + "\" failed: " + res.getRight().get());
                 }
             }
         }
-        for (int i = 0; i < stackSize; i++) {
-            System.out.println(stack[i]);
+        if (stackSize != 1) {
+            return Either.right("Unbalanced expression");
         }
+        return Either.left(stack[0]);
     }
 
     private static class Operation {
