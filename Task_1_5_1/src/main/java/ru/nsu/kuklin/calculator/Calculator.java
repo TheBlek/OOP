@@ -54,6 +54,28 @@ public class Calculator {
                 (args) -> Either.left(Complex.sqrt(args[0])),
                 1
             ),
+            new Operation(
+                "sind",
+                (args) -> {
+                    if (args[0].y() == 0) {
+                        return Either.left(new Complex(Math.sin(Math.toRadians(args[0].x())), 0));
+                    } else {
+                        return Either.right("Failed to convert imaginary number to degrees");
+                    }
+                },
+                1
+            ),
+            new Operation(
+                "cosd",
+                (args) -> {
+                    if (args[0].y() == 0) {
+                        return Either.left(new Complex(Math.cos(Math.toRadians(args[0].x())), 0));
+                    } else {
+                        return Either.right("Failed to convert imaginary number to degrees");
+                    }
+                },
+                1
+            ),
         };
 
         for (int i = lexems.length - 1; i >= 0; i--) {

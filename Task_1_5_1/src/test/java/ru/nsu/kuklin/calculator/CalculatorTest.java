@@ -114,10 +114,29 @@ public class CalculatorTest {
 
     @Test
     public void testSqrt() {
-        assertEquals(Either.left(new Complex(1.772427713617681, 0)), Calculator.execute("sqrt 3.1415"));
+        assertEquals(
+            Either.left(new Complex(1.772427713617681, 0)),
+            Calculator.execute("sqrt 3.1415")
+        );
         assertEquals(
             Either.left(new Complex(1.8033841761788165, -0.3327078100858895)),
             Calculator.execute("sqrt - 3.1415 1.2i")
+        );
+    }
+
+    @Test
+    public void testDegrees() {
+        assertEquals(
+            Either.left(new Complex(1.0, 0)),
+            Calculator.execute("sind 90")
+        );
+        assertEquals(
+            Either.left(new Complex(6.123233995736766E-17, 0)),
+            Calculator.execute("cosd 90")
+        );
+        assertEquals(
+            Either.left(new Complex(-1.0, 0)),
+            Calculator.execute("cosd 180")
         );
     }
 
