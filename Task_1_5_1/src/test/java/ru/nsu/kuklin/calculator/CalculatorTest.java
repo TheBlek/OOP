@@ -74,6 +74,10 @@ public class CalculatorTest {
             Either.left(new Complex(2.2014590648613295, -0.09196210022806267)),
             Calculator.execute("ln - 9 0.83i")
         );
+        assertEquals(
+            Either.left(new Complex(2.2014590648613295, 3.0496305533617303)),
+            Calculator.execute("ln - 0.83i 9")
+        );
     }
 
     @Test
@@ -145,6 +149,54 @@ public class CalculatorTest {
         assertEquals(
             Either.left(new Complex(5.897713069869024, -1.0385882044932546)),
             Calculator.execute("ln * / sqrt - 3.2i 1.5 + 1.01i 1.1 pow sin + 2 8i cos + 1 i")
+        );
+    }
+
+    @Test
+    public void testUnbalanced() {
+        assertEquals(
+            Either.right("Unbalanced operator \"*\" at pos 1"),
+            Calculator.execute("ln * pow sin + 2 8i cos + 1 i")
+        );
+        assertEquals(
+            Either.right("Unbalanced expression"),
+            Calculator.execute("ln i ln * + 1 i pow sin + 2 8i cos + 1 i")
+        );
+    }
+
+    @Test
+    public void testUnrecognised() {
+        assertEquals(
+            Either.right("Unrecognised operator: \"asldj\""),
+            Calculator.execute("ln * asldj sin + 2 8i cos + 1 i")
+        );
+    }
+
+    @Test
+    public void divisionByZero() {
+        assertEquals(
+            Either.right("Operation \"/\" failed: Division by zero"),
+            Calculator.execute("/ cos + 1 2i sind 0")
+        );
+    }
+
+    @Test
+    public void logarithmOfZero() {
+        assertEquals(
+            Either.right("Operation \"ln\" failed: Logarithm of zero number"),
+            Calculator.execute("ln sind 0")
+        );
+    }
+
+    @Test
+    public void complexDegrees() {
+        assertEquals(
+            Either.right("Operation \"sind\" failed: Failed to convert imaginary number to degrees"),
+            Calculator.execute("sind pow 2.7 + 1 i")
+        );
+        assertEquals(
+            Either.right("Operation \"cosd\" failed: Failed to convert imaginary number to degrees"),
+            Calculator.execute("cosd pow 2.7 + 1 i")
         );
     }
 }
