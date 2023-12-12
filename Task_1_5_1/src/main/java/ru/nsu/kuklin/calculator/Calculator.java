@@ -12,7 +12,7 @@ public class Calculator {
      * On success, returns left variant with the result.
      * On failure, returns right variant with error message.
      */
-    public Either<Complex, String> execute(String input) {
+    static public Either<Complex, String> execute(String input) {
         var lexems = input.split(" ");
         
         Complex[] stack = new Complex[lexems.length];
