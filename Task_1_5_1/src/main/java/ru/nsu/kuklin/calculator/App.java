@@ -2,7 +2,13 @@ package ru.nsu.kuklin.calculator;
 
 import java.util.*;
 
+/**
+ * Stub docs.
+ */
 public class App {
+    /**
+     * main.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {

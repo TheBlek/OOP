@@ -2,6 +2,9 @@ package ru.nsu.kuklin.calculator;
 
 import java.lang.Math;
 
+/**
+ * Record representing a complex number.
+ */
 public record Complex(double x, double y) {
     /**
      * Calculates sum of complex numbers.
@@ -29,7 +32,10 @@ public record Complex(double x, double y) {
      */
     public static Complex div(Complex lhs, Complex rhs) {
         double len = rhs.lenSqr();
-        return new Complex((lhs.x * rhs.x + lhs.y * rhs.y)/len, (-lhs.x * rhs.y + lhs.y * rhs.x)/len);
+        return new Complex(
+            (lhs.x * rhs.x + lhs.y * rhs.y) / len,
+            (-lhs.x * rhs.y + lhs.y * rhs.x) / len
+        );
     }
 
     /**
@@ -44,8 +50,9 @@ public record Complex(double x, double y) {
      */
     static Complex log(Complex z) {
         double arg = Math.atan(z.y / z.x);
-        if (z.x < 0)
+        if (z.x < 0) {
             arg += Math.PI;
+        }
         return new Complex(Math.log(Math.sqrt(z.lenSqr())), arg);
     }
 
@@ -73,8 +80,9 @@ public record Complex(double x, double y) {
     static Complex sqrt(Complex z) {
         double len = Math.sqrt(Math.sqrt(z.lenSqr()));
         double arg = Math.atan(z.y / z.x);
-        if (z.x < 0)
+        if (z.x < 0) {
             arg += Math.PI;
+        }
         Complex radius = Complex.exp(new Complex(0, arg/2));
         return new Complex(len * radius.x, len * radius.y);
     }
