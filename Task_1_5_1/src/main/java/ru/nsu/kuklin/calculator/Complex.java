@@ -83,7 +83,7 @@ public record Complex(double x, double y) {
         if (z.x < 0) {
             arg += Math.PI;
         }
-        Complex radius = Complex.exp(new Complex(0, arg/2));
+        Complex radius = Complex.exp(new Complex(0, arg / 2));
         return new Complex(len * radius.x, len * radius.y);
     }
 

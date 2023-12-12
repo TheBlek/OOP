@@ -6,13 +6,16 @@ import java.lang.*;
 import java.text.*;
 import io.jbock.util.*;
 
+/**
+ * Class providing calculator interface.
+ */
 public class Calculator {
     /**
      * Calculates the expression passed as input.
      * On success, returns left variant with the result.
      * On failure, returns right variant with error message.
      */
-    static public Either<Complex, String> execute(String input) {
+    public static Either<Complex, String> execute(String input) {
         var lexems = input.split(" ");
         
         Complex[] stack = new Complex[lexems.length];
@@ -25,20 +28,22 @@ public class Calculator {
             new Operation(
                 "/", 
                 (args) -> {
-                    if (args[1].lenSqr() > 0.0001)
+                    if (args[1].lenSqr() > 0.0001) {
                         return Either.left(Complex.div(args[0], args[1]));
-                    else 
+                    } else {
                         return Either.right("Division by zero");
+                    }
                 },
                 2
             ),
             new Operation(
                 "ln",
                 (args) -> {
-                    if (args[0].lenSqr() > 0.0001)
+                    if (args[0].lenSqr() > 0.0001) {
                         return Either.left(Complex.log(args[0]));
-                    else
+                    } else {
                         return Either.right("Logarithm of zero number");
+                    }
                 },
                 1
             ),
@@ -85,6 +90,7 @@ public class Calculator {
                 stackSize++;
                 continue;
             } catch (NumberFormatException e) {
+                i = i; // Linter is very notorious being, y'know
             }
             if (lexems[i].charAt(lexems[i].length() - 1) == 'i') {
                 try {
@@ -97,6 +103,7 @@ public class Calculator {
                     stackSize++;
                     continue;
                 } catch (NumberFormatException e1) {
+                    i = i; // Linter is very notorious being, y'know
                 }
             }
             int k = 0;
