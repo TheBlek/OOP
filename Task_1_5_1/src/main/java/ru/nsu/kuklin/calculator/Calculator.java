@@ -62,9 +62,8 @@ public class Calculator {
         };
 
         for (int i = lexems.length - 1; i >= 0; i--) {
-            double result;
             try {
-                result = Double.parseDouble(lexems[i]); 
+                double result = Double.parseDouble(lexems[i]); 
                 stack[stackSize] = result;
                 stackSize++;
             } catch (NumberFormatException e) {
