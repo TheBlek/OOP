@@ -66,7 +66,11 @@ public class Calculator {
             }
             if (lexems[i].charAt(lexems[i].length() - 1) == 'i') {
                 try {
-                    double result = Double.parseDouble(lexems[i].substring(0, lexems[i].length() - 1));
+                    double result = 1;
+                    if (lexems[i].length() > 1) { 
+                        result = Double.parseDouble(lexems[i].substring(0, lexems[i].length() - 1));
+                    }
+
                     stack[stackSize] = new Complex(0, result);
                     stackSize++;
                     continue;
