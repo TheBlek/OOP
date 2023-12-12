@@ -191,11 +191,15 @@ public class CalculatorTest {
     @Test
     public void complexDegrees() {
         assertEquals(
-            Either.right("Operation \"sind\" failed: Failed to convert imaginary number to degrees"),
+            Either.right(
+                "Operation \"sind\" failed: Failed to convert imaginary number to degrees"
+            ),
             Calculator.execute("sind pow 2.7 + 1 i")
         );
         assertEquals(
-            Either.right("Operation \"cosd\" failed: Failed to convert imaginary number to degrees"),
+            Either.right(
+                "Operation \"cosd\" failed: Failed to convert imaginary number to degrees"
+            ),
             Calculator.execute("cosd pow 2.7 + 1 i")
         );
     }

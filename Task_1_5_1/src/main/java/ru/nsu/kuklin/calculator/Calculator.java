@@ -119,7 +119,7 @@ public class Calculator {
                 if (stackSize == 0) {
                     return Either.right("Unbalanced operator \"" + ops[k] + "\" at pos " + i);
                 }
-                args[j] = stack[stackSize-1];
+                args[j] = stack[stackSize - 1];
                 stackSize--;
             }
             var res = ops[k].call(args);
