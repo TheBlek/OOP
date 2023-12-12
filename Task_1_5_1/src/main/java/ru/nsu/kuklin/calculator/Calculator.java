@@ -7,56 +7,51 @@ import java.text.*;
 import io.jbock.util.*;
 
 public class Calculator {
-    public Either<Double, String> execute(String input) {
+    /**
+     * Calculates the expression passed as input.
+     * On success, returns left variant with the result.
+     * On failure, returns right variant with error message.
+     */
+    public Either<Complex, String> execute(String input) {
         var lexems = input.split(" ");
         
-        double[] stack = new double[lexems.length];
+        Complex[] stack = new Complex[lexems.length];
         int stackSize = 0;
 
         var ops = new Operation[] {
-            new Operation("+", (args) -> Either.left(args[0] + args[1]), 2),
-            new Operation("*", (args) -> Either.left(args[0] * args[1]), 2),
-            new Operation("-", (args) -> Either.left(args[0] - args[1]), 2),
+            new Operation("+", (args) -> Either.left(Complex.add(args[0], args[1])), 2),
+            new Operation("*", (args) -> Either.left(Complex.mul(args[0], args[1])), 2),
+            new Operation("-", (args) -> Either.left(Complex.sub(args[0], args[1])), 2),
             new Operation(
                 "/", 
                 (args) -> {
-                    if (args[1] != 0)
-                        return Either.left(args[0] / args[1]);
+                    if (args[1].lenSqr() > 0.0001)
+                        return Either.left(Complex.div(args[0], args[1]));
                     else 
                         return Either.right("Division by zero");
                 },
                 2
             ),
-            new Operation("sin", (args) -> Either.left(Math.sin(args[0])), 1),
-            new Operation("cos", (args) -> Either.left(Math.cos(args[0])), 1),
             new Operation(
                 "ln",
                 (args) -> {
-                    if (args[0] > 0)
-                        return Either.left(Math.log(args[0]));
+                    if (args[0].lenSqr() > 0.0001)
+                        return Either.left(Complex.log(args[0]));
                     else
-                        return Either.right("Logarithm of non-positive number");
+                        return Either.right("Logarithm of zero number");
                 },
                 1
             ),
             new Operation(
                 "pow",
-                (args) -> {
-                    if (Math.floor(args[1]) == args[1] || args[0] >= 0)
-                        return Either.left(Math.pow(args[0], args[1]));
-                    else
-                        return Either.right("Raising negative number to non-integral power");
-                },
+                (args) -> Either.left(Complex.exp(Complex.mul(args[1], Complex.log(args[0])))),
                 2
             ),
+            new Operation("sin", (args) -> Either.left(Complex.sin(args[0])), 1),
+            new Operation("cos", (args) -> Either.left(Complex.cos(args[0])), 1),
             new Operation(
                 "sqrt",
-                (args) -> {
-                    if (args[0] >= 0)
-                        return Either.left(Math.sqrt(args[0]));
-                    else
-                        return Either.right("Root of a negative number");
-                },
+                (args) -> Either.left(Complex.sqrt(args[0])),
                 1
             ),
         };
@@ -64,33 +59,43 @@ public class Calculator {
         for (int i = lexems.length - 1; i >= 0; i--) {
             try {
                 double result = Double.parseDouble(lexems[i]); 
-                stack[stackSize] = result;
+                stack[stackSize] = new Complex(result, 0);
                 stackSize++;
+                continue;
             } catch (NumberFormatException e) {
-                int k = 0;
-                while (k < ops.length && !ops[k].match(lexems[i])) {
-                    k++;
-                }
-                if (k == ops.length) {
-                    return Either.right("Unrecognised operator: \"" + lexems[i] + "\"");
-                }
-
-                double[] args = new double[ops[k].getArity()];
-                for (int j = 0; j < args.length; j++) {
-                    if (stackSize == 0) {
-                        return Either.right("Unbalanced operator \"" + ops[k] + "\" at pos " + i);
-                    }
-                    args[j] = stack[stackSize-1];
-                    stackSize--;
-                }
-                var res = ops[k].call(args);
-                if (res.isLeft()) {
-                    double value = res.getLeft().get();
-                    stack[stackSize] = value;
+            }
+            if (lexems[i].charAt(lexems[i].length() - 1) == 'i') {
+                try {
+                    double result = Double.parseDouble(lexems[i].substring(0, lexems[i].length() - 1));
+                    stack[stackSize] = new Complex(0, result);
                     stackSize++;
-                } else {
-                    return Either.right("Operation \"" + ops[k] + "\" failed: " + res.getRight().get());
+                    continue;
+                } catch (NumberFormatException e1) {
                 }
+            }
+            int k = 0;
+            while (k < ops.length && !ops[k].match(lexems[i])) {
+                k++;
+            }
+            if (k == ops.length) {
+                return Either.right("Unrecognised operator: \"" + lexems[i] + "\"");
+            }
+
+            Complex[] args = new Complex[ops[k].getArity()];
+            for (int j = 0; j < args.length; j++) {
+                if (stackSize == 0) {
+                    return Either.right("Unbalanced operator \"" + ops[k] + "\" at pos " + i);
+                }
+                args[j] = stack[stackSize-1];
+                stackSize--;
+            }
+            var res = ops[k].call(args);
+            if (res.isLeft()) {
+                Complex value = res.getLeft().get();
+                stack[stackSize] = value;
+                stackSize++;
+            } else {
+                return Either.right("Operation \"" + ops[k] + "\" failed: " + res.getRight().get());
             }
         }
         if (stackSize != 1) {
@@ -100,7 +105,7 @@ public class Calculator {
     }
 
     private static class Operation {
-        Operation(String p, Function<double[], Either<Double, String>> f, int r) {
+        Operation(String p, Function<Complex[], Either<Complex, String>> f, int r) {
             pattern = p;
             operation = f;
             arity = r;
@@ -114,7 +119,7 @@ public class Calculator {
             return arity;
         }
 
-        public Either<Double, String> call(double[] args) {
+        public Either<Complex, String> call(Complex[] args) {
             assert args.length == arity : "Wrong number of arguments";
             return operation.apply(args);
         }
@@ -124,7 +129,7 @@ public class Calculator {
         }
          
         private String pattern;
-        private Function<double[], Either<Double, String>> operation;
+        private Function<Complex[], Either<Complex, String>> operation;
         private int arity;
     }
 }

@@ -7,8 +7,11 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Calculator calc = new Calculator();
         while (true) {
-            var res = calc.execute(scanner.nextLine());
+            var input = scanner.nextLine();
+            System.out.println("input: " + input);
+            var res = calc.execute(input);
             if (res.isRight()) {
+                System.out.println(res.getRight().get());
                 return;
             }
 
