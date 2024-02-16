@@ -46,4 +46,22 @@ public class AppTest {
     public void detectLastCompositeStream() {
         assertEquals(true, CompositeNumberDetector.detectParallelStream(new int[] {1, 3, 7, 35}));
     }
+
+    @Test
+    @DisplayName("threads empty")
+    public void detectEmptyThread() {
+        assertEquals(false, CompositeNumberDetector.detectParallelThreads(new int[] {}, 4));
+    }
+
+    @Test
+    @DisplayName("threads all primes")
+    public void detectPrimesThread() {
+        assertEquals(false, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 31}, 4));
+    }
+
+    @Test
+    @DisplayName("threads last composite")
+    public void detectLastCompositeThread() {
+        assertEquals(true, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 35}, 4));
+    }
 }
