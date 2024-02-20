@@ -5,7 +5,7 @@ import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
 public class OnlyLastComposite {
-    @Param({ "100", "1000", "10000", "100000" })
+    @Param({ "1000", "10000", "100000", "1000000" })
     public int size;
     public int[] nums;
 

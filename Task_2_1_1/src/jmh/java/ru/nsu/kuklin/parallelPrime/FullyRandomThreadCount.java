@@ -4,10 +4,12 @@ import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
-public class FullyRandomDetectorState {
+public class FullyRandomThreadCount {
     @Param({ "1000000" })
     public int size;
     public int[] nums;
+    @Param({"1", "2", "4", "8", "16"})
+    public int thread_count;
 
     @Setup(Level.Invocation)
     public void setUp() {

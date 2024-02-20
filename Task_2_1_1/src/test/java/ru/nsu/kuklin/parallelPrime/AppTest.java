@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 
 /**
  * Class for tests.
@@ -59,9 +61,10 @@ public class AppTest {
         assertEquals(false, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 31}, 4));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("threads last composite")
-    public void detectLastCompositeThread() {
-        assertEquals(true, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 35}, 4));
+    @ValueSource(ints = {1, 2, 4, 8, 16})
+    public void detectLastCompositeThread(int thread_count) {
+        assertEquals(true, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 35}, thread_count));
     }
 }

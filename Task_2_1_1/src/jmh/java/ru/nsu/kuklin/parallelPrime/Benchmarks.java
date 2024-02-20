@@ -26,4 +26,19 @@ public class Benchmarks {
     public void streamLast(Blackhole bh, OnlyLastComposite state) throws Exception {
         bh.consume(CompositeNumberDetector.detectParallelStream(state.nums));
     }
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    public void threadRandom(Blackhole bh, FullyRandomThreadCount state) throws Exception {
+        bh.consume(
+            CompositeNumberDetector.detectParallelThreads(state.nums, state.thread_count)
+        );
+    }
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    public void threadLast(Blackhole bh, OnlyLastCompositeThreadCount state) throws Exception {
+        bh.consume(
+            CompositeNumberDetector.detectParallelThreads(state.nums, state.thread_count)
+        );
+    }
 }
