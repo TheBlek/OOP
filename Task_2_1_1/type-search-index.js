@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.parallelPrime","l":"CompositeNumberDetector"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.parallelprime","l":"CompositeNumberDetector"}];updateSearchResults();
