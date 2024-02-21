@@ -39,13 +39,13 @@ public class CompositeNumberDetector {
             .anyMatch(p -> p == 0);
     }
 
-    public static boolean detectParallelThreads(int[] nums, int thread_count) {
+    public static boolean detectParallelThreads(int[] nums, int threadCount) {
         ThreadGroup group = new ThreadGroup("Detectors");
         AtomicBoolean result = new AtomicBoolean(false);
         int next = 0;
-        for (int i = 0; i < thread_count && next < nums.length; i++) {
+        for (int i = 0; i < threadCount && next < nums.length; i++) {
             int l = next;                               // Equally distribute surplas numbers
-            int r = l + nums.length / thread_count + (i < nums.length % thread_count ? 1 : 0);
+            int r = l + nums.length / threadCount + (i < nums.length % threadCount ? 1 : 0);
             Thread t = new Thread(group, new Runnable() {
                 public void run() {
                     for (int k = l; k < r; k++) {
@@ -62,10 +62,10 @@ public class CompositeNumberDetector {
                 }
             });
             t.start();
-            next = right;
+            next = r;
         }
         
-        Thread[] threads = new Thread[thread_count];
+        Thread[] threads = new Thread[threadCount];
         int cnt = group.enumerate(threads);
         for (int i = 0; i < cnt; i++) {
             try {

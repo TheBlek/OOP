@@ -9,7 +9,7 @@ public class OnlyLastCompositeThreadCount {
     public int size;
     public int[] nums;
     @Param({"1", "2", "4", "8", "16"})
-    public int thread_count;
+    public int threadCount;
 
     @Setup(Level.Invocation)
     public void setUp() {

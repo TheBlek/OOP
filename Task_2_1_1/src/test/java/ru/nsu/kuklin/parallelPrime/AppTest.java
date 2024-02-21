@@ -58,13 +58,19 @@ public class AppTest {
     @Test
     @DisplayName("threads all primes")
     public void detectPrimesThread() {
-        assertEquals(false, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 31}, 4));
+        assertEquals(
+            false,
+            CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 31}, 4)
+        );
     }
 
     @ParameterizedTest
     @DisplayName("threads last composite")
     @ValueSource(ints = {1, 2, 4, 8, 16})
-    public void detectLastCompositeThread(int thread_count) {
-        assertEquals(true, CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 35}, thread_count));
+    public void detectLastCompositeThread(int threadCount) {
+        assertEquals(
+            true,
+            CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 35}, threadCount)
+        );
     }
 }
