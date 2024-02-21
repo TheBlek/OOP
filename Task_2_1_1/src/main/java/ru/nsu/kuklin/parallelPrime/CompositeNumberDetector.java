@@ -12,7 +12,7 @@ public class CompositeNumberDetector {
         for (int i = 0; i < nums.length; i++) {
             i++;
             boolean prime = true;
-            for (int j = 2; j*j < nums[i]; j++) {
+            for (int j = 2; j * j < nums[i]; j++) {
                 if (nums[i] % j == 0) {
                     prime = false;
                     break;
@@ -29,9 +29,11 @@ public class CompositeNumberDetector {
             .stream(nums)
             .parallel()
             .map(num -> {
-                for (int j = 2; j*j < num; j++)
-                    if (num % j == 0)
+                for (int j = 2; j * j < num; j++) {
+                    if (num % j == 0) {
                         return 0;
+                    }
+                }
                 return 1;
             })
             .anyMatch(p -> p == 0);
@@ -42,12 +44,12 @@ public class CompositeNumberDetector {
         AtomicBoolean result = new AtomicBoolean(false);
         int next = 0;
         for (int i = 0; i < thread_count && next < nums.length; i++) {
-            final int left = next;                               // Equally distribute surplas numbers
-            final int right = left + nums.length / thread_count + (i < nums.length % thread_count ? 1 : 0);
+            int l = next;                               // Equally distribute surplas numbers
+            int r = l + nums.length / thread_count + (i < nums.length % thread_count ? 1 : 0);
             Thread t = new Thread(group, new Runnable() {
                 public void run() {
-                    for (int k = left; k < right; k++) {
-                        for (int j = 2; j*j < nums[k]; j++) {
+                    for (int k = l; k < r; k++) {
+                        for (int j = 2; j * j < nums[k]; j++) {
                             if (nums[k] % j == 0) {
                                 result.set(true);
                                 group.interrupt();
@@ -76,5 +78,4 @@ public class CompositeNumberDetector {
         return result.get();
     }
 }
-
 
