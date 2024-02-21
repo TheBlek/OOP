@@ -41,7 +41,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("ru.nsu.kuklin.parallelPrime.App")
+    mainClass.set("ru.nsu.kuklin.parallelprime.App")
 }
 
 tasks.test {

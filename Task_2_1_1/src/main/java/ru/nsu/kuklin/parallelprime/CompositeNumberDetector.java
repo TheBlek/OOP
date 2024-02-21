@@ -1,11 +1,9 @@
-package ru.nsu.kuklin.parallelPrime;
+package ru.nsu.kuklin.parallelprime;
 
 import java.util.Arrays;
 import java.lang.ThreadGroup;
 import java.lang.Thread;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
 
 public class CompositeNumberDetector {
     public static boolean detectSequential(int[] nums) {

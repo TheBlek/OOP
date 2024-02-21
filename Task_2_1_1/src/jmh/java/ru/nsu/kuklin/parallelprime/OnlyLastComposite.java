@@ -1,15 +1,13 @@
-package ru.nsu.kuklin.parallelPrime;
+package ru.nsu.kuklin.parallelprime;
 
 import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
-public class OnlyLastCompositeThreadCount {
+public class OnlyLastComposite {
     @Param({ "1000", "10000", "100000", "1000000" })
     public int size;
     public int[] nums;
-    @Param({"1", "2", "4", "8", "16"})
-    public int threadCount;
 
     @Setup(Level.Invocation)
     public void setUp() {

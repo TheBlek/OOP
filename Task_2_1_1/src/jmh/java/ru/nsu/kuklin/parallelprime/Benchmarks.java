@@ -1,4 +1,4 @@
-package ru.nsu.kuklin.parallelPrime;
+package ru.nsu.kuklin.parallelprime;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
