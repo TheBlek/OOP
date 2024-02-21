@@ -3,10 +3,13 @@ package ru.nsu.kuklin.parallelprime;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
+/**
+ * Benchmarks for composite detector.
+ */
 @State(Scope.Benchmark)
 public class Benchmarks {
-    /*
-     * Bench
+    /**
+     * Bench.
      */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
@@ -14,8 +17,8 @@ public class Benchmarks {
         bh.consume(CompositeNumberDetector.detectSequential(state.nums));
     }
 
-    /*
-     * Bench
+    /**
+     * Bench.
      */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
@@ -23,8 +26,8 @@ public class Benchmarks {
         bh.consume(CompositeNumberDetector.detectSequential(state.nums));
     }
 
-    /*
-     * Bench
+    /**
+     * Bench.
      */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
@@ -32,8 +35,8 @@ public class Benchmarks {
         bh.consume(CompositeNumberDetector.detectParallelStream(state.nums));
     }
     
-    /*
-     * Bench
+    /**
+     * Bench.
      */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
@@ -41,8 +44,8 @@ public class Benchmarks {
         bh.consume(CompositeNumberDetector.detectParallelStream(state.nums));
     }
 
-    /*
-     * Bench
+    /**
+     * Bench.
      */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
@@ -52,8 +55,8 @@ public class Benchmarks {
         );
     }
 
-    /*
-     * Bench
+    /**
+     * Bench.
      */
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)

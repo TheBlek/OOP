@@ -3,7 +3,7 @@ package ru.nsu.kuklin.parallelprime;
 import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
-/*
+/**
  * Class for testing composite detector on big array.
  * Array consist of primes where only the last is composite.
  */
@@ -13,7 +13,7 @@ public class OnlyLastComposite {
     public int size;
     public int[] nums;
 
-    /*
+    /**
      * Setup function.
      */
     @Setup(Level.Invocation)

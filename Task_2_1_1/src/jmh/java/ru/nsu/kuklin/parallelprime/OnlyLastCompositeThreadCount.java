@@ -3,7 +3,7 @@ package ru.nsu.kuklin.parallelprime;
 import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
-/*
+/**
  * Class for testing composite detector threaded on big array.
  * Array consist of primes where only the last is composite.
  */
@@ -15,7 +15,7 @@ public class OnlyLastCompositeThreadCount {
     @Param({"1", "2", "4", "8", "16"})
     public int threadCount;
 
-    /*
+    /**
      * Setup function.
      */
     @Setup(Level.Invocation)

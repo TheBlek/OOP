@@ -3,7 +3,7 @@ package ru.nsu.kuklin.parallelprime;
 import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
-/*
+/**
  * Class for testing composite detector threaded on big array of random numbers.
  */
 @State(Scope.Benchmark)
@@ -14,7 +14,7 @@ public class FullyRandomThreadCount {
     @Param({"1", "2", "4", "8", "16"})
     public int threadCount;
 
-    /*
+    /**
      * Setup function.
      */
     @Setup(Level.Invocation)
