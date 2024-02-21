@@ -22,9 +22,9 @@ public class OnlyLastCompositeThreadCount {
     public void setUp() {
         Random rng = new Random();
         nums = new int[size];
-        for (int i = 0; i < size-1; i++) {
+        for (int i = 0; i < size - 1; i++) {
             nums[i] = 1000000007;
         }
-        nums[size-1] = rng.nextInt() * 101;
+        nums[size - 1] = rng.nextInt() * 101;
     }
 }

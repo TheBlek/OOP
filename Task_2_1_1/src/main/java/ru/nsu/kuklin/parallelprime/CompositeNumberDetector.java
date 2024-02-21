@@ -70,8 +70,9 @@ public class CompositeNumberDetector {
                                 break;
                             }
                         }
-                        if (Thread.currentThread().isInterrupted())
+                        if (Thread.currentThread().isInterrupted()) {
                             return;
+                        }
                     }
                 }
             });

@@ -62,6 +62,9 @@ public class AppTest {
         );
     }
 
+    /**
+     * Ugh. This is not detected as a test and a doc is required
+     */
     @ParameterizedTest
     @DisplayName("threads last composite")
     @ValueSource(ints = {1, 2, 4, 8, 16})
