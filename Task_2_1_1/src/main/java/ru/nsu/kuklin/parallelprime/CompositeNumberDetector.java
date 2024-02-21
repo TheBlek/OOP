@@ -5,7 +5,14 @@ import java.lang.ThreadGroup;
 import java.lang.Thread;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/*
+ * Class to detect composite numbers in arrays.
+ */
 public class CompositeNumberDetector {
+    /*
+     * Checks if there is a composite number in array.
+     * Sequential
+     */
     public static boolean detectSequential(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             i++;
@@ -16,12 +23,17 @@ public class CompositeNumberDetector {
                     break;
                 }
             }
-            if (!prime)
+            if (!prime) {
                 return true;
+            }
         }
         return false;
     }
 
+    /*
+     * Checks if there is a composite number in array.
+     * Uses parallel stream
+     */
     public static boolean detectParallelStream(int[] nums) {
         return Arrays
             .stream(nums)
@@ -37,6 +49,10 @@ public class CompositeNumberDetector {
             .anyMatch(p -> p == 0);
     }
 
+    /*
+     * Checks if there is a composite number in array.
+     * Uses raw threads
+     */
     public static boolean detectParallelThreads(int[] nums, int threadCount) {
         ThreadGroup group = new ThreadGroup("Detectors");
         AtomicBoolean result = new AtomicBoolean(false);

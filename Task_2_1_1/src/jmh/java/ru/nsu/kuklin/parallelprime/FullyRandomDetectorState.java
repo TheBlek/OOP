@@ -4,7 +4,7 @@ import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
 /*
- * Class for testing composite detector on big array of random numbers
+ * Class for testing composite detector on big array of random numbers.
  */
 @State(Scope.Benchmark)
 public class FullyRandomDetectorState {
@@ -12,6 +12,9 @@ public class FullyRandomDetectorState {
     public int size;
     public int[] nums;
 
+    /*
+     * Setup function.
+     */
     @Setup(Level.Invocation)
     public void setUp() {
         Random rng = new Random();

@@ -4,7 +4,7 @@ import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
 /*
- * Class for testing composite detector threaded on big array of random numbers
+ * Class for testing composite detector threaded on big array of random numbers.
  */
 @State(Scope.Benchmark)
 public class FullyRandomThreadCount {
@@ -14,6 +14,9 @@ public class FullyRandomThreadCount {
     @Param({"1", "2", "4", "8", "16"})
     public int threadCount;
 
+    /*
+     * Setup function.
+     */
     @Setup(Level.Invocation)
     public void setUp() {
         Random rng = new Random();

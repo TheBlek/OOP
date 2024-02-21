@@ -4,8 +4,8 @@ import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
 /*
- * Class for testing composite detector on big array 
- * of primes where only the last is composite
+ * Class for testing composite detector on big array.
+ * Array consist of primes where only the last is composite.
  */
 @State(Scope.Benchmark)
 public class OnlyLastComposite {
@@ -13,6 +13,9 @@ public class OnlyLastComposite {
     public int size;
     public int[] nums;
 
+    /*
+     * Setup function.
+     */
     @Setup(Level.Invocation)
     public void setUp() {
         Random rng = new Random();

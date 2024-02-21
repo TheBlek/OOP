@@ -4,8 +4,8 @@ import java.util.Random;
 import org.openjdk.jmh.annotations.*;
 
 /*
- * Class for testing composite detector threaded on big array 
- * of primes where only the last is composite
+ * Class for testing composite detector threaded on big array.
+ * Array consist of primes where only the last is composite.
  */
 @State(Scope.Benchmark)
 public class OnlyLastCompositeThreadCount {
@@ -15,6 +15,9 @@ public class OnlyLastCompositeThreadCount {
     @Param({"1", "2", "4", "8", "16"})
     public int threadCount;
 
+    /*
+     * Setup function.
+     */
     @Setup(Level.Invocation)
     public void setUp() {
         Random rng = new Random();
