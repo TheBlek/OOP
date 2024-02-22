@@ -11,7 +11,7 @@ public class FullyRandomThreadCount {
     @Param({ "1000000" })
     public int size;
     public int[] nums;
-    @Param({"1", "2", "4", "8", "16"})
+    @Param({"1", "2", "4", "8", "16", "24", "50", "100"})
     public int threadCount;
 
     /**
