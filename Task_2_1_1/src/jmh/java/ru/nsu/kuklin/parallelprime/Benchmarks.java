@@ -14,7 +14,7 @@ public class Benchmarks {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void sequentialRandom(Blackhole bh, FullyRandomDetectorState state) throws Exception {
-        bh.consume(CompositeNumberDetector.detectSequential(state.nums));
+        bh.consume((new SequentialDetector()).detect(state.nums));
     }
 
     /**
@@ -23,7 +23,7 @@ public class Benchmarks {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void sequentialLast(Blackhole bh, OnlyLastComposite state) throws Exception {
-        bh.consume(CompositeNumberDetector.detectSequential(state.nums));
+        bh.consume((new SequentialDetector()).detect(state.nums));
     }
 
     /**
@@ -32,7 +32,7 @@ public class Benchmarks {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void streamRandom(Blackhole bh, FullyRandomDetectorState state) throws Exception {
-        bh.consume(CompositeNumberDetector.detectParallelStream(state.nums));
+        bh.consume((new ParallelStreamDetector()).detect(state.nums));
     }
     
     /**
@@ -41,7 +41,7 @@ public class Benchmarks {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     public void streamLast(Blackhole bh, OnlyLastComposite state) throws Exception {
-        bh.consume(CompositeNumberDetector.detectParallelStream(state.nums));
+        bh.consume((new ParallelStreamDetector()).detect(state.nums));
     }
 
     /**
@@ -51,7 +51,7 @@ public class Benchmarks {
     @BenchmarkMode(Mode.AverageTime)
     public void threadRandom(Blackhole bh, FullyRandomThreadCount state) throws Exception {
         bh.consume(
-            CompositeNumberDetector.detectParallelThreads(state.nums, state.threadCount)
+                (new RawThreadsDetector(state.threadCount)).detect(state.nums)
         );
     }
 
@@ -62,7 +62,7 @@ public class Benchmarks {
     @BenchmarkMode(Mode.AverageTime)
     public void threadLast(Blackhole bh, OnlyLastCompositeThreadCount state) throws Exception {
         bh.consume(
-            CompositeNumberDetector.detectParallelThreads(state.nums, state.threadCount)
+                (new RawThreadsDetector(state.threadCount)).detect(state.nums)
         );
     }
 }

@@ -14,43 +14,43 @@ public class AppTest {
     @Test
     @DisplayName("sequential empty")
     public void detectEmpty() {
-        assertEquals(false, CompositeNumberDetector.detectSequential(new int[] {}));
+        assertEquals(false, (new SequentialDetector()).detect(new int[] {}));
     }
 
     @Test
     @DisplayName("sequential all primes")
     public void detectPrimes() {
-        assertEquals(false, CompositeNumberDetector.detectSequential(new int[] {1, 3, 7, 31}));
+        assertEquals(false, (new SequentialDetector()).detect(new int[] {1, 3, 7, 31}));
     }
 
     @Test
     @DisplayName("sequential last composite")
     public void detectLastComposite() {
-        assertEquals(true, CompositeNumberDetector.detectSequential(new int[] {1, 3, 7, 35}));
+        assertEquals(true, (new SequentialDetector()).detect(new int[] {1, 3, 7, 35}));
     }
 
     @Test
     @DisplayName("stream empty")
     public void detectEmptyStream() {
-        assertEquals(false, CompositeNumberDetector.detectParallelStream(new int[] {}));
+        assertEquals(false, (new ParallelStreamDetector()).detect(new int[] {}));
     }
 
     @Test
     @DisplayName("stream all primes")
     public void detectPrimesStream() {
-        assertEquals(false, CompositeNumberDetector.detectParallelStream(new int[] {1, 3, 7, 31}));
+        assertEquals(false, (new ParallelStreamDetector()).detect(new int[] {1, 3, 7, 31}));
     }
 
     @Test
     @DisplayName("stream last composite")
     public void detectLastCompositeStream() {
-        assertEquals(true, CompositeNumberDetector.detectParallelStream(new int[] {1, 3, 7, 35}));
+        assertEquals(true, (new ParallelStreamDetector()).detect(new int[] {1, 3, 7, 35}));
     }
 
     @Test
     @DisplayName("threads empty")
     public void detectEmptyThread() {
-        assertEquals(false, CompositeNumberDetector.detectParallelThreads(new int[] {}, 4));
+        assertEquals(false, (new RawThreadsDetector(4)).detect(new int[] {}));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class AppTest {
     public void detectPrimesThread() {
         assertEquals(
             false,
-            CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 31}, 4)
+            (new RawThreadsDetector(4)).detect(new int[] {1, 3, 7, 31})
         );
     }
 
@@ -71,7 +71,7 @@ public class AppTest {
     public void detectLastCompositeThread(int threadCount) {
         assertEquals(
             true,
-            CompositeNumberDetector.detectParallelThreads(new int[] {1, 3, 7, 35}, threadCount)
+            (new RawThreadsDetector(threadCount)).detect(new int[] {1, 3, 7, 35})
         );
     }
 }
