@@ -51,5 +51,6 @@ public class RawThreadsDetector implements CompositeNumberDetector {
 
         return result.get();
     }
+
     private final int threadCount;
 }

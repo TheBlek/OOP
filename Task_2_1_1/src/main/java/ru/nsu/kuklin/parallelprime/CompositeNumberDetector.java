@@ -9,6 +9,9 @@ public interface CompositeNumberDetector {
      */
     boolean detect(int[] nums);
 
+    /**
+     * Checks if number is composite.
+     */
     default boolean isComposite(int num) {
         for (int j = 2; j * j < num; j++) {
             if (num % j == 0) {
