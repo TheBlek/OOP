@@ -14,14 +14,6 @@ public class ParallelStreamDetector implements CompositeNumberDetector {
         return Arrays
             .stream(nums)
             .parallel()
-            .map(num -> {
-                for (int j = 2; j * j < num; j++) {
-                    if (num % j == 0) {
-                        return 0;
-                    }
-                }
-                return 1;
-            })
-            .anyMatch(p -> p == 0);
+            .anyMatch(this::isComposite);
     }
 }

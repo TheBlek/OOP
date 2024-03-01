@@ -6,8 +6,15 @@ package ru.nsu.kuklin.parallelprime;
 public interface CompositeNumberDetector {
     /**
      * Main method.
-     * @param nums To search a composite number in
-     * @return Whether there are composite numbers inside
      */
     boolean detect(int[] nums);
+
+    default boolean isComposite(int num) {
+        for (int j = 2; j * j < num; j++) {
+            if (num % j == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
