@@ -48,37 +48,65 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:R">R</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
-<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" class="type-name-link" title="class in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a> - Class in <a href="ru/nsu/kuklin/parallelprime/package-summary.html">ru.nsu.kuklin.parallelprime</a></dt>
+<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" class="type-name-link" title="interface in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a> - Interface in <a href="ru/nsu/kuklin/parallelprime/package-summary.html">ru.nsu.kuklin.parallelprime</a></dt>
 <dd>
-<div class="block">Class to detect composite numbers in arrays.</div>
+<div class="block">Interface for Detectors of composite numbers.</div>
 </dd>
-<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html#%3Cinit%3E()" class="member-name-link">CompositeNumberDetector()</a> - Constructor for class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" title="class in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a></dt>
-<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
-<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html#detectParallelStream(int%5B%5D)" class="member-name-link">detectParallelStream(int[])</a> - Static method in class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" title="class in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a></dt>
+<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html#detect(int%5B%5D)" class="member-name-link">detect(int[])</a> - Method in interface ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" title="interface in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a></dt>
 <dd>
-<div class="block">Checks if there is a composite number in array.</div>
+<div class="block">Main method.</div>
 </dd>
-<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html#detectParallelThreads(int%5B%5D,int)" class="member-name-link">detectParallelThreads(int[], int)</a> - Static method in class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" title="class in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a></dt>
+<dt><a href="ru/nsu/kuklin/parallelprime/ParallelStreamDetector.html#detect(int%5B%5D)" class="member-name-link">detect(int[])</a> - Method in class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/ParallelStreamDetector.html" title="class in ru.nsu.kuklin.parallelprime">ParallelStreamDetector</a></dt>
 <dd>
-<div class="block">Checks if there is a composite number in array.</div>
+<div class="block">Main method.</div>
 </dd>
-<dt><a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html#detectSequential(int%5B%5D)" class="member-name-link">detectSequential(int[])</a> - Static method in class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/CompositeNumberDetector.html" title="class in ru.nsu.kuklin.parallelprime">CompositeNumberDetector</a></dt>
+<dt><a href="ru/nsu/kuklin/parallelprime/RawThreadsDetector.html#detect(int%5B%5D)" class="member-name-link">detect(int[])</a> - Method in class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/RawThreadsDetector.html" title="class in ru.nsu.kuklin.parallelprime">RawThreadsDetector</a></dt>
 <dd>
-<div class="block">Checks if there is a composite number in array.</div>
+<div class="block">Main method.</div>
 </dd>
+<dt><a href="ru/nsu/kuklin/parallelprime/SequentialDetector.html#detect(int%5B%5D)" class="member-name-link">detect(int[])</a> - Method in class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/SequentialDetector.html" title="class in ru.nsu.kuklin.parallelprime">SequentialDetector</a></dt>
+<dd>
+<div class="block">Main method.</div>
+</dd>
+</dl>
+<h2 class="title" id="I:P">P</h2>
+<dl class="index">
+<dt><a href="ru/nsu/kuklin/parallelprime/ParallelStreamDetector.html" class="type-name-link" title="class in ru.nsu.kuklin.parallelprime">ParallelStreamDetector</a> - Class in <a href="ru/nsu/kuklin/parallelprime/package-summary.html">ru.nsu.kuklin.parallelprime</a></dt>
+<dd>
+<div class="block">Detects composite numbers using a parallel stream.</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/parallelprime/ParallelStreamDetector.html#%3Cinit%3E()" class="member-name-link">ParallelStreamDetector()</a> - Constructor for class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/ParallelStreamDetector.html" title="class in ru.nsu.kuklin.parallelprime">ParallelStreamDetector</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
+<dt><a href="ru/nsu/kuklin/parallelprime/RawThreadsDetector.html" class="type-name-link" title="class in ru.nsu.kuklin.parallelprime">RawThreadsDetector</a> - Class in <a href="ru/nsu/kuklin/parallelprime/package-summary.html">ru.nsu.kuklin.parallelprime</a></dt>
+<dd>
+<div class="block">Detects composite numbers using raw threads.</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/parallelprime/RawThreadsDetector.html#%3Cinit%3E(int)" class="member-name-link">RawThreadsDetector(int)</a> - Constructor for class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/RawThreadsDetector.html" title="class in ru.nsu.kuklin.parallelprime">RawThreadsDetector</a></dt>
+<dd>
+<div class="block">Construct to use a certain amount of threads.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/parallelprime/package-summary.html">ru.nsu.kuklin.parallelprime</a> - package ru.nsu.kuklin.parallelprime</dt>
 <dd>&nbsp;</dd>
 </dl>
-<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:R">R</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
+<h2 class="title" id="I:S">S</h2>
+<dl class="index">
+<dt><a href="ru/nsu/kuklin/parallelprime/SequentialDetector.html" class="type-name-link" title="class in ru.nsu.kuklin.parallelprime">SequentialDetector</a> - Class in <a href="ru/nsu/kuklin/parallelprime/package-summary.html">ru.nsu.kuklin.parallelprime</a></dt>
+<dd>
+<div class="block">Detects composite numbers sequentially</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/parallelprime/SequentialDetector.html#%3Cinit%3E()" class="member-name-link">SequentialDetector()</a> - Constructor for class ru.nsu.kuklin.parallelprime.<a href="ru/nsu/kuklin/parallelprime/SequentialDetector.html" title="class in ru.nsu.kuklin.parallelprime">SequentialDetector</a></dt>
+<dd>&nbsp;</dd>
+</dl>
+<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 </div>
 </div>
 </body>
