@@ -14,7 +14,7 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
     }
 
     public void put(@NotNull T o) throws InterruptedException {
-        freeSpace.acquireUninterruptibly();
+        freeSpace.acquire();
         occupiedSpace.release();
         synchronized(deque) {
             deque.push(o);
@@ -23,7 +23,7 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
 
     @NotNull
     public T get() throws InterruptedException {
-        occupiedSpace.acquireUninterruptibly();
+        occupiedSpace.acquire();
         freeSpace.release();
         T res;
         synchronized(deque) {
