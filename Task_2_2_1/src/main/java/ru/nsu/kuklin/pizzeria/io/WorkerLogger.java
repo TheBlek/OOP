@@ -1,4 +1,4 @@
-package ru.nsu.kuklin.pizzeria;
+package ru.nsu.kuklin.pizzeria.io;
 
 public class WorkerLogger implements ILogger {
     public WorkerLogger(Class<?> classObj, int id) {

@@ -1,9 +1,6 @@
 package ru.nsu.kuklin.pizzeria;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.concurrent.Semaphore;
-import java.util.function.Consumer;
+import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 
 public class State {
     public State(int storageSize) {

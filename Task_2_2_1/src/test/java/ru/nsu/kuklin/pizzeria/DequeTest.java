@@ -1,6 +1,7 @@
 package ru.nsu.kuklin.pizzeria;
 
 import org.junit.jupiter.api.Test;
+import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 
 import static java.lang.Thread.sleep;
 

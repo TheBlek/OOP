@@ -1,6 +1,9 @@
-package ru.nsu.kuklin.pizzeria;
+package ru.nsu.kuklin.pizzeria.baker;
 
-import java.util.function.Consumer;
+import ru.nsu.kuklin.pizzeria.Order;
+import ru.nsu.kuklin.pizzeria.worker.Worker;
+import ru.nsu.kuklin.pizzeria.io.ILogger;
+import ru.nsu.kuklin.pizzeria.queue.IBlockingQueue;
 
 public class Baker extends Worker {
     public Baker(ILogger logger, IBlockingQueue<Order> orders, IBlockingQueue<Order> storage) {
