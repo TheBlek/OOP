@@ -8,14 +8,14 @@ public class DequeTest {
     @Test
     public void testBlocking() {
         var deque = new BlockingDeque<Integer>(10);
-        new Thread() {
-            public void run() {
-                System.out.println(deque.pop());
-            }
-        }.start();
+        new Thread(() -> {
+            try {
+                System.out.println(deque.get());
+            } catch (InterruptedException ignored) {}
+        }).start();
         try {
             Thread.sleep(1000);
-        } catch (Exception ignored) {}
-        deque.push(10);
+            deque.put(10);
+        } catch (InterruptedException ignored) {}
     }
 }
