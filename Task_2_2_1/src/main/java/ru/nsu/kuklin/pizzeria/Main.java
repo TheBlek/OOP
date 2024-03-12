@@ -5,6 +5,9 @@ import ru.nsu.kuklin.pizzeria.baker.BakerData;
 import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
 import ru.nsu.kuklin.pizzeria.customer.CustomerData;
 import ru.nsu.kuklin.pizzeria.customer.DefaultCustomerFactory;
+import ru.nsu.kuklin.pizzeria.deliverer.DefaultDelivererFactory;
+import ru.nsu.kuklin.pizzeria.deliverer.Deliverer;
+import ru.nsu.kuklin.pizzeria.deliverer.DelivererData;
 import ru.nsu.kuklin.pizzeria.io.IDeserializer;
 import ru.nsu.kuklin.pizzeria.io.JsonDeserializer;
 import ru.nsu.kuklin.pizzeria.worker.Worker;
@@ -34,6 +37,11 @@ public class Main {
                 new WorkerProvider<>(
                         new JsonDeserializer<>(CustomerData.class, new File("customers1.json")),
                         new DefaultCustomerFactory(state))
+        );
+        startWorkers(
+                new WorkerProvider<>(
+                        new JsonDeserializer<>(DelivererData.class, new File("deliverers1.json")),
+                        new DefaultDelivererFactory(state))
         );
         Scanner input = new Scanner(System.in);
         String in;

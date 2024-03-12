@@ -17,7 +17,9 @@ public class JsonDeserializer<T> implements IDeserializer<T> {
     public T[] read() {
         try {
             return (T[]) mapper.readValue(file, type.arrayType());
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            System.out.printf("Failed to deserialize file %s: %s", file, e);
+        }
         return (T[]) new Object[0];
     }
 
