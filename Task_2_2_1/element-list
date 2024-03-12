@@ -1,5 +1,6 @@
 ru.nsu.kuklin.pizzeria
 ru.nsu.kuklin.pizzeria.baker
+ru.nsu.kuklin.pizzeria.customer
 ru.nsu.kuklin.pizzeria.io
 ru.nsu.kuklin.pizzeria.queue
 ru.nsu.kuklin.pizzeria.worker
