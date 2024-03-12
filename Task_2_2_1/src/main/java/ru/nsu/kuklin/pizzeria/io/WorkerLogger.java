@@ -1,14 +1,19 @@
 package ru.nsu.kuklin.pizzeria.io;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class WorkerLogger implements ILogger {
     public WorkerLogger(Class<?> classObj, int id) {
-        this.classObj = classObj;
+        this.className = classObj.getSimpleName();
         this.id = id;
     }
 
     public void log(String message) {
-        System.out.printf("[%s %d]: %s\n", classObj.getSimpleName(), id, message);
+        LocalDateTime now = LocalDateTime.now();
+        System.out.printf("[%s %d][%s]: %s\n", className, id, dtf.format(now), message);
     }
-    private final Class<?> classObj;
+    private final String className;
     private final int id;
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 }

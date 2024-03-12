@@ -14,6 +14,10 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType<JavaExec>() {
+    standardInput = System.`in`
+}
+
 dependencies {
     // Use JUnit test framework.
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
