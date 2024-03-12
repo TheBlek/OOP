@@ -20,5 +20,4 @@ public abstract class WorkerFactory<T extends Worker, D> {
     }
 
     protected final State state;
-    protected Class<?> type = null;
 }

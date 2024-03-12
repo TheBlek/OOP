@@ -11,7 +11,6 @@ public class DefaultCustomerFactory extends WorkerFactory<Customer, CustomerData
 
     @Override
     public Customer construct(CustomerData data) {
-        return new Customer(new WorkerLogger(Customer.class, id++), state.getOrders(), data.orders());
+        return new Customer(new WorkerLogger(Customer.class, data.name()), state.getOrders(), data.orders());
     }
-    private int id = 0;
 }
