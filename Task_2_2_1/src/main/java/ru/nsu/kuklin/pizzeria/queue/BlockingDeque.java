@@ -17,7 +17,7 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
         freeSpace.acquire();
         occupiedSpace.release();
         synchronized(deque) {
-            deque.push(o);
+            deque.add(o);
         }
     }
 
@@ -27,7 +27,7 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
         freeSpace.release();
         T res;
         synchronized(deque) {
-            res = deque.pop();
+            res = deque.poll();
         }
         return res;
     }

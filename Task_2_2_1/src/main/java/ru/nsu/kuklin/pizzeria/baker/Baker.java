@@ -22,7 +22,8 @@ public class Baker extends Worker {
                 logger.log("Ready to take order");
                 Order order = orders.get();
                 logger.log("Took order " + order.name());
-                Thread.sleep((int)(timeToPizza * 1000));
+                int sleep_time = (int)(timeToPizza * 1000.f);
+                Thread.sleep(sleep_time);
                 logger.log("Finished order " + order.name());
                 storage.put(order);
             } catch (Exception e) {
