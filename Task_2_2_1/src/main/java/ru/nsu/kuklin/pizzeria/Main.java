@@ -30,17 +30,17 @@ public class Main {
         workers = new ArrayList<>();
         startWorkers(
                 new WorkerProvider<>(
-                        new JsonDeserializer<>(BakerData.class, new File("bakers1.json")),
+                        new JsonDeserializer<>(BakerData.class, new File("configs/bakers1.json")),
                         new DefaultBakerFactory(state))
         );
         startWorkers(
                 new WorkerProvider<>(
-                        new JsonDeserializer<>(CustomerData.class, new File("customers1.json")),
+                        new JsonDeserializer<>(CustomerData.class, new File("configs/customers1.json")),
                         new DefaultCustomerFactory(state))
         );
         startWorkers(
                 new WorkerProvider<>(
-                        new JsonDeserializer<>(DelivererData.class, new File("deliverers1.json")),
+                        new JsonDeserializer<>(DelivererData.class, new File("configs/deliverers1.json")),
                         new DefaultDelivererFactory(state))
         );
         Scanner input = new Scanner(System.in);

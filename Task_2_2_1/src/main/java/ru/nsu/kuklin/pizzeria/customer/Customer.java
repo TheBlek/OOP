@@ -25,6 +25,14 @@ public class Customer extends Worker {
         logger.log("Going home");
     }
 
+    public BlockingDeque<Order> getOrders() {
+        return orders;
+    }
+
+    public Order[] getToPlace() {
+        return toPlace;
+    }
+
     private final BlockingDeque<Order> orders;
     private final Order[] toPlace;
 }

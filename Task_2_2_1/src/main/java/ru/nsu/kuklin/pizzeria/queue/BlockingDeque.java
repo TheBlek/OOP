@@ -33,7 +33,7 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
     }
 
     private final ArrayDeque<T> deque;
-    private int size;
+    private final int size;
     private final Semaphore occupiedSpace;
     private final Semaphore freeSpace;
 }

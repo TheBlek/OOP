@@ -32,6 +32,18 @@ public class Baker extends Worker {
         }
     }
 
+    public IBlockingQueue<Order> getOrders() {
+        return orders;
+    }
+
+    public IBlockingQueue<Order> getStorage() {
+        return storage;
+    }
+
+    public float getTimeToPizza() {
+        return timeToPizza;
+    }
+
     private final IBlockingQueue<Order> orders;
     private final IBlockingQueue<Order> storage;
     private final float timeToPizza;
