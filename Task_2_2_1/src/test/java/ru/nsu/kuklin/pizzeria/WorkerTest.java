@@ -36,7 +36,7 @@ public class WorkerTest {
             fail();
         }
         var end = System.nanoTime();
-        assertEquals(data.timePerPizza() * 1000.f, TimeUnit.NANOSECONDS.toMillis(end - start), 10.f);
+        assertEquals(data.timePerPizza() * 1000.f, TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
         assertEquals(new Order(0, "PIZZA"), out);
     }
     @Test

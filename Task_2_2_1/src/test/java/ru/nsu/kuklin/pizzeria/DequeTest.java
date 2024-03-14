@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 
 import static java.lang.Thread.sleep;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DequeTest {
     @Test
@@ -17,6 +18,18 @@ public class DequeTest {
         try {
             Thread.sleep(1000);
             deque.put(10);
+        } catch (InterruptedException ignored) {}
+    }
+
+    public void testQueue() {
+        var deque = new BlockingDeque<Integer>(10);
+        try {
+            deque.put(1);
+            deque.put(2);
+            deque.put(3);
+            assertEquals(1, deque.get());
+            assertEquals(2, deque.get());
+            assertEquals(3, deque.get());
         } catch (InterruptedException ignored) {}
     }
 }
