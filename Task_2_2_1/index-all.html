@@ -104,7 +104,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a> - Class in <a href="ru/nsu/kuklin/pizzeria/deliverer/package-summary.html">ru.nsu.kuklin.pizzeria.deliverer</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingDeque,float)" class="member-name-link">Deliverer(ILogger, BlockingDeque&lt;Order&gt;, float)</a> - Constructor for class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
+<dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,float)" class="member-name-link">Deliverer(ILogger, IBlockingQueue&lt;Order&gt;, float)</a> - Constructor for class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/DelivererData.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.deliverer">DelivererData</a> - Record Class in <a href="ru/nsu/kuklin/pizzeria/deliverer/package-summary.html">ru.nsu.kuklin.pizzeria.deliverer</a></dt>
 <dd>&nbsp;</dd>
@@ -144,9 +144,23 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html#get()" class="member-name-link">get()</a> - Method in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerProvider</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#getDeliveryTime()" class="member-name-link">getDeliveryTime()</a> - Method in class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#getOrders()" class="member-name-link">getOrders()</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html#getOrders()" class="member-name-link">getOrders()</a> - Method in class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/State.html#getOrders()" class="member-name-link">getOrders()</a> - Method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/State.html" title="class in ru.nsu.kuklin.pizzeria">State</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#getStorage()" class="member-name-link">getStorage()</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#getStorage()" class="member-name-link">getStorage()</a> - Method in class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/State.html#getStorage()" class="member-name-link">getStorage()</a> - Method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/State.html" title="class in ru.nsu.kuklin.pizzeria">State</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#getTimeToPizza()" class="member-name-link">getTimeToPizza()</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html#getToPlace()" class="member-name-link">getToPlace()</a> - Method in class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:H">H</h2>
@@ -305,8 +319,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html#type" class="member-name-link">type</a> - Variable in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerFactory</a></dt>
-<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">
@@ -320,7 +332,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.io">WorkerLogger</a> - Class in <a href="ru/nsu/kuklin/pizzeria/io/package-summary.html">ru.nsu.kuklin.pizzeria.io</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html#%3Cinit%3E(java.lang.Class,int)" class="member-name-link">WorkerLogger(Class&lt;?&gt;, int)</a> - Constructor for class ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html" title="class in ru.nsu.kuklin.pizzeria.io">WorkerLogger</a></dt>
+<dt><a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html#%3Cinit%3E(java.lang.Class,java.lang.String)" class="member-name-link">WorkerLogger(Class&lt;?&gt;, String)</a> - Constructor for class ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html" title="class in ru.nsu.kuklin.pizzeria.io">WorkerLogger</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerProvider&lt;T,<wbr>D&gt;</a> - Class in <a href="ru/nsu/kuklin/pizzeria/worker/package-summary.html">ru.nsu.kuklin.pizzeria.worker</a></dt>
 <dd>&nbsp;</dd>

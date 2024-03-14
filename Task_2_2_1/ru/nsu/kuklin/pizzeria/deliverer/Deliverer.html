@@ -117,8 +117,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingDeque,float)" class="member-name-link">Deliverer</a><wbr>(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
- <a href="../queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;storage,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,float)" class="member-name-link">Deliverer</a><wbr>(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
+ <a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;storage,
  float&nbsp;deliveryTime)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -135,6 +135,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDeliveryTime()" class="member-name-link">getDeliveryTime</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a><wbr>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStorage()" class="member-name-link">getStorage</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -156,10 +162,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingDeque,float)">
+<section class="detail" id="&lt;init&gt;(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,float)">
 <h3>Deliverer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Deliverer</span><wbr><span class="parameters">(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
- <a href="../queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;storage,
+ <a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;storage,
  float&nbsp;deliveryTime)</span></div>
 </section>
 </li>
@@ -175,6 +181,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="run()">
 <h3>run</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDeliveryTime()">
+<h3>getDeliveryTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getDeliveryTime</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStorage()">
+<h3>getStorage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</span>&nbsp;<span class="element-name">getStorage</span>()</div>
 </section>
 </li>
 </ul>
