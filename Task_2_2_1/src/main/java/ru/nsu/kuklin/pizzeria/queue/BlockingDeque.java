@@ -15,20 +15,20 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
 
     public void put(@NotNull T o) throws InterruptedException {
         freeSpace.acquire();
-        occupiedSpace.release();
         synchronized(deque) {
             deque.add(o);
         }
+        occupiedSpace.release();
     }
 
     @NotNull
     public T get() throws InterruptedException {
         occupiedSpace.acquire();
-        freeSpace.release();
         T res;
         synchronized(deque) {
             res = deque.poll();
         }
+        freeSpace.release();
         return res;
     }
 
