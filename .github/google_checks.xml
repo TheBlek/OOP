@@ -261,6 +261,7 @@
     <module name="AbbreviationAsWordInName">
       <property name="ignoreFinal" value="false"/>
       <property name="allowedAbbreviationLength" value="0"/>
+      <property name="allowedAbbreviations" value="I,XML,URL,O"/>
       <property name="tokens"
                value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF, ANNOTATION_FIELD_DEF,
                     PARAMETER_DEF, VARIABLE_DEF, METHOD_DEF, PATTERN_VARIABLE_DEF, RECORD_DEF,
@@ -353,7 +354,7 @@
     </module>
     <module name="SingleLineJavadoc"/>
     <module name="EmptyCatchBlock">
-      <property name="exceptionVariableName" value="expected"/>
+      <property name="exceptionVariableName" value="ignored"/>
     </module>
     <module name="CommentsIndentation">
       <property name="tokens" value="SINGLE_LINE_COMMENT, BLOCK_COMMENT_BEGIN"/>
