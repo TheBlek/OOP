@@ -17,6 +17,9 @@ public class DefaultDelivererFactory extends WorkerFactory<Deliverer, DelivererD
 
     @Override
     public Deliverer construct(DelivererData data) {
-        return new Deliverer(new WorkerLogger(Deliverer.class, data.name()), state.getStorage(), data.deliveryTime());
+        return new Deliverer(
+            new WorkerLogger(Deliverer.class, data.name()),
+            state.getStorage(),
+            data.deliveryTime());
     }
 }

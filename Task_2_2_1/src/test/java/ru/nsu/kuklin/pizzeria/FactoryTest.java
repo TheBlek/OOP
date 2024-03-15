@@ -27,9 +27,9 @@ public class FactoryTest {
     public void testBakerFactoryMap() {
         var state = new State(100, 100);
         var data = new BakerData[]{
-                new BakerData("John", 82),
-                new BakerData("Mike", -12),
-                new BakerData("Авдотьевна", 0),
+            new BakerData("John", 82),
+            new BakerData("Mike", -12),
+            new BakerData("Авдотьевна", 0),
         };
         var factory = new DefaultBakerFactory(state);
         var res = factory.map(data);
@@ -43,19 +43,38 @@ public class FactoryTest {
     @Test
     public void testCustomerFactory() {
         var state = new State(100, 100);
-        var data = new CustomerData("John", new Order[] {new Order(0, "PIZZA"), new Order(-123, "Another one")});
+        var orders = new Order[] {
+            new Order(0, "PIZZA"),
+            new Order(-123, "Another one")
+        };
+        var data = new CustomerData("John", orders);
         var factory = new DefaultCustomerFactory(state);
         var res = factory.construct(data);
-        assertArrayEquals(new Order[] {new Order(0, "PIZZA"), new Order(-123, "Another one")}, res.getToPlace());
+        assertArrayEquals(orders, res.getToPlace());
         assertEquals(state.getOrders(), res.getOrders());
     }
     @Test
     public void testCustomerFactoryMap() {
         var state = new State(100, 100);
         var data = new CustomerData[]{
-                new CustomerData("John", new Order[] {new Order(0, "PIZZA"), new Order(-123, "Another one")}),
-                new CustomerData("Mike", new Order[] {new Order(1, "PIZZA1"), new Order(-122, "Another oneasdfasd")}),
-                new CustomerData("Авдотьевна", new Order[] {new Order(2, "PIZZA2"), new Order(-0, "Another onesdf")}),
+            new CustomerData(
+                "John",
+                new Order[] {
+                    new Order(0, "PIZZA"),
+                    new Order(-123, "Another one")
+                }),
+            new CustomerData(
+                "Mike",
+                new Order[] {
+                    new Order(1, "PIZZA1"),
+                    new Order(-122, "Another oneasdfasd")
+                }),
+            new CustomerData(
+                "Авдотьевна",
+                new Order[] {
+                    new Order(2, "PIZZA2"),
+                    new Order(-0, "Another onesdf")
+                }),
         };
         var factory = new DefaultCustomerFactory(state);
         var res = factory.map(data);
@@ -77,9 +96,9 @@ public class FactoryTest {
     public void testDelivererFactoryMap() {
         var state = new State(100, 100);
         var data = new DelivererData[]{
-                new DelivererData("John", 90),
-                new DelivererData("Mike", -42),
-                new DelivererData("Авдотьевна", 0),
+            new DelivererData("John", 90),
+            new DelivererData("Mike", -42),
+            new DelivererData("Авдотьевна", 0),
         };
         var factory = new DefaultDelivererFactory(state);
         var res = factory.map(data);

@@ -39,19 +39,19 @@ public class Pizzeria {
         Integer[] lengths = new JsonDeserializer<>(Integer.class, new File(storageFile)).read();
         state = new State(lengths[0], lengths[1]);
         var bakers = startWorkers(
-                new WorkerProvider<>(
-                        new JsonDeserializer<>(BakerData.class, new File(bakersFile)),
-                        new DefaultBakerFactory(state))
+            new WorkerProvider<>(
+                new JsonDeserializer<>(BakerData.class, new File(bakersFile)),
+                new DefaultBakerFactory(state))
         );
         var customers = startWorkers(
-                new WorkerProvider<>(
-                        new JsonDeserializer<>(CustomerData.class, new File(customersFile)),
-                        new DefaultCustomerFactory(state))
+            new WorkerProvider<>(
+                new JsonDeserializer<>(CustomerData.class, new File(customersFile)),
+                new DefaultCustomerFactory(state))
         );
         var deliverers = startWorkers(
-                new WorkerProvider<>(
-                        new JsonDeserializer<>(DelivererData.class, new File(deliverersFile)),
-                        new DefaultDelivererFactory(state))
+            new WorkerProvider<>(
+                new JsonDeserializer<>(DelivererData.class, new File(deliverersFile)),
+                new DefaultDelivererFactory(state))
         );
         exit.waitForExitCondition();
         // Stop taking orders
@@ -75,10 +75,7 @@ public class Pizzeria {
             worker.worker().stop();
         }
         for (var worker : deliverers) {
-            try {
-                worker.thread().join();
-            } catch (InterruptedException ignored) {
-            }
+            try { worker.thread().join(); } catch (InterruptedException ignored) {}
         }
     }
 

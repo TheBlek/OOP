@@ -14,7 +14,6 @@ public class BlockingQueue<T> implements IBlockingQueue<T> {
      */
     public BlockingQueue(int numElements) {
         deque = new ArrayDeque<T>(numElements);
-        size = numElements;
         occupiedSpace = new Semaphore(0);
         freeSpace = new Semaphore(numElements);
     }
@@ -54,7 +53,6 @@ public class BlockingQueue<T> implements IBlockingQueue<T> {
     }
 
     private final ArrayDeque<T> deque;
-    private final int size;
     private final Semaphore occupiedSpace;
     private final Semaphore freeSpace;
 }

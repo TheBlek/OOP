@@ -16,6 +16,9 @@ public class DefaultBakerFactory extends WorkerFactory<Baker, BakerData> {
 
     @Override
     public Baker construct(BakerData data) {
-        return new Baker(new WorkerLogger(Baker.class, data.name()), state.getOrders(), state.getStorage(), data.timePerPizza());
+        return new Baker(
+            new WorkerLogger(Baker.class, data.name()),
+            state.getOrders(),
+            state.getStorage(), data.timePerPizza());
     }
 }

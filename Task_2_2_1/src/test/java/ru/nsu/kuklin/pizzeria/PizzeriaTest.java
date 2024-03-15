@@ -11,10 +11,10 @@ public class PizzeriaTest {
     @Test
     public void interruptTest() throws InterruptedException, AWTException {
         Pizzeria p = new Pizzeria(
-                "configs/defaultStorage.json",
-                "configs/bakers1.json",
-                "configs/deliverers1.json",
-                "configs/customers1.json");
+            "configs/defaultStorage.json",
+            "configs/bakers1.json",
+            "configs/deliverers1.json",
+            "configs/customers1.json");
         var t = new Thread(() -> p.run(new ExitCondition() {
             @Override
             public void waitForExitCondition() {

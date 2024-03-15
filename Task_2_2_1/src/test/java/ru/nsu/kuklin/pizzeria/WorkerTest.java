@@ -35,7 +35,9 @@ public class WorkerTest {
             fail();
         }
         var end = System.nanoTime();
-        assertEquals(data.timePerPizza() * 1000.f, TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
+        assertEquals(
+            data.timePerPizza() * 1000.f,
+            TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
         assertEquals(new Order(0, "PIZZA"), out);
     }
     @Test
@@ -55,21 +57,23 @@ public class WorkerTest {
         try {
             // This will execute instantly (empty space in storage)
             state.getStorage().put(new Order(1, "Stub"));
-            // This will execute only after the prev order is taken - hence the original one is delivered
+            // This will execute after the prev order is taken - hence the original is delivered
             state.getStorage().put(new Order(1, "Stub"));
         } catch (Exception e) {
             fail();
         }
         var end = System.nanoTime();
-        assertEquals(data.deliveryTime() * 1000.f, TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
+        assertEquals(
+            data.deliveryTime() * 1000.f,
+            TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
     }
     @Test
     public void testConsumers() {
         var state = new State(10, 100);
         var data = new CustomerData("John", new Order[] {
-                new Order(0, "PIZZA"),
-                new Order(0, "PIZZA123"),
-                new Order(0, "P"),
+            new Order(0, "PIZZA"),
+            new Order(0, "PIZZA123"),
+            new Order(0, "P"),
         });
         var factory = new DefaultCustomerFactory(state);
         var thread = new Thread(factory.construct(data));

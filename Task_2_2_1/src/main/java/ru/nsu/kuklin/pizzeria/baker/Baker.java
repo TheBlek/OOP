@@ -12,7 +12,11 @@ public class Baker extends Worker {
     /**
      * Construct baker.
      */
-    public Baker(ILogger logger, IBlockingQueue<Order> orders, IBlockingQueue<Order> storage, float timeToPizza) {
+    public Baker(
+        ILogger logger,
+        IBlockingQueue<Order> orders,
+        IBlockingQueue<Order> storage,
+        float timeToPizza) {
         super(logger);
         this.orders = orders;
         this.storage = storage;

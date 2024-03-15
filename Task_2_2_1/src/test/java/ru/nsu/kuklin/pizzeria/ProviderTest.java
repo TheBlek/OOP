@@ -15,9 +15,9 @@ public class ProviderTest {
         var state = new State(10, 10);
         var factory = new DefaultBakerFactory(state);
         var data = new BakerData[]{
-                new BakerData("John", 82),
-                new BakerData("Mike", -12),
-                new BakerData("Авдотьевна", 0),
+            new BakerData("John", 82),
+            new BakerData("Mike", -12),
+            new BakerData("Авдотьевна", 0),
         };
         var provider = new WorkerProvider<>(new IDeserializer<BakerData>() {
             @Override
