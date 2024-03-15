@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.baker.BakerData;
 import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
 import ru.nsu.kuklin.pizzeria.io.IDeserializer;
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 import ru.nsu.kuklin.pizzeria.worker.WorkerProvider;
 
 import static java.lang.Thread.sleep;

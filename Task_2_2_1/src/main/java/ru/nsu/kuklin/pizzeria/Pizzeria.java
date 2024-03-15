@@ -16,7 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Runs pizzeria based on given configs.
+ */
 public class Pizzeria {
+    /**
+     * Construct pizzeria from given configs.
+     */
     public Pizzeria(String storageFile, String bakersFile, String deliverersFile, String customersFile) {
         this.bakersFile = bakersFile;
         this.deliverersFile = deliverersFile;
@@ -24,7 +30,11 @@ public class Pizzeria {
         this.storageFile = storageFile;
     }
 
-    public State run(ExitCondition exit) {
+    /**
+     *  Runs pizzeria until exit condition is met.
+     *  Once closed, all existing orders in pizzeria are finished and delivered.
+     */
+    public void run(ExitCondition exit) {
         Integer[] lengths = new JsonDeserializer<>(Integer.class, new File(storageFile)).read();
         state = new State(lengths[0], lengths[1]);
         var bakers = startWorkers(
@@ -64,11 +74,16 @@ public class Pizzeria {
             worker.worker().stop();
         }
         for (var worker : deliverers) {
-            try { worker.thread().join(); } catch (InterruptedException ignored) {}
+            try {
+                worker.thread().join();
+            } catch (InterruptedException ignored) {
+            }
         }
-        return state;
     }
 
+    /**
+     * Get current pizzeria state.
+     */
     public State getState() {
         return state;
     }

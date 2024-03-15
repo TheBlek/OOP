@@ -4,7 +4,13 @@ import ru.nsu.kuklin.pizzeria.State;
 import ru.nsu.kuklin.pizzeria.io.WorkerLogger;
 import ru.nsu.kuklin.pizzeria.worker.WorkerFactory;
 
+/**
+ * Customer factory from data and state.
+ */
 public class DefaultCustomerFactory extends WorkerFactory<Customer, CustomerData> {
+    /**
+     * Construct from pizzeria state.
+     */
     public DefaultCustomerFactory(State state) {
         super(state);
     }

@@ -5,8 +5,13 @@ import ru.nsu.kuklin.pizzeria.worker.Worker;
 import ru.nsu.kuklin.pizzeria.io.ILogger;
 import ru.nsu.kuklin.pizzeria.queue.IBlockingQueue;
 
+/**
+ * Worker that takes orders from order queue and places them in storage on completion.
+ */
 public class Baker extends Worker {
-
+    /**
+     * Construct baker.
+     */
     public Baker(ILogger logger, IBlockingQueue<Order> orders, IBlockingQueue<Order> storage, float timeToPizza) {
         super(logger);
         this.orders = orders;
@@ -30,14 +35,23 @@ public class Baker extends Worker {
         logger.log("Going home");
     }
 
+    /**
+     * Get attached orders queue.
+     */
     public IBlockingQueue<Order> getOrders() {
         return orders;
     }
 
+    /**
+     * Get attached storage queue.
+     */
     public IBlockingQueue<Order> getStorage() {
         return storage;
     }
 
+    /**
+     * Get time spent on one pizza.
+     */
     public float getTimeToPizza() {
         return timeToPizza;
     }

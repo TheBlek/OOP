@@ -2,12 +2,8 @@ package ru.nsu.kuklin.pizzeria;
 
 import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.baker.BakerData;
-import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
 import ru.nsu.kuklin.pizzeria.customer.CustomerData;
-import ru.nsu.kuklin.pizzeria.io.IDeserializer;
 import ru.nsu.kuklin.pizzeria.io.JsonDeserializer;
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
-import ru.nsu.kuklin.pizzeria.worker.WorkerProvider;
 
 import java.io.File;
 

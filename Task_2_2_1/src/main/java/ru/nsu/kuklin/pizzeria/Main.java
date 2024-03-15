@@ -21,9 +21,14 @@ import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Main class that runs pizzeria in terminal.
+ */
 public class Main {
 
-
+    /**
+     * Runs pizzeria on sample config until quit in written into terminal.
+     */
     public static void main(String[] args) throws IOException {
         var pizza = new Pizzeria(
                 "configs/defaultStorage.json",

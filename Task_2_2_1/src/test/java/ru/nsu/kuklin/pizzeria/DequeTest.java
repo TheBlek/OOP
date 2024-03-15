@@ -1,7 +1,7 @@
 package ru.nsu.kuklin.pizzeria;
 
 import org.junit.jupiter.api.Test;
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
+import ru.nsu.kuklin.pizzeria.queue.BlockingQueue;
 
 import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DequeTest {
     @Test
     public void testBlocking() {
-        var deque = new BlockingDeque<Integer>(10);
+        var deque = new BlockingQueue<Integer>(10);
         new Thread(() -> {
             try {
                 System.out.println(deque.get());
@@ -22,7 +22,7 @@ public class DequeTest {
     }
 
     public void testQueue() {
-        var deque = new BlockingDeque<Integer>(10);
+        var deque = new BlockingQueue<Integer>(10);
         try {
             deque.put(1);
             deque.put(2);

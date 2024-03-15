@@ -5,14 +5,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
 
-public class BlockingDeque<T> implements IBlockingQueue<T> {
-    public BlockingDeque(int numElements) {
+/**
+ * Blocking queue with fixed capacity implementation.
+ */
+public class BlockingQueue<T> implements IBlockingQueue<T> {
+    /**
+     * Construct queue with given capacity.
+     */
+    public BlockingQueue(int numElements) {
         deque = new ArrayDeque<T>(numElements);
         size = numElements;
         occupiedSpace = new Semaphore(0);
         freeSpace = new Semaphore(numElements);
     }
 
+    /**
+     * Put element at the end of the queue blocking until there is enough space.
+     */
     public void put(@NotNull T o) throws InterruptedException {
         freeSpace.acquire();
         synchronized(deque) {
@@ -21,6 +30,9 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
         occupiedSpace.release();
     }
 
+    /**
+     * Get first element of the queue blocking until there is one.
+     */
     @NotNull
     public T get() throws InterruptedException {
         occupiedSpace.acquire();
@@ -32,6 +44,9 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
         return res;
     }
 
+    /**
+     * Get current queue length.
+     */
     public int getSize() {
         synchronized(deque) {
             return deque.size();

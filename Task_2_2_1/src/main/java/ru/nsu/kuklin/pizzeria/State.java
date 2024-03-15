@@ -1,21 +1,30 @@
 package ru.nsu.kuklin.pizzeria;
 
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
+import ru.nsu.kuklin.pizzeria.queue.BlockingQueue;
 
+/**
+ * Pizzeria state representation.
+ */
 public class State {
     public State(int storageSize, int queueSize) {
-        orders = new BlockingDeque<Order>(queueSize);
-        storage = new BlockingDeque<Order>(storageSize);
+        orders = new BlockingQueue<Order>(queueSize);
+        storage = new BlockingQueue<Order>(storageSize);
     }
 
-    private final BlockingDeque<Order> orders;
-    private final BlockingDeque<Order> storage;
+    private final BlockingQueue<Order> orders;
+    private final BlockingQueue<Order> storage;
 
-    public BlockingDeque<Order> getOrders() {
+    /**
+     * Get blocking incoming order queue.
+     */
+    public BlockingQueue<Order> getOrders() {
         return orders;
     }
 
-    public BlockingDeque<Order> getStorage() {
+    /**
+     * Get blocking storage queue.
+     */
+    public BlockingQueue<Order> getStorage() {
         return storage;
     }
 }

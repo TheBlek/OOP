@@ -5,8 +5,14 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Deserializer implementation from a json format file.
+ */
 @SuppressWarnings("unchecked")
 public class JsonDeserializer<T> implements IDeserializer<T> {
+    /**
+     *  Construct a deserializer for given type from a given file.
+     */
     public JsonDeserializer(Class<T> type, File file) {
         this.type = type;
         this.file = file;

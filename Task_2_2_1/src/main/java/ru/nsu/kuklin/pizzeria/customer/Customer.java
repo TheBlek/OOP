@@ -2,13 +2,17 @@ package ru.nsu.kuklin.pizzeria.customer;
 
 import ru.nsu.kuklin.pizzeria.Order;
 import ru.nsu.kuklin.pizzeria.io.ILogger;
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
+import ru.nsu.kuklin.pizzeria.queue.BlockingQueue;
 import ru.nsu.kuklin.pizzeria.worker.Worker;
 
-import java.util.List;
-
+/**
+ * Worker that places new orders in the queue.
+ */
 public class Customer extends Worker {
-    public Customer(ILogger logger, BlockingDeque<Order> orders, Order[] toPlace) {
+    /**
+     * Construct deliverer.
+     */
+    public Customer(ILogger logger, BlockingQueue<Order> orders, Order[] toPlace) {
         super(logger);
         this.orders = orders;
         this.toPlace = toPlace;
@@ -28,14 +32,20 @@ public class Customer extends Worker {
         logger.log("Going home");
     }
 
-    public BlockingDeque<Order> getOrders() {
+    /**
+     * Get attached orders queue.
+     */
+    public BlockingQueue<Order> getOrders() {
         return orders;
     }
 
+    /**
+     * Get orders that customer will place during his lifetime.
+     */
     public Order[] getToPlace() {
         return toPlace;
     }
 
-    private final BlockingDeque<Order> orders;
+    private final BlockingQueue<Order> orders;
     private final Order[] toPlace;
 }

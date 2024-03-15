@@ -7,7 +7,6 @@ import ru.nsu.kuklin.pizzeria.customer.CustomerData;
 import ru.nsu.kuklin.pizzeria.customer.DefaultCustomerFactory;
 import ru.nsu.kuklin.pizzeria.deliverer.DefaultDelivererFactory;
 import ru.nsu.kuklin.pizzeria.deliverer.DelivererData;
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 
 import java.util.concurrent.TimeUnit;
 

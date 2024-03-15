@@ -9,12 +9,25 @@ import java.util.List;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract factory that produces T workers from their data D.
+ */
 public abstract class WorkerFactory<T extends Worker, D> {
+    /**
+     * Initialize factory with pizzeria state.
+     */
     public WorkerFactory(State state) {
         this.state = state;
     }
 
+    /**
+     * Main method.
+     */
     public abstract T construct(D data);
+
+    /**
+     * Provided method of mapping an array into a list.
+     */
     public List<T> map(D[] data) {
         return Arrays.stream(data).map(this::construct).toList();
     }

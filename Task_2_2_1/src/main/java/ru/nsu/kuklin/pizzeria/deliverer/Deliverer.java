@@ -2,11 +2,16 @@ package ru.nsu.kuklin.pizzeria.deliverer;
 
 import ru.nsu.kuklin.pizzeria.Order;
 import ru.nsu.kuklin.pizzeria.io.ILogger;
-import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 import ru.nsu.kuklin.pizzeria.queue.IBlockingQueue;
 import ru.nsu.kuklin.pizzeria.worker.Worker;
 
+/**
+ * Worker that delivers orders from storage
+ */
 public class Deliverer extends Worker {
+    /**
+     * Construct deliverer.
+     */
     public Deliverer(ILogger logger, IBlockingQueue<Order> storage, float deliveryTime) {
         super(logger);
         this.storage = storage;
@@ -26,10 +31,16 @@ public class Deliverer extends Worker {
         logger.log("Going home");
     }
 
+    /**
+     * Get for one order delivery.
+     */
     public float getDeliveryTime() {
         return deliveryTime;
     }
 
+    /**
+     * Get attached storage.
+     */
     public IBlockingQueue<Order> getStorage() {
         return storage;
     }
