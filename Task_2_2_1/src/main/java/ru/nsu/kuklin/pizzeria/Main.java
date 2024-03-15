@@ -1,25 +1,6 @@
 package ru.nsu.kuklin.pizzeria;
 
-import ru.nsu.kuklin.pizzeria.baker.Baker;
-import ru.nsu.kuklin.pizzeria.baker.BakerData;
-import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
-import ru.nsu.kuklin.pizzeria.customer.CustomerData;
-import ru.nsu.kuklin.pizzeria.customer.DefaultCustomerFactory;
-import ru.nsu.kuklin.pizzeria.deliverer.DefaultDelivererFactory;
-import ru.nsu.kuklin.pizzeria.deliverer.Deliverer;
-import ru.nsu.kuklin.pizzeria.deliverer.DelivererData;
-import ru.nsu.kuklin.pizzeria.io.IDeserializer;
-import ru.nsu.kuklin.pizzeria.io.JsonDeserializer;
-import ru.nsu.kuklin.pizzeria.worker.Worker;
-import ru.nsu.kuklin.pizzeria.worker.WorkerFactory;
-import ru.nsu.kuklin.pizzeria.worker.WorkerProvider;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Main class that runs pizzeria in terminal.
@@ -46,7 +27,7 @@ public class Main {
                     } catch (Exception e) {
                         break;
                     }
-                } while(str != null && !str.equals("quit"));
+                } while (str != null && !str.equals("quit"));
             }
         });
     }

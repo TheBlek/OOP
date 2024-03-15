@@ -1,8 +1,6 @@
 package ru.nsu.kuklin.pizzeria.worker;
 
 import ru.nsu.kuklin.pizzeria.io.IDeserializer;
-
-import java.util.Arrays;
 import java.util.List;
 
 /**

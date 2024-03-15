@@ -18,7 +18,9 @@ public class PizzeriaTest {
         var t = new Thread(() -> p.run(new ExitCondition() {
             @Override
             public void waitForExitCondition() {
-                try { Thread.sleep(500); } catch (InterruptedException ignored) {}
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignored) { }
             }
         }));
         t.start();

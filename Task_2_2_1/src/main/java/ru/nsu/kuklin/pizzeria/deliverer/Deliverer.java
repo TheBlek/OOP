@@ -6,7 +6,7 @@ import ru.nsu.kuklin.pizzeria.queue.IBlockingQueue;
 import ru.nsu.kuklin.pizzeria.worker.Worker;
 
 /**
- * Worker that delivers orders from storage
+ * Worker that delivers orders from storage.
  */
 public class Deliverer extends Worker {
     /**
@@ -25,7 +25,7 @@ public class Deliverer extends Worker {
                 logger.log("Ready to deliver order");
                 var order = storage.get();
                 logger.log("Delivering order " + order);
-                Thread.sleep((int)(deliveryTime * 1000.f));
+                Thread.sleep((int) (deliveryTime * 1000.f));
             }
         } catch (InterruptedException ignored) { }
         logger.log("Going home");

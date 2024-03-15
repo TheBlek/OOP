@@ -1,13 +1,8 @@
 package ru.nsu.kuklin.pizzeria.worker;
 
 import ru.nsu.kuklin.pizzeria.State;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.IntFunction;
-import java.util.stream.Collectors;
 
 /**
  * Abstract factory that produces T workers from their data D.
