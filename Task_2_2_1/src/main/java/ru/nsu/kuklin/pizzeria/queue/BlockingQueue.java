@@ -24,7 +24,7 @@ public class BlockingQueue<T> implements IBlockingQueue<T> {
      */
     public void put(@NotNull T o) throws InterruptedException {
         freeSpace.acquire();
-        synchronized(deque) {
+        synchronized (deque) {
             deque.add(o);
         }
         occupiedSpace.release();
@@ -37,7 +37,7 @@ public class BlockingQueue<T> implements IBlockingQueue<T> {
     public T get() throws InterruptedException {
         occupiedSpace.acquire();
         T res;
-        synchronized(deque) {
+        synchronized (deque) {
             res = deque.poll();
         }
         freeSpace.release();
@@ -48,7 +48,7 @@ public class BlockingQueue<T> implements IBlockingQueue<T> {
      * Get current queue length.
      */
     public int getSize() {
-        synchronized(deque) {
+        synchronized (deque) {
             return deque.size();
         }
     }
