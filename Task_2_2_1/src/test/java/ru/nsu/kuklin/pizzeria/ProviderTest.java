@@ -1,14 +1,16 @@
 package ru.nsu.kuklin.pizzeria;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.baker.BakerData;
 import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
 import ru.nsu.kuklin.pizzeria.io.IDeserializer;
 import ru.nsu.kuklin.pizzeria.worker.WorkerProvider;
 
-import static java.lang.Thread.sleep;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Tests for worker provider.
+ */
 public class ProviderTest {
     @Test
     public void testBakerProvider() {

@@ -1,16 +1,18 @@
 package ru.nsu.kuklin.pizzeria;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.baker.BakerData;
 import ru.nsu.kuklin.pizzeria.customer.CustomerData;
 import ru.nsu.kuklin.pizzeria.io.JsonDeserializer;
-
 import java.io.File;
 
-import static java.lang.Thread.sleep;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests for json deserialization.
+ */
 public class JsonDeserializerTest {
     @Test
     public void testBakers() {

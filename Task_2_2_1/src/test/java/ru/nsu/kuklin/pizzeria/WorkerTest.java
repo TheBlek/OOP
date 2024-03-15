@@ -1,5 +1,7 @@
 package ru.nsu.kuklin.pizzeria;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.baker.BakerData;
 import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
@@ -7,12 +9,11 @@ import ru.nsu.kuklin.pizzeria.customer.CustomerData;
 import ru.nsu.kuklin.pizzeria.customer.DefaultCustomerFactory;
 import ru.nsu.kuklin.pizzeria.deliverer.DefaultDelivererFactory;
 import ru.nsu.kuklin.pizzeria.deliverer.DelivererData;
-
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Tests for workers.
+ */
 public class WorkerTest {
     @Test
     public void testBaker() {

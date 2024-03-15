@@ -1,5 +1,8 @@
 package ru.nsu.kuklin.pizzeria;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.baker.BakerData;
 import ru.nsu.kuklin.pizzeria.baker.DefaultBakerFactory;
@@ -8,10 +11,9 @@ import ru.nsu.kuklin.pizzeria.customer.DefaultCustomerFactory;
 import ru.nsu.kuklin.pizzeria.deliverer.DefaultDelivererFactory;
 import ru.nsu.kuklin.pizzeria.deliverer.DelivererData;
 
-import static java.lang.Thread.sleep;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Tests for worker factories.
+ */
 public class FactoryTest {
     @Test
     public void testBakerFactory() {
@@ -23,6 +25,7 @@ public class FactoryTest {
         assertEquals(state.getOrders(), res.getOrders());
         assertEquals(state.getStorage(), res.getStorage());
     }
+
     @Test
     public void testBakerFactoryMap() {
         var state = new State(100, 100);

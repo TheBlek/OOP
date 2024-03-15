@@ -1,11 +1,13 @@
 package ru.nsu.kuklin.pizzeria;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import ru.nsu.kuklin.pizzeria.queue.BlockingQueue;
 
-import static java.lang.Thread.sleep;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Tests for blocking queue.
+ */
 public class DequeTest {
     @Test
     public void testBlocking() {

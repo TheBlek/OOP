@@ -1,15 +1,15 @@
 package ru.nsu.kuklin.pizzeria;
 
-import org.junit.jupiter.api.Test;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
+
+/**
+ * Tests for pizzeria.
+ */
 public class PizzeriaTest {
     @Test
-    public void interruptTest() throws InterruptedException, AWTException {
+    public void interruptTest() throws InterruptedException {
         Pizzeria p = new Pizzeria(
             "configs/defaultStorage.json",
             "configs/bakers1.json",
