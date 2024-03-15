@@ -19,6 +19,7 @@ public abstract class Worker implements Runnable {
     public void stop() {
         shouldStop = true;
     }
+
     protected final ILogger logger;
     protected volatile Boolean shouldStop = false;
 }

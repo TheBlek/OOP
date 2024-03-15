@@ -40,6 +40,7 @@ public class WorkerTest {
             TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
         assertEquals(new Order(0, "PIZZA"), out);
     }
+
     @Test
     public void testDeliverer() {
         var state = new State(1, 100);
@@ -67,6 +68,7 @@ public class WorkerTest {
             data.deliveryTime() * 1000.f,
             TimeUnit.NANOSECONDS.toMillis(end - start), 50.f);
     }
+
     @Test
     public void testConsumers() {
         var state = new State(10, 100);

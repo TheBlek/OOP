@@ -20,6 +20,7 @@ public class WorkerProvider<T extends Worker, D> {
     public List<T> get() {
         return factory.map(deserializer.read());
     }
+
     private final IDeserializer<D> deserializer;
     private final WorkerFactory<T, D> factory;
 }

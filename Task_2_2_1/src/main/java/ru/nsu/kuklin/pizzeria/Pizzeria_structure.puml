@@ -1,0 +1,343 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 10,
+    "backwardDepth": 10,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": false, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": false,
+    "showMethodParameterNames": false,
+    "showMethodParameterTypes": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "ru.nsu.kuklin.pizzeria.Pizzeria",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_109392 { 
+   	label=nsu
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1255026446 { 
+   	label=kuklin
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Baker1387497538[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Baker</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   orders: IBlockingQueue&lt;Order&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   storage: IBlockingQueue&lt;Order&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   timeToPizza: float [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BlockingQueue1373054186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BlockingQueue&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   deque: ArrayDeque&lt;T&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   freeSpace: Semaphore [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   occupiedSpace: Semaphore [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Customer1912945735[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Customer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   orders: IBlockingQueue&lt;Order&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   toPlace: Order[] [0..*]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Deliverer1025665001[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Deliverer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   deliveryTime: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   storage: IBlockingQueue&lt;Order&gt; [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ExitCondition1114069069[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)ExitCondition</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ waitForExitCondition()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+IBlockingQueue1373054186[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)IBlockingQueue&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ get()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ put()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+IDeserializer2019290815[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)IDeserializer&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ read()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+ILogger2019290815[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)ILogger</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ log()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+JsonDeserializer2019290815[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)JsonDeserializer&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   file: File [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mapper: ObjectMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   type: Class&lt;T&gt; [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Order1114069069[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Order</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Pizzeria1114069069[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Pizzeria</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bakersFile: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   customersFile: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   deliverersFile: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   state: State [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   storageFile: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RunningWorker1114069069[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)RunningWorker</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   thread: Thread [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   worker: Worker [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+State1114069069[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)State</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   orders: BlockingQueue&lt;Order&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   storage: BlockingQueue&lt;Order&gt; [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Worker551604761[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Worker</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   logger: ILogger [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   shouldStop: Boolean [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+WorkerLogger2019290815[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)WorkerLogger</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   className: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dtf: DateTimeFormatter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Baker1387497538 -> IBlockingQueue1373054186[label="orders
+[0..1]"];
+Baker1387497538 -> IBlockingQueue1373054186[label="storage
+[0..1]"];
+Baker1387497538 -> Order1114069069[label="orders
+[0..1]"];
+Baker1387497538 -> Order1114069069[label="storage
+[0..1]"];
+Customer1912945735 -> IBlockingQueue1373054186[label="orders
+[0..1]"];
+Customer1912945735 -> Order1114069069[label="orders
+[0..1]"];
+Customer1912945735 -> Order1114069069[label="toPlace
+[0..*]"];
+Deliverer1025665001 -> IBlockingQueue1373054186[label="storage
+[0..1]"];
+Deliverer1025665001 -> Order1114069069[label="storage
+[0..1]"];
+IBlockingQueue1373054186 -> BlockingQueue1373054186[arrowhead=none, arrowtail=empty, dir=both];
+IDeserializer2019290815 -> JsonDeserializer2019290815[arrowhead=none, arrowtail=empty, dir=both];
+ILogger2019290815 -> WorkerLogger2019290815[arrowhead=none, arrowtail=empty, dir=both];
+Pizzeria1114069069 -> ExitCondition1114069069[label="run() -> waitForExitCondition()"];
+Pizzeria1114069069 -> JsonDeserializer2019290815[label="run() -> read()"];
+Pizzeria1114069069 -> State1114069069[label="state
+[0..1]"];
+RunningWorker1114069069 -> Worker551604761[label="worker
+[0..1]"];
+State1114069069 -> BlockingQueue1373054186[label="orders
+[0..1]"];
+State1114069069 -> BlockingQueue1373054186[label="storage
+[0..1]"];
+State1114069069 -> Order1114069069[label="orders
+[0..1]"];
+State1114069069 -> Order1114069069[label="storage
+[0..1]"];
+Worker551604761 -> Baker1387497538[arrowhead=none, arrowtail=empty, dir=both];
+Worker551604761 -> Customer1912945735[arrowhead=none, arrowtail=empty, dir=both];
+Worker551604761 -> Deliverer1025665001[arrowhead=none, arrowtail=empty, dir=both];
+Worker551604761 -> ILogger2019290815[label="logger
+[0..1]"];
+    
+}
+@enduml

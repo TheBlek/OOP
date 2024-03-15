@@ -11,9 +11,6 @@ public class State {
         storage = new BlockingQueue<Order>(storageSize);
     }
 
-    private final BlockingQueue<Order> orders;
-    private final BlockingQueue<Order> storage;
-
     /**
      * Get blocking incoming order queue.
      */
@@ -27,4 +24,7 @@ public class State {
     public BlockingQueue<Order> getStorage() {
         return storage;
     }
+
+    private final BlockingQueue<Order> orders;
+    private final BlockingQueue<Order> storage;
 }

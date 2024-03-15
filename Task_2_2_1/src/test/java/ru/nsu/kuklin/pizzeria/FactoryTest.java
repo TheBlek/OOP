@@ -53,6 +53,7 @@ public class FactoryTest {
         assertArrayEquals(orders, res.getToPlace());
         assertEquals(state.getOrders(), res.getOrders());
     }
+
     @Test
     public void testCustomerFactoryMap() {
         var state = new State(100, 100);
@@ -83,6 +84,7 @@ public class FactoryTest {
             assertEquals(state.getOrders(), res.get(i).getOrders());
         }
     }
+
     @Test
     public void testDelivererFactory() {
         var state = new State(100, 100);
@@ -92,6 +94,7 @@ public class FactoryTest {
         assertEquals(82, res.getDeliveryTime());
         assertEquals(state.getStorage(), res.getStorage());
     }
+
     @Test
     public void testDelivererFactoryMap() {
         var state = new State(100, 100);

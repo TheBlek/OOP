@@ -3,6 +3,7 @@ package ru.nsu.kuklin.pizzeria.customer;
 import ru.nsu.kuklin.pizzeria.Order;
 import ru.nsu.kuklin.pizzeria.io.ILogger;
 import ru.nsu.kuklin.pizzeria.queue.BlockingQueue;
+import ru.nsu.kuklin.pizzeria.queue.IBlockingQueue;
 import ru.nsu.kuklin.pizzeria.worker.Worker;
 
 /**
@@ -35,7 +36,7 @@ public class Customer extends Worker {
     /**
      * Get attached orders queue.
      */
-    public BlockingQueue<Order> getOrders() {
+    public IBlockingQueue<Order> getOrders() {
         return orders;
     }
 
@@ -46,6 +47,6 @@ public class Customer extends Worker {
         return toPlace;
     }
 
-    private final BlockingQueue<Order> orders;
+    private final IBlockingQueue<Order> orders;
     private final Order[] toPlace;
 }
