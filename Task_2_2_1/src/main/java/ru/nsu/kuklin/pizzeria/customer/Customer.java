@@ -29,7 +29,7 @@ public class Customer extends Worker {
                 logger.log("Placed order " + toPlace[i].name());
                 i++;
             }
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) { }
         logger.log("Going home");
     }
 

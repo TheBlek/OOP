@@ -35,7 +35,7 @@ public class Baker extends Worker {
                 logger.log("Finished order " + order.name());
                 storage.put(order);
             }
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) { }
         logger.log("Going home");
     }
 

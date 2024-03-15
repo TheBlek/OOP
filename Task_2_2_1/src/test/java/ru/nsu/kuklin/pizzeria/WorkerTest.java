@@ -83,8 +83,9 @@ public class WorkerTest {
 
         thread.start();
         try {
-            for (var order : data.orders())
+            for (var order : data.orders()) {
                 assertEquals(order, state.getOrders().get());
+            }
         } catch (Exception e) {
             fail();
         }

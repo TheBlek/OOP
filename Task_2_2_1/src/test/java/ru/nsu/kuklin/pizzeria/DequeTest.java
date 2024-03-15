@@ -15,14 +15,15 @@ public class DequeTest {
         new Thread(() -> {
             try {
                 System.out.println(deque.get());
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) { }
         }).start();
         try {
             Thread.sleep(1000);
             deque.put(10);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) { }
     }
 
+    @Test
     public void testQueue() {
         var deque = new BlockingQueue<Integer>(10);
         try {
@@ -32,6 +33,6 @@ public class DequeTest {
             assertEquals(1, deque.get());
             assertEquals(2, deque.get());
             assertEquals(3, deque.get());
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) { }
     }
 }

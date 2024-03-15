@@ -27,7 +27,7 @@ public class Deliverer extends Worker {
                 logger.log("Delivering order " + order);
                 Thread.sleep((int)(deliveryTime * 1000.f));
             }
-        } catch(InterruptedException ignored) {}
+        } catch (InterruptedException ignored) { }
         logger.log("Going home");
     }
 

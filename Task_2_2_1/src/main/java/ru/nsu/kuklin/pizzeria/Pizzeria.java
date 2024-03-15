@@ -61,27 +61,27 @@ public class Pizzeria {
         for (var worker : customers) {
             try {
                 worker.thread().join();
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) { }
         }
         // Stop baking when no left orders
-        while (state.getOrders().getSize() > 0) {}
+        while (state.getOrders().getSize() > 0) { }
         for (var worker : bakers) {
             worker.worker().stop();
         }
         for (var worker : bakers) {
             try {
                 worker.thread().join();
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) { }
         }
         // Stop delivering once no orders in storage
-        while (state.getStorage().getSize() > 0) {}
+        while (state.getStorage().getSize() > 0) { }
         for (var worker : deliverers) {
             worker.worker().stop();
         }
         for (var worker : deliverers) {
             try {
                 worker.thread().join();
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) { }
         }
     }
 

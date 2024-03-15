@@ -19,19 +19,20 @@ public class JsonDeserializerTest {
         var ds = new JsonDeserializer<>(BakerData.class, new File("configs/bakers1.json"));
         var res = ds.read();
         assertArrayEquals(new BakerData[] {
-                new BakerData("Smith", 10.f),
-                new BakerData("Cvbn", 15.f),
+            new BakerData("Smith", 10.f),
+            new BakerData("Cvbn", 15.f),
         }, res);
     }
+
     @Test
     public void testCustomers() {
         var ds = new JsonDeserializer<>(CustomerData.class, new File("configs/customers1.json"));
         var res = ds.read();
         var data = new CustomerData[] {
-                new CustomerData("John", new Order[] {
-                        new Order(0, "Pizza"),
-                        new Order(1, "Big pizza"),
-                }),
+            new CustomerData("John", new Order[] {
+                new Order(0, "Pizza"),
+                new Order(1, "Big pizza"),
+            }),
         };
         assertEquals(data.length, res.length);
         for (int i = 0; i < data.length; i++) {
