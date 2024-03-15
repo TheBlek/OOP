@@ -97,6 +97,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Deliverer</span>
 <span class="extends-implements">extends <a href="../worker/Worker.html" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a></span></div>
+<div class="block">Worker that delivers orders from storage</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -120,7 +121,9 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,float)" class="member-name-link">Deliverer</a><wbr>(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
  <a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;storage,
  float&nbsp;deliveryTime)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Construct deliverer.</div>
+</div>
 </div>
 </section>
 </li>
@@ -137,10 +140,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDeliveryTime()" class="member-name-link">getDeliveryTime</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get for one order delivery.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a><wbr>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStorage()" class="member-name-link">getStorage</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get attached storage.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -170,6 +177,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Deliverer</span><wbr><span class="parameters">(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
  <a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;storage,
  float&nbsp;deliveryTime)</span></div>
+<div class="block">Construct deliverer.</div>
 </section>
 </li>
 </ul>
@@ -190,12 +198,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getDeliveryTime()">
 <h3>getDeliveryTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getDeliveryTime</span>()</div>
+<div class="block">Get for one order delivery.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStorage()">
 <h3>getStorage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</span>&nbsp;<span class="element-name">getStorage</span>()</div>
+<div class="block">Get attached storage.</div>
 </section>
 </li>
 </ul>

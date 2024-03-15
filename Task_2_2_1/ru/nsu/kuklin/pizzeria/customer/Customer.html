@@ -97,6 +97,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Customer</span>
 <span class="extends-implements">extends <a href="../worker/Worker.html" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a></span></div>
+<div class="block">Worker that places new orders in the queue.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,10 +118,12 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingDeque,ru.nsu.kuklin.pizzeria.Order%5B%5D)" class="member-name-link">Customer</a><wbr>(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
- <a href="../queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;orders,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingQueue,ru.nsu.kuklin.pizzeria.Order%5B%5D)" class="member-name-link">Customer</a><wbr>(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
+ <a href="../queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;orders,
  <a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>[]&nbsp;toPlace)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Construct deliverer.</div>
+</div>
 </div>
 </section>
 </li>
@@ -135,12 +138,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a><wbr>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a><wbr>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrders()" class="member-name-link">getOrders</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get attached orders queue.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getToPlace()" class="member-name-link">getToPlace</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get orders that customer will place during his lifetime.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -165,11 +172,12 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingDeque,ru.nsu.kuklin.pizzeria.Order[])">
+<section class="detail" id="&lt;init&gt;(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingQueue,ru.nsu.kuklin.pizzeria.Order[])">
 <h3>Customer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Customer</span><wbr><span class="parameters">(<a href="../io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a>&nbsp;logger,
- <a href="../queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;orders,
+ <a href="../queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;&nbsp;orders,
  <a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>[]&nbsp;toPlace)</span></div>
+<div class="block">Construct deliverer.</div>
 </section>
 </li>
 </ul>
@@ -189,13 +197,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getOrders()">
 <h3>getOrders</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</span>&nbsp;<span class="element-name">getOrders</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a>&lt;<a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>&gt;</span>&nbsp;<span class="element-name">getOrders</span>()</div>
+<div class="block">Get attached orders queue.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getToPlace()">
 <h3>getToPlace</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a>[]</span>&nbsp;<span class="element-name">getToPlace</span>()</div>
+<div class="block">Get orders that customer will place during his lifetime.</div>
 </section>
 </li>
 </ul>

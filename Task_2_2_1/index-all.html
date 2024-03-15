@@ -53,24 +53,36 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:B">B</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a> - Class in <a href="ru/nsu/kuklin/pizzeria/baker/package-summary.html">ru.nsu.kuklin.pizzeria.baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Worker that takes orders from order queue and places them in storage on completion.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,float)" class="member-name-link">Baker(ILogger, IBlockingQueue&lt;Order&gt;, IBlockingQueue&lt;Order&gt;, float)</a> - Constructor for class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct baker.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/BakerData.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.baker">BakerData</a> - Record Class in <a href="ru/nsu/kuklin/pizzeria/baker/package-summary.html">ru.nsu.kuklin.pizzeria.baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Data for Customer.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/BakerData.html#%3Cinit%3E(java.lang.String,float)" class="member-name-link">BakerData(String, float)</a> - Constructor for record class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/BakerData.html" title="class in ru.nsu.kuklin.pizzeria.baker">BakerData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>BakerData</code> record class.</div>
 </dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque&lt;T&gt;</a> - Class in <a href="ru/nsu/kuklin/pizzeria/queue/package-summary.html">ru.nsu.kuklin.pizzeria.queue</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html#%3Cinit%3E(int)" class="member-name-link">BlockingDeque(int)</a> - Constructor for class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue&lt;T&gt;</a> - Class in <a href="ru/nsu/kuklin/pizzeria/queue/package-summary.html">ru.nsu.kuklin.pizzeria.queue</a></dt>
+<dd>
+<div class="block">Blocking queue with fixed capacity implementation.</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html#%3Cinit%3E(int)" class="member-name-link">BlockingQueue(int)</a> - Constructor for class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a></dt>
+<dd>
+<div class="block">Construct queue with given capacity.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html#construct(D)" class="member-name-link">construct(D)</a> - Method in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Main method.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/DefaultBakerFactory.html#construct(ru.nsu.kuklin.pizzeria.baker.BakerData)" class="member-name-link">construct(BakerData)</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/DefaultBakerFactory.html" title="class in ru.nsu.kuklin.pizzeria.baker">DefaultBakerFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/DefaultCustomerFactory.html#construct(ru.nsu.kuklin.pizzeria.customer.CustomerData)" class="member-name-link">construct(CustomerData)</a> - Method in class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/DefaultCustomerFactory.html" title="class in ru.nsu.kuklin.pizzeria.customer">DefaultCustomerFactory</a></dt>
@@ -78,11 +90,17 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/DefaultDelivererFactory.html#construct(ru.nsu.kuklin.pizzeria.deliverer.DelivererData)" class="member-name-link">construct(DelivererData)</a> - Method in class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/DefaultDelivererFactory.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">DefaultDelivererFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a> - Class in <a href="ru/nsu/kuklin/pizzeria/customer/package-summary.html">ru.nsu.kuklin.pizzeria.customer</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingDeque,ru.nsu.kuklin.pizzeria.Order%5B%5D)" class="member-name-link">Customer(ILogger, BlockingDeque&lt;Order&gt;, Order[])</a> - Constructor for class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Worker that places new orders in the queue.</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.BlockingQueue,ru.nsu.kuklin.pizzeria.Order%5B%5D)" class="member-name-link">Customer(ILogger, BlockingQueue&lt;Order&gt;, Order[])</a> - Constructor for class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a></dt>
+<dd>
+<div class="block">Construct deliverer.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/CustomerData.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.customer">CustomerData</a> - Record Class in <a href="ru/nsu/kuklin/pizzeria/customer/package-summary.html">ru.nsu.kuklin.pizzeria.customer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Data for Customer.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/CustomerData.html#%3Cinit%3E(java.lang.String,ru.nsu.kuklin.pizzeria.Order%5B%5D)" class="member-name-link">CustomerData(String, Order[])</a> - Constructor for record class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/CustomerData.html" title="class in ru.nsu.kuklin.pizzeria.customer">CustomerData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>CustomerData</code> record class.</div>
@@ -91,23 +109,39 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/DefaultBakerFactory.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.baker">DefaultBakerFactory</a> - Class in <a href="ru/nsu/kuklin/pizzeria/baker/package-summary.html">ru.nsu.kuklin.pizzeria.baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Deliverer factory from data and state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/DefaultBakerFactory.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.State)" class="member-name-link">DefaultBakerFactory(State)</a> - Constructor for class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/DefaultBakerFactory.html" title="class in ru.nsu.kuklin.pizzeria.baker">DefaultBakerFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/DefaultCustomerFactory.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.customer">DefaultCustomerFactory</a> - Class in <a href="ru/nsu/kuklin/pizzeria/customer/package-summary.html">ru.nsu.kuklin.pizzeria.customer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Customer factory from data and state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/DefaultCustomerFactory.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.State)" class="member-name-link">DefaultCustomerFactory(State)</a> - Constructor for class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/DefaultCustomerFactory.html" title="class in ru.nsu.kuklin.pizzeria.customer">DefaultCustomerFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct from pizzeria state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/DefaultDelivererFactory.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.deliverer">DefaultDelivererFactory</a> - Class in <a href="ru/nsu/kuklin/pizzeria/deliverer/package-summary.html">ru.nsu.kuklin.pizzeria.deliverer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Deliverer factory from data and state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/DefaultDelivererFactory.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.State)" class="member-name-link">DefaultDelivererFactory(State)</a> - Constructor for class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/DefaultDelivererFactory.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">DefaultDelivererFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct from pizzeria state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a> - Class in <a href="ru/nsu/kuklin/pizzeria/deliverer/package-summary.html">ru.nsu.kuklin.pizzeria.deliverer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Worker that delivers orders from storage</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger,ru.nsu.kuklin.pizzeria.queue.IBlockingQueue,float)" class="member-name-link">Deliverer(ILogger, IBlockingQueue&lt;Order&gt;, float)</a> - Constructor for class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct deliverer.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/DelivererData.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.deliverer">DelivererData</a> - Record Class in <a href="ru/nsu/kuklin/pizzeria/deliverer/package-summary.html">ru.nsu.kuklin.pizzeria.deliverer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Data for Deliverer.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/DelivererData.html#%3Cinit%3E(java.lang.String,float)" class="member-name-link">DelivererData(String, float)</a> - Constructor for record class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/DelivererData.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">DelivererData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>DelivererData</code> record class.</div>
@@ -140,40 +174,70 @@ loadScripts(document, 'script');</script>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/ExitCondition.html" class="type-name-link" title="interface in ru.nsu.kuklin.pizzeria">ExitCondition</a> - Interface in <a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Interface for blocking methods that pizzeria might want to wait for.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:G">G</h2>
 <dl class="index">
-<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html#get()" class="member-name-link">get()</a> - Method in class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html#get()" class="member-name-link">get()</a> - Method in class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a></dt>
+<dd>
+<div class="block">Get first element of the queue blocking until there is one.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html#get()" class="member-name-link">get()</a> - Method in interface ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets first element from the queue blocking until there is one.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html#get()" class="member-name-link">get()</a> - Method in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerProvider</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#getDeliveryTime()" class="member-name-link">getDeliveryTime()</a> - Method in class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get for one order delivery.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#getOrders()" class="member-name-link">getOrders()</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get attached orders queue.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html#getOrders()" class="member-name-link">getOrders()</a> - Method in class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get attached orders queue.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/State.html#getOrders()" class="member-name-link">getOrders()</a> - Method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/State.html" title="class in ru.nsu.kuklin.pizzeria">State</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html#getSize()" class="member-name-link">getSize()</a> - Method in class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get blocking incoming order queue.</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html#getSize()" class="member-name-link">getSize()</a> - Method in class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a></dt>
+<dd>
+<div class="block">Get current queue length.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html#getSize()" class="member-name-link">getSize()</a> - Method in interface ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns current size (not capacity) of the queue.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Pizzeria.html#getState()" class="member-name-link">getState()</a> - Method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Pizzeria.html" title="class in ru.nsu.kuklin.pizzeria">Pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get current pizzeria state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#getStorage()" class="member-name-link">getStorage()</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get attached storage queue.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#getStorage()" class="member-name-link">getStorage()</a> - Method in class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get attached storage.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/State.html#getStorage()" class="member-name-link">getStorage()</a> - Method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/State.html" title="class in ru.nsu.kuklin.pizzeria">State</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get blocking storage queue.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/baker/Baker.html#getTimeToPizza()" class="member-name-link">getTimeToPizza()</a> - Method in class ru.nsu.kuklin.pizzeria.baker.<a href="ru/nsu/kuklin/pizzeria/baker/Baker.html" title="class in ru.nsu.kuklin.pizzeria.baker">Baker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get time spent on one pizza.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/customer/Customer.html#getToPlace()" class="member-name-link">getToPlace()</a> - Method in class ru.nsu.kuklin.pizzeria.customer.<a href="ru/nsu/kuklin/pizzeria/customer/Customer.html" title="class in ru.nsu.kuklin.pizzeria.customer">Customer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get orders that customer will place during his lifetime.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:H">H</h2>
 <dl class="index">
@@ -201,27 +265,39 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html" class="type-name-link" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue&lt;T&gt;</a> - Interface in <a href="ru/nsu/kuklin/pizzeria/queue/package-summary.html">ru.nsu.kuklin.pizzeria.queue</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Blocking queue with a fixed capacity that allows different threads wait on the result of others.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Order.html#id()" class="member-name-link">id()</a> - Method in record class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>id</code> record component.</div>
 </dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/IDeserializer.html" class="type-name-link" title="interface in ru.nsu.kuklin.pizzeria.io">IDeserializer&lt;T&gt;</a> - Interface in <a href="ru/nsu/kuklin/pizzeria/io/package-summary.html">ru.nsu.kuklin.pizzeria.io</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Interface for general deserialization of objects.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/ILogger.html" class="type-name-link" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a> - Interface in <a href="ru/nsu/kuklin/pizzeria/io/package-summary.html">ru.nsu.kuklin.pizzeria.io</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">General interface for logging messages.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:J">J</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/io/JsonDeserializer.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.io">JsonDeserializer&lt;T&gt;</a> - Class in <a href="ru/nsu/kuklin/pizzeria/io/package-summary.html">ru.nsu.kuklin.pizzeria.io</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Deserializer implementation from a json format file.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/JsonDeserializer.html#%3Cinit%3E(java.lang.Class,java.io.File)" class="member-name-link">JsonDeserializer(Class&lt;T&gt;, File)</a> - Constructor for class ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/JsonDeserializer.html" title="class in ru.nsu.kuklin.pizzeria.io">JsonDeserializer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct a deserializer for given type from a given file.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/io/ILogger.html#log(java.lang.String)" class="member-name-link">log(String)</a> - Method in interface ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/ILogger.html" title="interface in ru.nsu.kuklin.pizzeria.io">ILogger</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Log a message.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html#log(java.lang.String)" class="member-name-link">log(String)</a> - Method in class ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html" title="class in ru.nsu.kuklin.pizzeria.io">WorkerLogger</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/Worker.html#logger" class="member-name-link">logger</a> - Variable in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/Worker.html" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a></dt>
@@ -230,13 +306,19 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/Main.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Main.html" title="class in ru.nsu.kuklin.pizzeria">Main</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Runs pizzeria on sample config until quit in written into terminal.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Main.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria">Main</a> - Class in <a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Main class that runs pizzeria in terminal.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Main.html#%3Cinit%3E()" class="member-name-link">Main()</a> - Constructor for class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Main.html" title="class in ru.nsu.kuklin.pizzeria">Main</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html#map(D%5B%5D)" class="member-name-link">map(D[])</a> - Method in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Provided method of mapping an array into a list.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:N">N</h2>
 <dl class="index">
@@ -260,7 +342,9 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:O">O</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/Order.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria">Order</a> - Record Class in <a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Order representation.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Order.html#%3Cinit%3E(int,java.lang.String)" class="member-name-link">Order(int, String)</a> - Constructor for record class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Order.html" title="class in ru.nsu.kuklin.pizzeria">Order</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Order</code> record class.</div>
@@ -273,18 +357,28 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/Pizzeria.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria">Pizzeria</a> - Class in <a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Runs pizzeria based on given configs.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Pizzeria.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">Pizzeria(String, String, String, String)</a> - Constructor for class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Pizzeria.html" title="class in ru.nsu.kuklin.pizzeria">Pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct pizzeria from given configs.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html#put(T)" class="member-name-link">put(T)</a> - Method in interface ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/IBlockingQueue.html" title="interface in ru.nsu.kuklin.pizzeria.queue">IBlockingQueue</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html#put(T)" class="member-name-link">put(T)</a> - Method in class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Puts an element into the queue blocking until there is enough space.</div>
+</dd>
+<dt><a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html#put(T)" class="member-name-link">put(T)</a> - Method in class ru.nsu.kuklin.pizzeria.queue.<a href="ru/nsu/kuklin/pizzeria/queue/BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a></dt>
+<dd>
+<div class="block">Put element at the end of the queue blocking until there is enough space.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/io/IDeserializer.html#read()" class="member-name-link">read()</a> - Method in interface ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/IDeserializer.html" title="interface in ru.nsu.kuklin.pizzeria.io">IDeserializer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Return all deserialized objects.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/JsonDeserializer.html#read()" class="member-name-link">read()</a> - Method in class ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/JsonDeserializer.html" title="class in ru.nsu.kuklin.pizzeria.io">JsonDeserializer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a> - package ru.nsu.kuklin.pizzeria</dt>
@@ -308,9 +402,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html#run()" class="member-name-link">run()</a> - Method in class ru.nsu.kuklin.pizzeria.deliverer.<a href="ru/nsu/kuklin/pizzeria/deliverer/Deliverer.html" title="class in ru.nsu.kuklin.pizzeria.deliverer">Deliverer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/Pizzeria.html#run(ru.nsu.kuklin.pizzeria.ExitCondition)" class="member-name-link">run(ExitCondition)</a> - Method in class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/Pizzeria.html" title="class in ru.nsu.kuklin.pizzeria">Pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Runs pizzeria until exit condition is met.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/RunningWorker.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria">RunningWorker</a> - Record Class in <a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Started worker representation.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/RunningWorker.html#%3Cinit%3E(java.lang.Thread,ru.nsu.kuklin.pizzeria.worker.Worker)" class="member-name-link">RunningWorker(Thread, Worker)</a> - Constructor for record class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/RunningWorker.html" title="class in ru.nsu.kuklin.pizzeria">RunningWorker</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>RunningWorker</code> record class.</div>
@@ -323,11 +421,15 @@ loadScripts(document, 'script');</script>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html#state" class="member-name-link">state</a> - Variable in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/State.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria">State</a> - Class in <a href="ru/nsu/kuklin/pizzeria/package-summary.html">ru.nsu.kuklin.pizzeria</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Pizzeria state representation.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/State.html#%3Cinit%3E(int,int)" class="member-name-link">State(int, int)</a> - Constructor for class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/State.html" title="class in ru.nsu.kuklin.pizzeria">State</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/Worker.html#stop()" class="member-name-link">stop()</a> - Method in class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/Worker.html" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Indicate that this worker should stop working.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:T">T</h2>
 <dl class="index">
@@ -363,27 +465,45 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">
 <dt><a href="ru/nsu/kuklin/pizzeria/ExitCondition.html#waitForExitCondition()" class="member-name-link">waitForExitCondition()</a> - Method in interface ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/ExitCondition.html" title="interface in ru.nsu.kuklin.pizzeria">ExitCondition</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">This call should block until arbitrary condition is met.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/RunningWorker.html#worker()" class="member-name-link">worker()</a> - Method in record class ru.nsu.kuklin.pizzeria.<a href="ru/nsu/kuklin/pizzeria/RunningWorker.html" title="class in ru.nsu.kuklin.pizzeria">RunningWorker</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>worker</code> record component.</div>
 </dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/Worker.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a> - Class in <a href="ru/nsu/kuklin/pizzeria/worker/package-summary.html">ru.nsu.kuklin.pizzeria.worker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Abstract worker class representing one task running in pizzeria.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/Worker.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.ILogger)" class="member-name-link">Worker(ILogger)</a> - Constructor for class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/Worker.html" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs from the logger.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerFactory&lt;T,<wbr>D&gt;</a> - Class in <a href="ru/nsu/kuklin/pizzeria/worker/package-summary.html">ru.nsu.kuklin.pizzeria.worker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Abstract factory that produces T workers from their data D.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.State)" class="member-name-link">WorkerFactory(State)</a> - Constructor for class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerFactory.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Initialize factory with pizzeria state.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.io">WorkerLogger</a> - Class in <a href="ru/nsu/kuklin/pizzeria/io/package-summary.html">ru.nsu.kuklin.pizzeria.io</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Implementation of ILogger interface that log the message from a particular worker.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html#%3Cinit%3E(java.lang.Class,java.lang.String)" class="member-name-link">WorkerLogger(Class&lt;?&gt;, String)</a> - Constructor for class ru.nsu.kuklin.pizzeria.io.<a href="ru/nsu/kuklin/pizzeria/io/WorkerLogger.html" title="class in ru.nsu.kuklin.pizzeria.io">WorkerLogger</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct from worker's class and name.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html" class="type-name-link" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerProvider&lt;T,<wbr>D&gt;</a> - Class in <a href="ru/nsu/kuklin/pizzeria/worker/package-summary.html">ru.nsu.kuklin.pizzeria.worker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Provider of workers based on a data deserializer and a factory.</div>
+</dd>
 <dt><a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html#%3Cinit%3E(ru.nsu.kuklin.pizzeria.io.IDeserializer,ru.nsu.kuklin.pizzeria.worker.WorkerFactory)" class="member-name-link">WorkerProvider(IDeserializer&lt;D&gt;, WorkerFactory&lt;T, D&gt;)</a> - Constructor for class ru.nsu.kuklin.pizzeria.worker.<a href="ru/nsu/kuklin/pizzeria/worker/WorkerProvider.html" title="class in ru.nsu.kuklin.pizzeria.worker">WorkerProvider</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Construct provider from given deserializer and factory.</div>
+</dd>
 </dl>
 <a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 </div>

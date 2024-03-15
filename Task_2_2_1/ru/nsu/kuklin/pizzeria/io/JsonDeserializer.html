@@ -96,6 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">JsonDeserializer&lt;T&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="IDeserializer.html" title="interface in ru.nsu.kuklin.pizzeria.io">IDeserializer</a>&lt;T&gt;</span></div>
+<div class="block">Deserializer implementation from a json format file.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -109,7 +110,9 @@ implements <a href="IDeserializer.html" title="interface in ru.nsu.kuklin.pizzer
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Class,java.io.File)" class="member-name-link">JsonDeserializer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;<a href="JsonDeserializer.html" title="type parameter in JsonDeserializer">T</a>&gt;&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Construct a deserializer for given type from a given file.</div>
+</div>
 </div>
 </section>
 </li>
@@ -126,7 +129,9 @@ implements <a href="IDeserializer.html" title="interface in ru.nsu.kuklin.pizzer
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="JsonDeserializer.html" title="type parameter in JsonDeserializer">T</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read()" class="member-name-link">read</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Return all deserialized objects.</div>
+</div>
 </div>
 </div>
 </div>
@@ -149,6 +154,7 @@ implements <a href="IDeserializer.html" title="interface in ru.nsu.kuklin.pizzer
 <h3>JsonDeserializer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">JsonDeserializer</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;<a href="JsonDeserializer.html" title="type parameter in JsonDeserializer">T</a>&gt;&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span></div>
+<div class="block">Construct a deserializer for given type from a given file.</div>
 </section>
 </li>
 </ul>
@@ -163,6 +169,8 @@ implements <a href="IDeserializer.html" title="interface in ru.nsu.kuklin.pizzer
 <section class="detail" id="read()">
 <h3>read</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="JsonDeserializer.html" title="type parameter in JsonDeserializer">T</a>[]</span>&nbsp;<span class="element-name">read</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="IDeserializer.html#read()">IDeserializer</a></code></span></div>
+<div class="block">Return all deserialized objects.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IDeserializer.html#read()">read</a></code>&nbsp;in interface&nbsp;<code><a href="IDeserializer.html" title="interface in ru.nsu.kuklin.pizzeria.io">IDeserializer</a>&lt;<a href="JsonDeserializer.html" title="type parameter in JsonDeserializer">T</a>&gt;</code></dd>

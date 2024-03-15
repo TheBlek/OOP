@@ -87,10 +87,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="BlockingDeque.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingDeque</a></code></dd>
+<dd><code><a href="BlockingQueue.html" title="class in ru.nsu.kuklin.pizzeria.queue">BlockingQueue</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IBlockingQueue&lt;T&gt;</span></div>
+<div class="block">Blocking queue with a fixed capacity that allows different threads wait on the result of others.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -107,13 +108,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IBlockingQueue.html" title="type parameter in IBlockingQueue">T</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get()" class="member-name-link">get</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Gets first element from the queue blocking until there is one.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSize()" class="member-name-link">getSize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns current size (not capacity) of the queue.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#put(T)" class="member-name-link">put</a><wbr>(<a href="IBlockingQueue.html" title="type parameter in IBlockingQueue">T</a>&nbsp;e)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Puts an element into the queue blocking until there is enough space.</div>
+</div>
 </div>
 </div>
 </div>
@@ -133,6 +140,7 @@ loadScripts(document, 'script');</script>
 <h3 id="put(java.lang.Object)">put</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">put</span><wbr><span class="parameters">(<a href="IBlockingQueue.html" title="type parameter in IBlockingQueue">T</a>&nbsp;e)</span>
   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Puts an element into the queue blocking until there is enough space.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
@@ -144,6 +152,7 @@ loadScripts(document, 'script');</script>
 <h3>get</h3>
 <div class="member-signature"><span class="return-type"><a href="IBlockingQueue.html" title="type parameter in IBlockingQueue">T</a></span>&nbsp;<span class="element-name">get</span>()
 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Gets first element from the queue blocking until there is one.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
@@ -154,6 +163,7 @@ throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/
 <section class="detail" id="getSize()">
 <h3>getSize</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getSize</span>()</div>
+<div class="block">Returns current size (not capacity) of the queue.</div>
 </section>
 </li>
 </ul>

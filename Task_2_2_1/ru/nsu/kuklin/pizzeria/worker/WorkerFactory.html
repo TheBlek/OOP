@@ -95,6 +95,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">WorkerFactory&lt;T extends <a href="Worker.html" title="class in ru.nsu.kuklin.pizzeria.worker">Worker</a>,<wbr>D&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Abstract factory that produces T workers from their data D.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -122,7 +123,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.kuklin.pizzeria.State)" class="member-name-link">WorkerFactory</a><wbr>(<a href="../State.html" title="class in ru.nsu.kuklin.pizzeria">State</a>&nbsp;state)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Initialize factory with pizzeria state.</div>
+</div>
 </div>
 </section>
 </li>
@@ -139,10 +142,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="WorkerFactory.html" title="type parameter in WorkerFactory">T</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#construct(D)" class="member-name-link">construct</a><wbr>(<a href="WorkerFactory.html" title="type parameter in WorkerFactory">D</a>&nbsp;data)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Main method.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="WorkerFactory.html" title="type parameter in WorkerFactory">T</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(D%5B%5D)" class="member-name-link">map</a><wbr>(<a href="WorkerFactory.html" title="type parameter in WorkerFactory">D</a>[]&nbsp;data)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Provided method of mapping an array into a list.</div>
+</div>
 </div>
 </div>
 </div>
@@ -178,6 +185,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(ru.nsu.kuklin.pizzeria.State)">
 <h3>WorkerFactory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WorkerFactory</span><wbr><span class="parameters">(<a href="../State.html" title="class in ru.nsu.kuklin.pizzeria">State</a>&nbsp;state)</span></div>
+<div class="block">Initialize factory with pizzeria state.</div>
 </section>
 </li>
 </ul>
@@ -192,12 +200,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="construct(D)">
 <h3 id="construct(java.lang.Object)">construct</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="WorkerFactory.html" title="type parameter in WorkerFactory">T</a></span>&nbsp;<span class="element-name">construct</span><wbr><span class="parameters">(<a href="WorkerFactory.html" title="type parameter in WorkerFactory">D</a>&nbsp;data)</span></div>
+<div class="block">Main method.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="map(D[])">
 <h3 id="map(java.lang.Object[])">map</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="WorkerFactory.html" title="type parameter in WorkerFactory">T</a>&gt;</span>&nbsp;<span class="element-name">map</span><wbr><span class="parameters">(<a href="WorkerFactory.html" title="type parameter in WorkerFactory">D</a>[]&nbsp;data)</span></div>
+<div class="block">Provided method of mapping an array into a list.</div>
 </section>
 </li>
 </ul>
