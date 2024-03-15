@@ -38,17 +38,17 @@ public class Pizzeria {
     public void run(ExitCondition exit) {
         Integer[] lengths = new JsonDeserializer<>(Integer.class, new File(storageFile)).read();
         state = new State(lengths[0], lengths[1]);
-        var bakers = startWorkers(
+        final var bakers = startWorkers(
             new WorkerProvider<>(
                 new JsonDeserializer<>(BakerData.class, new File(bakersFile)),
                 new DefaultBakerFactory(state))
         );
-        var customers = startWorkers(
+        final var customers = startWorkers(
             new WorkerProvider<>(
                 new JsonDeserializer<>(CustomerData.class, new File(customersFile)),
                 new DefaultCustomerFactory(state))
         );
-        var deliverers = startWorkers(
+        final var deliverers = startWorkers(
             new WorkerProvider<>(
                 new JsonDeserializer<>(DelivererData.class, new File(deliverersFile)),
                 new DefaultDelivererFactory(state))
@@ -59,7 +59,9 @@ public class Pizzeria {
             worker.worker().stop();
         }
         for (var worker : customers) {
-            try { worker.thread().join(); } catch (InterruptedException ignored) {}
+            try {
+                worker.thread().join();
+            } catch (InterruptedException ignored) {}
         }
         // Stop baking when no left orders
         while (state.getOrders().getSize() > 0) {}
@@ -67,7 +69,9 @@ public class Pizzeria {
             worker.worker().stop();
         }
         for (var worker : bakers) {
-            try { worker.thread().join(); } catch (InterruptedException ignored) {}
+            try {
+                worker.thread().join();
+            } catch (InterruptedException ignored) {}
         }
         // Stop delivering once no orders in storage
         while (state.getStorage().getSize() > 0) {}
@@ -75,7 +79,9 @@ public class Pizzeria {
             worker.worker().stop();
         }
         for (var worker : deliverers) {
-            try { worker.thread().join(); } catch (InterruptedException ignored) {}
+            try {
+                worker.thread().join();
+            } catch (InterruptedException ignored) {}
         }
     }
 
@@ -87,7 +93,7 @@ public class Pizzeria {
     }
 
     private static <T extends Worker, D>
-    List<RunningWorker> startWorkers(WorkerProvider<T, D> provider) {
+        List<RunningWorker> startWorkers(WorkerProvider<T, D> provider) {
         ArrayList<RunningWorker> result = new ArrayList<>();
         for (Worker w : provider.get()) {
             var t = new Thread(w);

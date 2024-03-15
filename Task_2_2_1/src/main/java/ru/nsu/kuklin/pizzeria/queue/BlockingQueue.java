@@ -1,7 +1,6 @@
 package ru.nsu.kuklin.pizzeria.queue;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
 

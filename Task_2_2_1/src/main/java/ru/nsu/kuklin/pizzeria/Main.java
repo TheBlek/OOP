@@ -29,7 +29,7 @@ public class Main {
     /**
      * Runs pizzeria on sample config until quit in written into terminal.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         var pizza = new Pizzeria(
                 "configs/defaultStorage.json",
                 "configs/bakers1.json",

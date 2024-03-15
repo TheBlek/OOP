@@ -1,7 +1,5 @@
 package ru.nsu.kuklin.pizzeria.io;
 
-import java.io.File;
-
 /**
  *  Interface for general deserialization of objects.
  */

@@ -2,7 +2,6 @@ package ru.nsu.kuklin.pizzeria.io;
 
 import java.io.File;
 import java.io.IOException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**

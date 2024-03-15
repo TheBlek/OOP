@@ -1,9 +1,7 @@
 package ru.nsu.kuklin.pizzeria.baker;
 
 import ru.nsu.kuklin.pizzeria.State;
-import ru.nsu.kuklin.pizzeria.io.ILogger;
 import ru.nsu.kuklin.pizzeria.io.WorkerLogger;
-import ru.nsu.kuklin.pizzeria.worker.Worker;
 import ru.nsu.kuklin.pizzeria.worker.WorkerFactory;
 
 /**
