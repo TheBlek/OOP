@@ -16,7 +16,7 @@ public abstract class WorkerFactory<T extends Worker, D> {
 
     public abstract T construct(D data);
     public List<T> map(D[] data) {
-        return Arrays.stream(data).map(this::construct).collect(Collectors.toList());
+        return Arrays.stream(data).map(this::construct).toList();
     }
 
     protected final State state;

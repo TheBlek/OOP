@@ -16,4 +16,5 @@ public class WorkerLogger implements ILogger {
     private final String className;
     private final String name;
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static WorkerLogger instance;
 }

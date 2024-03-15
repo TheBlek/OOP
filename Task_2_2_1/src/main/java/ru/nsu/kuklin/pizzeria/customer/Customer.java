@@ -16,12 +16,15 @@ public class Customer extends Worker {
 
     @Override
     public void run() {
+        int i = 0;
+
         try {
-            for (var order : toPlace) {
-                orders.put(order);
-                logger.log("Placed order " + order.name());
+            while (i < toPlace.length && !shouldStop) {
+                orders.put(toPlace[i]);
+                logger.log("Placed order " + toPlace[i].name());
+                i++;
             }
-        } catch (Exception ignored) {}
+        } catch (InterruptedException ignored) {}
         logger.log("Going home");
     }
 

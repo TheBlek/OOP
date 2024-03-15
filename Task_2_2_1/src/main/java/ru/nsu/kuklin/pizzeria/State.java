@@ -3,8 +3,8 @@ package ru.nsu.kuklin.pizzeria;
 import ru.nsu.kuklin.pizzeria.queue.BlockingDeque;
 
 public class State {
-    public State(int storageSize) {
-        orders = new BlockingDeque<Order>(100);
+    public State(int storageSize, int queueSize) {
+        orders = new BlockingDeque<Order>(queueSize);
         storage = new BlockingDeque<Order>(storageSize);
     }
 

@@ -22,48 +22,29 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-    private static State state;
-    private static ArrayList<Thread> workers;
+
 
     public static void main(String[] args) throws IOException {
-        state = new State(100);
-        workers = new ArrayList<>();
-        startWorkers(
-                new WorkerProvider<>(
-                        new JsonDeserializer<>(BakerData.class, new File("configs/bakers1.json")),
-                        new DefaultBakerFactory(state))
-        );
-        startWorkers(
-                new WorkerProvider<>(
-                        new JsonDeserializer<>(CustomerData.class, new File("configs/customers1.json")),
-                        new DefaultCustomerFactory(state))
-        );
-        startWorkers(
-                new WorkerProvider<>(
-                        new JsonDeserializer<>(DelivererData.class, new File("configs/deliverers1.json")),
-                        new DefaultDelivererFactory(state))
-        );
-        Scanner input = new Scanner(System.in);
-        String in;
-        do {
-            try {
-                in = input.nextLine();
-            } catch (Exception e) {
-                break;
+        var pizza = new Pizzeria(
+                "configs/defaultStorage.json",
+                "configs/bakers1.json",
+                "configs/deliverers1.json",
+                "configs/customers1.json");
+        pizza.run(new ExitCondition() {
+            @Override
+            public void waitForExitCondition() {
+                Scanner input = new Scanner(System.in);
+                String str;
+                do {
+                    try {
+                        str = input.nextLine();
+                    } catch (Exception e) {
+                        break;
+                    }
+                } while(str != null && !str.equals("quit"));
             }
-        } while(in != null && !in.equals("quit"));
-
-        // Exit condition
-        for (var worker : workers) {
-            worker.interrupt();
-        }
+        });
     }
 
-    private static <T extends Worker, D> void startWorkers(WorkerProvider<T, D> provider) {
-        for (Worker w : provider.get()) {
-            var t = new Thread(w);
-            t.start();
-            workers.add(t);
-        }
-    }
+
 }

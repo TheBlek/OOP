@@ -17,20 +17,17 @@ public class Baker extends Worker {
     @SuppressWarnings("BusyWait")
     @Override
     public void run() {
-        while (true) {
-            try {
+        try {
+            while (!shouldStop) {
                 logger.log("Ready to take order");
                 Order order = orders.get();
                 logger.log("Took order " + order.name());
-                int sleep_time = (int)(timeToPizza * 1000.f);
-                Thread.sleep(sleep_time);
+                Thread.sleep((int) (timeToPizza * 1000.f));
                 logger.log("Finished order " + order.name());
                 storage.put(order);
-            } catch (Exception e) {
-                logger.log("Going home");
-                return;
             }
-        }
+        } catch (InterruptedException ignored) {}
+        logger.log("Going home");
     }
 
     public IBlockingQueue<Order> getOrders() {

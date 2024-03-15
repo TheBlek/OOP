@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WorkerTest {
     @Test
     public void testBaker() {
-        var state = new State(100);
+        var state = new State(100, 100);
         try {
             state.getOrders().put(new Order(0, "PIZZA"));
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class WorkerTest {
     }
     @Test
     public void testDeliverer() {
-        var state = new State(1);
+        var state = new State(1, 100);
         try {
             state.getStorage().put(new Order(0, "PIZZA"));
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class WorkerTest {
     }
     @Test
     public void testConsumers() {
-        var state = new State(10);
+        var state = new State(10, 100);
         var data = new CustomerData("John", new Order[] {
                 new Order(0, "PIZZA"),
                 new Order(0, "PIZZA123"),

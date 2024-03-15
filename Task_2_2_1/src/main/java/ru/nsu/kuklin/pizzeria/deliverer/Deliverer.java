@@ -16,11 +16,11 @@ public class Deliverer extends Worker {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!shouldStop) {
                 logger.log("Ready to deliver order");
                 var order = storage.get();
                 logger.log("Delivering order " + order);
-                Thread.sleep((int)(deliveryTime * 1000));
+                Thread.sleep((int)(deliveryTime * 1000.f));
             }
         } catch(InterruptedException ignored) {}
         logger.log("Going home");

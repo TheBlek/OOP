@@ -32,6 +32,12 @@ public class BlockingDeque<T> implements IBlockingQueue<T> {
         return res;
     }
 
+    public int getSize() {
+        synchronized(deque) {
+            return deque.size();
+        }
+    }
+
     private final ArrayDeque<T> deque;
     private final int size;
     private final Semaphore occupiedSpace;

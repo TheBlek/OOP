@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProviderTest {
     @Test
     public void testBakerProvider() {
-        var state = new State(10);
+        var state = new State(10, 10);
         var factory = new DefaultBakerFactory(state);
         var data = new BakerData[]{
                 new BakerData("John", 82),
