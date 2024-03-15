@@ -9,12 +9,9 @@ import ru.nsu.kuklin.pizzeria.deliverer.DelivererData;
 import ru.nsu.kuklin.pizzeria.io.JsonDeserializer;
 import ru.nsu.kuklin.pizzeria.worker.Worker;
 import ru.nsu.kuklin.pizzeria.worker.WorkerProvider;
-
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Runs pizzeria based on given configs.
@@ -23,11 +20,15 @@ public class Pizzeria {
     /**
      * Construct pizzeria from given configs.
      */
-    public Pizzeria(String storageFile, String bakersFile, String deliverersFile, String customersFile) {
+    public Pizzeria(
+        String storageFile,
+        String bakersFile,
+        String deliverersFile,
+        String customersFile) {
+        this.storageFile = storageFile;
         this.bakersFile = bakersFile;
         this.deliverersFile = deliverersFile;
         this.customersFile = customersFile;
-        this.storageFile = storageFile;
     }
 
     /**
@@ -88,7 +89,8 @@ public class Pizzeria {
         return state;
     }
 
-    private static <T extends Worker, D>  List<RunningWorker> startWorkers(WorkerProvider<T, D> provider) {
+    private static <T extends Worker, D>
+    List<RunningWorker> startWorkers(WorkerProvider<T, D> provider) {
         ArrayList<RunningWorker> result = new ArrayList<>();
         for (Worker w : provider.get()) {
             var t = new Thread(w);
