@@ -46,13 +46,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-        showStandardStreams = true
-    }
-    finalizedBy(tasks.jacocoTestReport)
+    finalizedBy jacocoTestReport
 }
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = true
     }
