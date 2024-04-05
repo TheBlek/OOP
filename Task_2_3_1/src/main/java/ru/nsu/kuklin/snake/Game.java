@@ -15,20 +15,33 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Game extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        var loader = new FXMLLoader(Game.class.getResource("main_menu.fxml"));
-        Scene scene = new Scene(loader.load());
-        MainMenu menu = loader.getController();
-        menu.setGame(this);
         this.stage = stage;
         stage.setTitle("Snake");
+        toMainMenu(null);
+    }
+
+    private void toMainMenu(String message) {
+        var loader = new FXMLLoader(Game.class.getResource("main_menu.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(loader.load());
+        } catch (IOException e) {
+            System.out.println("Failed to load game.fxml");
+            return;
+        }
+        MainMenu menu = loader.getController();
+        menu.setGame(this);
+        if (message != null) {
+            menu.sendMessage(message);
+        }
         stage.setScene(scene);
         stage.show();
     }
-
     public void startGame(int fieldWidth, int fieldHeight) {
         var loader = new FXMLLoader(GameView.class.getResource("game.fxml"));
         Scene scene = null;
@@ -55,7 +68,9 @@ public class Game extends Application {
             new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    processor.step(gameModel);
+                    if (Objects.requireNonNull(processor.step(gameModel)) == StepStatus.LOSE) {
+                        toMainMenu("You died at your own hands at length " + gameModel.snake.size() + "\nPlay again?");
+                    }
                     view.draw(gameModel);
                 }
             });

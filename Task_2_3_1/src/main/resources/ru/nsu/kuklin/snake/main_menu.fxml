@@ -37,4 +37,5 @@
         </items>
         </ChoiceBox>
     </HBox>
+    <Label fx:id="message" textAlignment="CENTER"/>
 </VBox>

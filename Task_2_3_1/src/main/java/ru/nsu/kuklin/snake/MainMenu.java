@@ -3,6 +3,7 @@ package ru.nsu.kuklin.snake;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 
 public class MainMenu {
 
@@ -21,6 +22,9 @@ public class MainMenu {
     public void heightChanged() {
         this.fieldHeight = height.getValue();
     }
+    public void sendMessage(String text) {
+        message.setText(text);
+    }
 
     private int fieldWidth = 99;
     private int fieldHeight = 99;
@@ -28,5 +32,7 @@ public class MainMenu {
     private ChoiceBox<Integer> width;
     @FXML
     private ChoiceBox<Integer> height;
+    @FXML
+    private Label message;
     private Game game;
 }

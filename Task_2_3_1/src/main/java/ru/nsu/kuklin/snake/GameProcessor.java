@@ -9,16 +9,14 @@ import javafx.scene.input.KeyEvent;
 import java.util.Random;
 
 public class GameProcessor {
-    public GameProcessor() {
-    }
 
-    public void step(GameModel data) {
+    public StepStatus step(GameModel data) {
         while (data.food.size() < data.targetFoodCount) {
             spawnFood(data);
         }
         step++;
         if (step % period != 0) {
-            return;
+            return StepStatus.SKIP;
         }
         data.snakeDirection = snakeDirection;
         lastSnakeStep = snakeDirection;
@@ -34,12 +32,10 @@ public class GameProcessor {
                 data.food.remove(id);
                 break;
             case SNAKE:
-                data.startUp();
-                snakeDirection = Direction.DOWN;
-                lastSnakeStep = Direction.DOWN;
-                return;
+                return StepStatus.LOSE;
         }
         data.field[(int)newPos.getX()][(int)newPos.getY()] = CellType.SNAKE;
+        return StepStatus.OK;
     }
 
     private static Point2D getNextHead(GameModel data) {
