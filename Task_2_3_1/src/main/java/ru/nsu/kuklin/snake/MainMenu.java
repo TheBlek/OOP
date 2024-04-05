@@ -16,12 +16,15 @@ public class MainMenu {
      */
     public void startGame(ActionEvent event) {
         try {
-            int fCount = Integer.parseInt(foodCount.getText());
-            if (fCount <= 0) {
-                sendMessage("Food Count should be positive. How do you suppose eating anything otherwise?");
+            int foodCnt = Integer.parseInt(foodCount.getText());
+            if (foodCnt <= 0) {
+                sendMessage(
+                    "Food Count should be positive. " +
+                        "How do you suppose eating anything otherwise?"
+                );
                 return;
             }
-            game.startGame(fieldWidth, fieldHeight, fCount);
+            game.startGame(fieldWidth, fieldHeight, foodCnt);
         } catch (Exception ignored) { }
         sendMessage("Food Count is not a number!!!! Dumbass...");
     }
