@@ -6,9 +6,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.nsu.kuklin.snake.MainMenu"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.collections.FXCollections?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ru.nsu.kuklin.snake.MainMenu"
+      prefHeight="600.0" prefWidth="900.0"
+      alignment="CENTER">
+    <Button onAction="#startGame" text="Play"/>
+    <HBox alignment="CENTER">
+        <Label text="Width: "/>
+        <ChoiceBox fx:id="width" onAction="#widthChanged">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <Integer fx:value="1" />
+                    <Integer fx:value="12" />
+                    <Integer fx:value="27" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+    </HBox>
+    <HBox alignment="CENTER">
+        <Label text="Height: "/>
+        <ChoiceBox fx:id="height" onAction="#heightChanged">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <Integer fx:value="1" />
+                <Integer fx:value="12" />
+                <Integer fx:value="27" />
+            </FXCollections>
+        </items>
+        </ChoiceBox>
+    </HBox>
+</VBox>
