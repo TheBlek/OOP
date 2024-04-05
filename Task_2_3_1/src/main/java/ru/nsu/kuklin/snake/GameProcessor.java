@@ -30,6 +30,11 @@ public class GameProcessor {
             case FOOD:
                 var id = data.food.lastIndexOf(newPos);
                 data.food.remove(id);
+                untilNextSpeedUp -= 1;
+                if (untilNextSpeedUp == 0) {
+                    period -= 1;
+                    untilNextSpeedUp = startPeriod - period + 1;
+                }
                 break;
             case SNAKE:
                 return StepStatus.LOSE;
@@ -90,6 +95,8 @@ public class GameProcessor {
     private Direction snakeDirection = Direction.DOWN;
     private Direction lastSnakeStep = Direction.DOWN;
     private int step = 0;
-    private int period = 20;
+    private final int startPeriod = 20;
+    private int period = startPeriod;
+    private int untilNextSpeedUp = 1;
     private final Random rng = new Random();
 }
