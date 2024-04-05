@@ -78,6 +78,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GameModel</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Snake game model. Contains only data and initialization methods.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -102,24 +103,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;javafx.geometry.Point2D&gt;</code></div>
 <div class="col-second odd-row-color"><code><a href="#food" class="member-name-link">food</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#isGameOver" class="member-name-link">isGameOver</a></code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Deque.html" title="class or interface in java.util" class="external-link">Deque</a>&lt;javafx.geometry.Point2D&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#snake" class="member-name-link">snake</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><code><a href="#isGameWin" class="member-name-link">isGameWin</a></code></div>
+<div class="col-first odd-row-color"><code><a href="Direction.html" title="enum class in ru.nsu.kuklin.snake">Direction</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#snakeDirection" class="member-name-link">snakeDirection</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="Direction.html" title="enum class in ru.nsu.kuklin.snake">Direction</a></code></div>
-<div class="col-second even-row-color"><code><a href="#lastSnakeStep" class="member-name-link">lastSnakeStep</a></code></div>
+<div class="col-first even-row-color"><code>int</code></div>
+<div class="col-second even-row-color"><code><a href="#targetFoodCount" class="member-name-link">targetFoodCount</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Deque.html" title="class or interface in java.util" class="external-link">Deque</a>&lt;javafx.geometry.Point2D&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#snake" class="member-name-link">snake</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="Direction.html" title="enum class in ru.nsu.kuklin.snake">Direction</a></code></div>
-<div class="col-second even-row-color"><code><a href="#snakeDirection" class="member-name-link">snakeDirection</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><code><a href="#targetFoodCount" class="member-name-link">targetFoodCount</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -134,7 +126,9 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">GameModel</a><wbr>(int&nbsp;fieldWidth,
  int&nbsp;fieldHeight,
  int&nbsp;foodCount)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Create Snake game with given parameters.</div>
+</div>
 </div>
 </section>
 </li>
@@ -151,7 +145,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startUp()" class="member-name-link">startUp</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Setup new snake game.</div>
+</div>
 </div>
 </div>
 </div>
@@ -179,12 +175,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="snakeDirection">
 <h3>snakeDirection</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Direction.html" title="enum class in ru.nsu.kuklin.snake">Direction</a></span>&nbsp;<span class="element-name">snakeDirection</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="lastSnakeStep">
-<h3>lastSnakeStep</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Direction.html" title="enum class in ru.nsu.kuklin.snake">Direction</a></span>&nbsp;<span class="element-name">lastSnakeStep</span></div>
 </section>
 </li>
 <li>
@@ -217,18 +207,6 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">targetFoodCount</span></div>
 </section>
 </li>
-<li>
-<section class="detail" id="isGameOver">
-<h3>isGameOver</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isGameOver</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="isGameWin">
-<h3>isGameWin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isGameWin</span></div>
-</section>
-</li>
 </ul>
 </section>
 </li>
@@ -243,6 +221,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GameModel</span><wbr><span class="parameters">(int&nbsp;fieldWidth,
  int&nbsp;fieldHeight,
  int&nbsp;foodCount)</span></div>
+<div class="block">Create Snake game with given parameters.</div>
 </section>
 </li>
 </ul>
@@ -257,6 +236,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="startUp()">
 <h3>startUp</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startUp</span>()</div>
+<div class="block">Setup new snake game. Can be used to restart game to reuse GameModel object.</div>
 </section>
 </li>
 </ul>
