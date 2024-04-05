@@ -14,13 +14,14 @@ public class GameView {
     /**
      * Draw given snake game on the attached canvas.
      */
-    public void draw(GameModel game) {
+    public void draw(GameModel game, int period) {
         if (gc == null) {
             gc = canvas.getGraphicsContext2D();
         }
         int cellHeight = (int) (canvas.getHeight() / game.fieldHeight);
         int cellWidth = (int) (canvas.getWidth() / game.fieldWidth);
         score.setText("Score: " + game.snake.size());
+        speed.setText("Frames per step: " + period);
         for (int i = 0; i < game.field.length; i++) {
             for (int j = 0; j < game.field[0].length; j++) {
                 switch (game.field[i][j]) {
@@ -49,5 +50,7 @@ public class GameView {
     private ResizableCanvas canvas;
     @FXML
     private Label score;
+    @FXML
+    private Label speed;
     private GraphicsContext gc = null;
 }

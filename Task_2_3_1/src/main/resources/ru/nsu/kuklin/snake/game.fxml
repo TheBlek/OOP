@@ -13,9 +13,32 @@
 <?import ru.nsu.kuklin.snake.ResizableCanvas?>
 <HBox minHeight="600" minWidth="900" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.kuklin.snake.GameView">
     <ResizableCanvas HBox.hgrow="ALWAYS" fx:id="canvas"/>
-    <Label fx:id="score" minWidth="150">
-        <font>
-            <Font size="30.0" />
-        </font>
-    </Label>
+    <VBox>
+        <HBox.margin>
+            <Insets>
+                <left>10</left>
+                <right>10</right>
+            </Insets>
+        </HBox.margin>
+        <Label fx:id="score">
+            <VBox.margin>
+                <Insets>
+                    <top>10</top>
+                </Insets>
+            </VBox.margin>
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label fx:id="speed">
+            <VBox.margin>
+                <Insets>
+                    <top>10</top>
+                </Insets>
+            </VBox.margin>
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+    </VBox>
 </HBox>

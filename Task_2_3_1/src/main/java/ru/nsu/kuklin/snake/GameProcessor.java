@@ -114,6 +114,11 @@ public class GameProcessor {
     private Direction lastSnakeStep = Direction.DOWN;
     private int step = 0;
     private final int startPeriod;
+
+    public int getPeriod() {
+        return period;
+    }
+
     private int period;
     private int untilNextSpeedUp = 1;
     private final Random rng = new Random();

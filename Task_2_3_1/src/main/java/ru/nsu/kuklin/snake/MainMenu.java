@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * Main menu class that handles interaction in the main menu.
@@ -14,7 +15,15 @@ public class MainMenu {
      * Play button callback.
      */
     public void startGame(ActionEvent event) {
-        game.startGame(fieldWidth, fieldHeight);
+        try {
+            int fCount = Integer.parseInt(foodCount.getText());
+            if (fCount <= 0) {
+                sendMessage("Food Count should be positive. How do you suppose eating anything otherwise?");
+                return;
+            }
+            game.startGame(fieldWidth, fieldHeight, fCount);
+        } catch (Exception ignored) { }
+        sendMessage("Food Count is not a number!!!! Dumbass...");
     }
 
     /**
@@ -51,6 +60,8 @@ public class MainMenu {
     private ChoiceBox<Integer> width;
     @FXML
     private ChoiceBox<Integer> height;
+    @FXML
+    private TextField foodCount;
     @FXML
     private Label message;
     private Game game;

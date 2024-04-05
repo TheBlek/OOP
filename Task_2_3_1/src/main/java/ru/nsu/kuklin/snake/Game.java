@@ -34,9 +34,9 @@ public class Game extends Application {
     /**
      * Create game scene with given field size and start game.
      */
-    public void startGame(int fieldWidth, int fieldHeight) {
+    public void startGame(int fieldWidth, int fieldHeight, int foodCount) {
         var loader = new FXMLLoader(GameView.class.getResource("game.fxml"));
-        Scene scene = null;
+        Scene scene;
         try {
             scene = new Scene(loader.load());
         } catch (IOException e) {
@@ -47,10 +47,10 @@ public class Game extends Application {
 
         GameView view = loader.getController();
 
-        var gameLoop = new Timeline();
+        gameLoop = new Timeline();
         gameLoop.setCycleCount(Animation.INDEFINITE);
 
-        var gameModel = new GameModel(fieldWidth, fieldHeight, 1);
+        var gameModel = new GameModel(fieldWidth, fieldHeight, foodCount);
         var processor = new GameProcessor(20);
 
         scene.setOnKeyPressed(processor.getKeyHandler());
@@ -66,7 +66,7 @@ public class Game extends Application {
                                 + gameModel.snake.size()
                                 + "\nPlay again?");
                     }
-                    view.draw(gameModel);
+                    view.draw(gameModel, processor.getPeriod());
                 }
             });
 
@@ -77,12 +77,15 @@ public class Game extends Application {
     }
 
     private void toMainMenu(String message) {
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
         var loader = new FXMLLoader(Game.class.getResource("main_menu.fxml"));
-        Scene scene = null;
+        Scene scene;
         try {
             scene = new Scene(loader.load());
         } catch (IOException e) {
-            System.out.println("Failed to load game.fxml");
+            System.out.println("Failed to load main_menu.fxml");
             return;
         }
         MainMenu menu = loader.getController();
@@ -95,4 +98,5 @@ public class Game extends Application {
     }
 
     private Stage stage;
+    private Timeline gameLoop;
 }
