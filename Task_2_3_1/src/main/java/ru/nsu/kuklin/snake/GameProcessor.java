@@ -69,7 +69,6 @@ public class GameProcessor {
         return new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
                 if (event.getCode().equals(KeyCode.A) && lastSnakeStep != Direction.RIGHT) {
                     snakeDirection = Direction.LEFT;
                 } else if (event.getCode().equals(KeyCode.D) && lastSnakeStep != Direction.LEFT) {

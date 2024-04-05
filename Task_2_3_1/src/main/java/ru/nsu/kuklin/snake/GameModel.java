@@ -12,11 +12,13 @@ public class GameModel {
         snake = new ArrayDeque<>();
         targetFoodCount = foodCount;
         food = new ArrayList<>(targetFoodCount);
+        this.fieldHeight = fieldHeight;
+        this.fieldWidth = fieldWidth;
         startUp();
     }
     public void startUp() {
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
+        for (int i = 0; i < fieldWidth; i++) {
+            for (int j = 0; j < fieldHeight; j++) {
                 field[i][j] = CellType.EMPTY;
             }
         }
@@ -33,6 +35,8 @@ public class GameModel {
     public Direction snakeDirection;
     public Direction lastSnakeStep;
     public CellType[][] field;
+    public int fieldHeight;
+    public int fieldWidth;
     public ArrayList<Point2D> food;
     public int targetFoodCount;
     public boolean isGameOver = false;
