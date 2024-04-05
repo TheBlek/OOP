@@ -6,7 +6,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 
+/**
+ * Snake game model. Contains only data and initialization methods.
+ */
 public class GameModel {
+    /**
+     * Create Snake game with given parameters.
+     */
     public GameModel(int fieldWidth, int fieldHeight, int foodCount) {
         field = new CellType[fieldWidth][fieldHeight];
         snake = new ArrayDeque<>();
@@ -16,6 +22,10 @@ public class GameModel {
         this.fieldWidth = fieldWidth;
         startUp();
     }
+
+    /**
+     * Setup new snake game. Can be used to restart game to reuse GameModel object.
+     */
     public void startUp() {
         for (int i = 0; i < fieldWidth; i++) {
             for (int j = 0; j < fieldHeight; j++) {
@@ -33,12 +43,9 @@ public class GameModel {
     }
     public Deque<Point2D> snake;
     public Direction snakeDirection;
-    public Direction lastSnakeStep;
     public CellType[][] field;
     public int fieldHeight;
     public int fieldWidth;
     public ArrayList<Point2D> food;
     public int targetFoodCount;
-    public boolean isGameOver = false;
-    public boolean isGameWin = false;
 }

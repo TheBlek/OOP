@@ -7,7 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * Class with attached canvas that draws snake game.
+ */
 public class GameView {
+    /**
+     * Draw given snake game on the attached canvas.
+     */
     public void draw(GameModel game) {
         if (gc == null) {
             gc = canvas.getGraphicsContext2D();
@@ -40,7 +46,5 @@ public class GameView {
     private ResizableCanvas canvas;
     @FXML
     private Label score;
-    @FXML
-    private Pane pane;
     private GraphicsContext gc = null;
 }

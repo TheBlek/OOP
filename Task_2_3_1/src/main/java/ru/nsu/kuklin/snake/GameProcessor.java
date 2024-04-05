@@ -2,14 +2,23 @@ package ru.nsu.kuklin.snake;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Cell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Random;
 
 public class GameProcessor {
+    /**
+     * Create a process with given step period.
+     */
+    public GameProcessor(int startPeriod) {
+        this.startPeriod = startPeriod;
+        this.period = this.startPeriod;
+    }
 
+    /**
+     * Make one simulation step on the model.
+     */
     public StepStatus step(GameModel data) {
         while (data.food.size() < data.targetFoodCount) {
             spawnFood(data);
@@ -43,6 +52,26 @@ public class GameProcessor {
         return StepStatus.OK;
     }
 
+    /**
+     * Get key handler for events.
+     */
+    public EventHandler<KeyEvent> getKeyHandler() {
+        return new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.A) && lastSnakeStep != Direction.RIGHT) {
+                    snakeDirection = Direction.LEFT;
+                } else if (event.getCode().equals(KeyCode.D) && lastSnakeStep != Direction.LEFT) {
+                    snakeDirection = Direction.RIGHT;
+                } else if (event.getCode().equals(KeyCode.W) && lastSnakeStep != Direction.DOWN) {
+                    snakeDirection = Direction.UP;
+                } else if (event.getCode().equals(KeyCode.S) && lastSnakeStep != Direction.UP) {
+                    snakeDirection = Direction.DOWN;
+                }
+            }
+        };
+    }
+
     private static Point2D getNextHead(GameModel data) {
         var head = data.snake.getLast();
         var newPos = switch (data.snakeDirection) {
@@ -66,25 +95,9 @@ public class GameProcessor {
         return newPos;
     }
 
-    public EventHandler<KeyEvent> getKeyHandler() {
-        return new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.A) && lastSnakeStep != Direction.RIGHT) {
-                    snakeDirection = Direction.LEFT;
-                } else if (event.getCode().equals(KeyCode.D) && lastSnakeStep != Direction.LEFT) {
-                    snakeDirection = Direction.RIGHT;
-                } else if (event.getCode().equals(KeyCode.W) && lastSnakeStep != Direction.DOWN) {
-                    snakeDirection = Direction.UP;
-                } else if (event.getCode().equals(KeyCode.S) && lastSnakeStep != Direction.UP) {
-                    snakeDirection = Direction.DOWN;
-                }
-            }
-        };
-    }
     private void spawnFood(GameModel data) {
-        int foodX = 0;
-        int foodY = 0;
+        int foodX;
+        int foodY;
         do {
             foodX = rng.nextInt(0, data.field.length);
             foodY = rng.nextInt(0, data.field[0].length);
@@ -95,8 +108,9 @@ public class GameProcessor {
     private Direction snakeDirection = Direction.DOWN;
     private Direction lastSnakeStep = Direction.DOWN;
     private int step = 0;
-    private final int startPeriod = 20;
-    private int period = startPeriod;
+
+    private final int startPeriod;
+    private int period;
     private int untilNextSpeedUp = 1;
     private final Random rng = new Random();
 }

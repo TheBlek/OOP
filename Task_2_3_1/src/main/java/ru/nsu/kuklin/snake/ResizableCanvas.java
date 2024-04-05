@@ -2,6 +2,9 @@ package ru.nsu.kuklin.snake;
 
 import javafx.scene.canvas.Canvas;
 
+/**
+ * Canvas that is able to resize on its own.
+ */
 public class ResizableCanvas extends Canvas {
 
     @Override
@@ -31,7 +34,6 @@ public class ResizableCanvas extends Canvas {
 
     @Override
     public void resize(double width, double height) {
-        System.out.println("Resized to: " + width + "; " + height);
         this.setWidth(width);
         this.setHeight(height);
     }
