@@ -1,7 +1,6 @@
 package ru.nsu.kuklin.snake;
 
 import javafx.geometry.Point2D;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -36,11 +35,13 @@ public class GameModel {
         snake.add(new Point2D(0, 0));
         snake.add(new Point2D(0, 1));
         snake.add(new Point2D(0, 2));
-        for (var seg : snake)
-            field[(int)seg.getX()][(int)seg.getY()] = CellType.SNAKE;
+        for (var seg : snake) {
+            field[(int) seg.getX()][(int) seg.getY()] = CellType.SNAKE;
+        }
         snakeDirection = Direction.DOWN;
         food.clear();
     }
+
     public Deque<Point2D> snake;
     public Direction snakeDirection;
     public CellType[][] field;

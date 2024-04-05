@@ -7,16 +7,15 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Handles whole game, has entry point.
+ */
 public class Game extends Application {
     /**
      * Entry point.
@@ -62,7 +61,10 @@ public class Game extends Application {
                 @Override
                 public void handle(ActionEvent event) {
                     if (Objects.requireNonNull(processor.step(gameModel)) == StepStatus.LOSE) {
-                        toMainMenu("You died at your own hands at length " + gameModel.snake.size() + "\nPlay again?");
+                        toMainMenu(
+                            "You died at your own hands at length "
+                                + gameModel.snake.size()
+                                + "\nPlay again?");
                     }
                     view.draw(gameModel);
                 }

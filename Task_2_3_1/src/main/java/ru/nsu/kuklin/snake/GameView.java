@@ -38,10 +38,13 @@ public class GameView {
                         gc.setFill(Color.WHITE);
                         gc.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
                         break;
+                    default:
+                        break;
                 }
             }
         }
     }
+
     @FXML
     private ResizableCanvas canvas;
     @FXML

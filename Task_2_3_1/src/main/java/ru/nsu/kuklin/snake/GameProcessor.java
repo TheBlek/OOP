@@ -4,9 +4,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 import java.util.Random;
 
+/**
+ * Processes game steps.
+ */
 public class GameProcessor {
     /**
      * Create a process with given step period.
@@ -31,10 +33,10 @@ public class GameProcessor {
         lastSnakeStep = snakeDirection;
         var newPos = getNextHead(data);
         data.snake.add(newPos);
-        switch (data.field[(int)newPos.getX()][(int)newPos.getY()]) {
+        switch (data.field[(int) newPos.getX()][(int) newPos.getY()]) {
             case EMPTY:
                 var old = data.snake.remove();
-                data.field[(int)old.getX()][(int)old.getY()] = CellType.EMPTY;
+                data.field[(int) old.getX()][(int) old.getY()] = CellType.EMPTY;
                 break;
             case FOOD:
                 var id = data.food.lastIndexOf(newPos);
@@ -47,8 +49,10 @@ public class GameProcessor {
                 break;
             case SNAKE:
                 return StepStatus.LOSE;
+            default:
+                break;
         }
-        data.field[(int)newPos.getX()][(int)newPos.getY()] = CellType.SNAKE;
+        data.field[(int) newPos.getX()][(int) newPos.getY()] = CellType.SNAKE;
         return StepStatus.OK;
     }
 
@@ -105,10 +109,10 @@ public class GameProcessor {
         data.field[foodX][foodY] = CellType.FOOD;
         data.food.add(new Point2D(foodX, foodY));
     }
+
     private Direction snakeDirection = Direction.DOWN;
     private Direction lastSnakeStep = Direction.DOWN;
     private int step = 0;
-
     private final int startPeriod;
     private int period;
     private int untilNextSpeedUp = 1;
