@@ -23,6 +23,11 @@ public class MainMenu {
                         "How do you suppose eating anything otherwise?"
                 );
                 return;
+            } else if (foodCnt >= fieldHeight * fieldWidth) {
+                sendMessage(
+                    "Too much food is not good, try less"
+                );
+                return;
             }
             game.startGame(fieldWidth, fieldHeight, foodCnt);
         } catch (Exception ignored) { }
