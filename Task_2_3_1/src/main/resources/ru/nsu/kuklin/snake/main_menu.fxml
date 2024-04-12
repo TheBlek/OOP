@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ru.nsu.kuklin.snake.MainMenu"
+      prefHeight="600.0" prefWidth="900.0"
+      alignment="CENTER">
+    <Button onAction="#startGame" text="Play">
+        <VBox.margin>
+            <Insets>
+                <bottom>10</bottom>
+            </Insets>
+        </VBox.margin>
+    </Button>
+    <HBox alignment="CENTER">
+        <VBox.margin>
+            <Insets>
+                <bottom>10</bottom>
+            </Insets>
+        </VBox.margin>
+        <Label text="Width: "/>
+        <ChoiceBox fx:id="width" onAction="#widthChanged">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <Integer fx:value="1" />
+                    <Integer fx:value="12" />
+                    <Integer fx:value="27" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+    </HBox>
+    <HBox alignment="CENTER">
+        <VBox.margin>
+            <Insets>
+                <bottom>10</bottom>
+            </Insets>
+        </VBox.margin>
+        <Label text="Height: "/>
+        <ChoiceBox fx:id="height" onAction="#heightChanged">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <Integer fx:value="1" />
+                <Integer fx:value="12" />
+                <Integer fx:value="27" />
+            </FXCollections>
+        </items>
+        </ChoiceBox>
+    </HBox>
+    <HBox alignment="CENTER">
+        <VBox.margin>
+            <Insets>
+                <bottom>10</bottom>
+            </Insets>
+        </VBox.margin>
+        <Label text="Food Count: "/>
+        <TextField fx:id="foodCount"/>
+    </HBox>
+    <Label fx:id="message" textAlignment="CENTER"/>
+</VBox>
