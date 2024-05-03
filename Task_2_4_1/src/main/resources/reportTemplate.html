@@ -15,6 +15,8 @@
                <th>TESTS</th>
                <th>COVERAGE</th>
                <th>CHECKSTYLE</th>
+               <th>SOFT</th>
+               <th>HARD</th>
            </tr>
            <tr th:each="result : ${results.get(task_id)}">
                <td th:text="|${result.student().getName()} (${result.student().getNickname()})|"></td>
@@ -22,6 +24,8 @@
                <td th:text="|${result.testCount()-result.failCount()-result.skipCount()}/${result.failCount()}/${result.skipCount()}|"></td>
                <td th:text="|${result.coverage()}%|"></td>
                <td th:text="${result.checkstyle()}"></td>
+               <td th:text="${result.softPass()} ? 'Yes' : 'No'"></td>
+               <td th:text="${result.hardPass()} ? 'Yes' : 'No'"></td>
            </tr>
        </table>
     </div>
