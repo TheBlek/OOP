@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.kuklin.dsl","l":"Application"},{"p":"ru.nsu.kuklin.dsl","l":"TaskResult"}];updateSearchResults();
