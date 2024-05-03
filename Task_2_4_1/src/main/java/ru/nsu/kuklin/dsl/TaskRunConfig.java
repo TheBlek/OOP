@@ -1,6 +1,6 @@
 package ru.nsu.kuklin.dsl;
 
-public record TaskRunConfig(String task, boolean excludeTests) {
+record TaskRunConfig(String task, boolean excludeTests) {
     public TaskRunConfig(String task) {
         this(task, false);
     }
