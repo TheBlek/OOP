@@ -1,5 +1,7 @@
 package ru.nsu.kuklin.dsl;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.catchSystemExit;
+
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.util.DelegatingScript;
@@ -7,7 +9,6 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.jsoup.Jsoup;
@@ -23,13 +24,16 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static com.github.stefanbirkner.systemlambda.SystemLambda.catchSystemExit;
-
+/**
+ * Entry point class. Does all the work.
+ */
 public class Application {
+    /**
+     * Entry point. Does all the work of checking the labs.     * @param args
+     */
     public static void main(String[] args) {
         // Read configuration
         CompilerConfiguration cc = new CompilerConfiguration();
@@ -41,7 +45,9 @@ public class Application {
             System.out.println("Error: No config found.");
             return;
         }
-        var script = (DelegatingScript)sh.parse(new BufferedReader(new InputStreamReader(inputStream)));
+        var script = (DelegatingScript) sh.parse(
+            new BufferedReader(new InputStreamReader(inputStream))
+        );
         CheckerConfigGroovy config = new CheckerConfigGroovy();
         script.setDelegate(config);
         script.run();
@@ -51,14 +57,18 @@ public class Application {
         GradleConnector connector = GradleConnector.newConnector();
         var results = new ArrayList<ArrayList<TaskResult>>();
 
-        if (updateStudentsRepos(config, repoPrefix)) return;
+        if (updateStudentsRepos(config, repoPrefix)) {
+            return;
+        }
 
         for (var task : config.getTasks()) {
             /* Check all the tasks from this student */
             var taskResults = new ArrayList<TaskResult>();
             for (var student : config.getStudents()) {
                 System.out.println("Checking task " + task.getName() + "@" + student.getNickname());
-                var projectFile = new File(String.format("%s/%s/%s", repoPrefix, student.getNickname(), task.getName()));
+                var projectFile = new File(
+                    String.format("%s/%s/%s", repoPrefix, student.getNickname(), task.getName())
+                );
 
                 if (!projectFile.exists()) {
                     System.out.println("Project directory not found");
@@ -105,7 +115,8 @@ public class Application {
         generateReport(results, config);
     }
 
-    private record PassResults(boolean soft, boolean hard) {};
+    private record PassResults(boolean soft, boolean hard) {}
+
     private static PassResults getSoftHardPasses(Task task, Student student, String repoPrefix) {
         boolean hardPass = false;
         boolean softPass = false;
@@ -120,7 +131,9 @@ public class Application {
             int last = 0;
             for (RevCommit commit : commits) {
                 if (first == null) {
-                    first = LocalDate.ofInstant(Instant.ofEpochSecond(commit.getCommitTime()), ZoneId.systemDefault());
+                    first = LocalDate.ofInstant(
+                        Instant.ofEpochSecond(commit.getCommitTime()), ZoneId.systemDefault()
+                    );
                 }
                 last = commit.getCommitTime();
             }
@@ -132,11 +145,14 @@ public class Application {
 
             softPass = first.isBefore(task.getSoftDeadline());
             hardPass = lastDate.isBefore(task.getHardDeadline());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         return new PassResults(softPass, hardPass);
     }
 
-    private static void generateReport(ArrayList<ArrayList<TaskResult>> results, CheckerConfigGroovy config) {
+    private static void generateReport(
+        ArrayList<ArrayList<TaskResult>> results,
+        CheckerConfigGroovy config
+    ) {
         var engine = new TemplateEngine();
         engine.setTemplateResolver(new FileTemplateResolver());
         var ctx = new Context();
@@ -153,15 +169,28 @@ public class Application {
         }
     }
 
-    private static CheckstyleResult getCheckstyleResult(Task task, Student student, String repoPrefix) {
+    private static CheckstyleResult getCheckstyleResult(
+        Task task,
+        Student student,
+        String repoPrefix
+    ) {
         CheckstyleResult checkstyle = CheckstyleResult.CLEAN;
         try {
             var outFile = "checkstyle.txt";
             int exitCode = catchSystemExit(() -> {
                 try {
-                    String configPath = String.format("%s/%s/.github/google_checks.xml", repoPrefix, student.getNickname());
-                    var mainSourcePath = String.format("%s/%s/%s/src/main/java/", repoPrefix, student.getNickname(), task.getName());
-                    var testSourcePath = String.format("%s/%s/%s/src/test/java/", repoPrefix, student.getNickname(), task.getName());
+                    String configPath = String.format(
+                        "%s/%s/.github/google_checks.xml",
+                        repoPrefix, student.getNickname()
+                    );
+                    var mainSourcePath = String.format(
+                        "%s/%s/%s/src/main/java/",
+                        repoPrefix, student.getNickname(), task.getName()
+                    );
+                    var testSourcePath = String.format(
+                        "%s/%s/%s/src/test/java/",
+                        repoPrefix, student.getNickname(), task.getName()
+                    );
                     Main.main("-c", configPath, "-o", outFile, mainSourcePath, testSourcePath);
                 } catch (IOException e) {
                     System.out.println("Failed to call checkstyle: " + e);
@@ -186,12 +215,17 @@ public class Application {
                 checkstyle = CheckstyleResult.WARNING;
             }
         } catch (Exception e) {
-            System.out.println("Something weird happened... Exit should have been called... No checkstyle data, sry");
+            System.out.println("Exit should have been called... No checkstyle data, sry");
         }
         return checkstyle;
     }
 
-    private static int getCoveragePercentage(ProjectConnection connection, String repoPrefix, Student student, Task task ) {
+    private static int getCoveragePercentage(
+        ProjectConnection connection,
+        String repoPrefix,
+        Student student,
+        Task task
+    ) {
         runTask(connection, new TaskRunConfig("jacocoTestReport"));
 
         File jacocoFile = new File(
@@ -219,6 +253,8 @@ public class Application {
             return 0;
         }
     }
+
+    private record TestCounts(int total, int fail, int skip) {}
 
     private static TestCounts getTestCounts(String repoPrefix, Student student, Task task) {
         File reportFile = new File(
