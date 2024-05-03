@@ -6,6 +6,8 @@ import groovy.util.DelegatingScript;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.jsoup.Jsoup;
@@ -18,6 +20,10 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import com.puppycrawl.tools.checkstyle.Main;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,7 +47,7 @@ public class Application {
         script.run();
 
         // Do the stuff
-        String repoPrefix = "src/main/resources/repoes";
+        String repoPrefix = "repoes";
         GradleConnector connector = GradleConnector.newConnector();
         var results = new ArrayList<ArrayList<TaskResult>>();
 
@@ -60,13 +66,14 @@ public class Application {
                 }
 
                 var connection = connector.forProjectDirectory(projectFile).connect();
-                var builds = runTask(connection, new TaskRunConfig("build").withClean().withExcludeTests());
+                runTask(connection, new TaskRunConfig("clean"));
+                var builds = runTask(connection, new TaskRunConfig("build").withExcludeTests());
                 var tests = runTask(connection, new TaskRunConfig("test"));
 
                 TestCounts counts = getTestCounts(repoPrefix, student, task);
 
                 int coveragePercent = 0;
-                if (tests.isSuccess()) {
+                if (tests) {
                     coveragePercent = getCoveragePercentage(connection, repoPrefix, student, task);
                 }
 
@@ -74,7 +81,21 @@ public class Application {
 
                 runTask(connection, new TaskRunConfig("javadoc"));
 
-                taskResults.add(new TaskResult(student, builds.isSuccess(), counts.total(), counts.fail(), counts.skip(), coveragePercent, checkstyle));
+                PassResults passes = getSoftHardPasses(task, student, repoPrefix);
+
+                taskResults.add(
+                    new TaskResult(
+                        student,
+                        builds,
+                        counts.total(),
+                        counts.fail(),
+                        counts.skip(),
+                        coveragePercent,
+                        checkstyle,
+                        passes.soft(),
+                        passes.hard()
+                    )
+                );
                 connection.close();
             }
             results.add(taskResults);
@@ -84,6 +105,37 @@ public class Application {
         generateReport(results, config);
     }
 
+    private record PassResults(boolean soft, boolean hard) {};
+    private static PassResults getSoftHardPasses(Task task, Student student, String repoPrefix) {
+        boolean hardPass = false;
+        boolean softPass = false;
+        try {
+            var repoFile = new File(String.format("%s/%s", repoPrefix, student.getNickname()));
+            var commits = Git
+                .open(repoFile)
+                .log()
+                .addPath(task.getName())
+                .call();
+            LocalDate first = null;
+            int last = 0;
+            for (RevCommit commit : commits) {
+                if (first == null) {
+                    first = LocalDate.ofInstant(Instant.ofEpochSecond(commit.getCommitTime()), ZoneId.systemDefault());
+                }
+                last = commit.getCommitTime();
+            }
+            if (first == null) {
+                System.out.println("No commits with this project found.");
+                return new PassResults(false, false);
+            }
+            var lastDate = LocalDate.ofInstant(Instant.ofEpochSecond(last), ZoneId.systemDefault());
+
+            softPass = first.isBefore(task.getSoftDeadline());
+            hardPass = lastDate.isBefore(task.getHardDeadline());
+        } catch (Exception ignored) {}
+        return new PassResults(softPass, hardPass);
+    }
+
     private static void generateReport(ArrayList<ArrayList<TaskResult>> results, CheckerConfigGroovy config) {
         var engine = new TemplateEngine();
         engine.setTemplateResolver(new FileTemplateResolver());
@@ -91,6 +143,7 @@ public class Application {
         ctx.setVariable("results", results);
         ctx.setVariable("tasks", config.getTasks());
 
+        // TODO: Try to avoid relative path to resources. Maybe read into string and pass that.
         var report = new File("report.html");
         try (var writer = new FileOutputStream(report)) {
             var result = engine.process("src/main/resources/reportTemplate.html", ctx);
@@ -223,32 +276,13 @@ public class Application {
         return false;
     }
 
-    private static TaskRunResult runTask(ProjectConnection conn, TaskRunConfig config) {
+    private static boolean runTask(ProjectConnection conn, TaskRunConfig config) {
         Exception error = null;
-        var stream = new OutputStream() {
-            private final StringBuilder stringBuilder = new StringBuilder();
-            @Override
-            public void write(int b) throws IOException {
-                stringBuilder.append((char)b);
-            }
-
-            public String toString() {
-                return stringBuilder.toString();
-            }
-        };
         try {
             System.out.printf("Running %s...", config.task());
-            var builder = conn.newBuild();
-            if (config.clean()) {
-                builder = builder.forTasks("clean", config.task());
-            } else {
-                builder = builder.forTasks(config.task());
-            }
+            var builder = conn.newBuild().forTasks(config.task());
             if (config.excludeTests()) {
                 builder = builder.addArguments("-x",  "test");
-            }
-            if (config.getStdOut()) {
-                builder = builder.setStandardOutput(stream);
             }
             builder.run();
             System.out.println("Success");
@@ -256,6 +290,6 @@ public class Application {
             error = e;
             System.out.println("Failure: " + error);
         }
-        return new TaskRunResult(error == null, stream.toString());
+        return error == null;
     }
 }
