@@ -83,3 +83,7 @@ tasks.jacocoTestReport {
         xml.required.set(true)
     }
 }
+
+tasks.withType(Jar::class).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
