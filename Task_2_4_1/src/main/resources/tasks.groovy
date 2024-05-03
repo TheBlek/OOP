@@ -9,3 +9,15 @@ task {
     softDeadline "05.04.24"
     hardDeadline "12.04.24"
 }
+
+task {
+    name "Task_1_3_1"
+    softDeadline "05.04.24"
+    hardDeadline "12.04.24"
+}
+
+//task {
+//    name "Task_1_2_2"
+//    softDeadline "05.04.24"
+//    hardDeadline "12.04.24"
+//}

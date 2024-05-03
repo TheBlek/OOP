@@ -44,31 +44,9 @@ public class Application {
         String repoPrefix = "src/main/resources/repoes";
         GradleConnector connector = GradleConnector.newConnector();
         var results = new ArrayList<ArrayList<TaskResult>>();
-        for (var student : config.getStudents()) {
-            /* Bring student repository up to date */
-            try {
-                var repoFile = new File(String.format("%s/%s", repoPrefix, student.getNickname()));
-                Git repo;
-                if (!repoFile.exists()) {
-                    repo = Git.cloneRepository()
-                        .setURI(String.format("https://github.com/%s/OOP.git", student.getNickname()))
-                        .setDirectory(repoFile)
-                        .call();
-                } else {
-                    try {
-                        repo = Git.open(repoFile);
-                    } catch (IOException e) {
-                        System.out.println("Uhhhhhhhhhh");
-                        return;
-                    }
-                }
-                assert repo != null;
-                repo.pull().call();
-            } catch (GitAPIException e) {
-                System.out.println("Failed to clone: " + e);
-                continue;
-            }
-        }
+
+        if (updateStudentsRepos(config, repoPrefix)) return;
+
         for (var task : config.getTasks()) {
             /* Check all the tasks from this student */
             var taskResults = new ArrayList<TaskResult>();
@@ -85,111 +63,28 @@ public class Application {
                 var builds = runTask(connection, new TaskRunConfig("build").withClean().withExcludeTests());
                 var tests = runTask(connection, new TaskRunConfig("test"));
 
-                File reportFile = new File(
-                    String.format(
-                        "%s/%s/%s/build/reports/tests/test/index.html",
-                        repoPrefix,
-                        student.getNickname(),
-                        task.getName()
-                    )
-                );
-
-                int testCount, failCount, skipCount;
-                try {
-                    Document report = Jsoup.parse(reportFile, "UTF-8");
-                    Element el = report.getElementById("summary");
-                    testCount = Integer.parseInt(
-                        report.getElementById("tests").getElementsByClass("counter").get(0).text()
-                    );
-                    failCount = Integer.parseInt(
-                        report.getElementById("failures").getElementsByClass("counter").get(0).text()
-                    );
-                    skipCount = Integer.parseInt(
-                        report.getElementById("ignored").getElementsByClass("counter").get(0).text()
-                    );
-                } catch (IOException e) {
-                    System.out.println("Failed to find test report file: " + reportFile);
-                    taskResults.add(new TaskResult(student, builds.isSuccess(), 0, 0, 0, 0, CheckstyleResult.ERROR));
-                    continue;
-                }
+                TestCounts counts = getTestCounts(repoPrefix, student, task);
 
                 int coveragePercent = 0;
                 if (tests.isSuccess()) {
-                    runTask(connection, new TaskRunConfig("jacocoTestReport"));
-
-                    File jacocoFile = new File(
-                        String.format(
-                            "%s/%s/%s/build/reports/jacoco/test/jacocoTestReport.xml",
-                            repoPrefix,
-                            student.getNickname(),
-                            task.getName()
-                        )
-                    );
-
-                    try {
-                        Document report = Jsoup.parse(jacocoFile, "UTF-8", "", Parser.xmlParser());
-                        report.getElementsByTag("package").remove();
-                        float total = 0.0f;
-                        for (var el : report.getElementsByTag("counter")) {
-                            var cov = Integer.parseInt(el.attribute("covered").getValue());
-                            var miss = Integer.parseInt(el.attribute("missed").getValue());
-                            total += (float) cov / (cov + miss);
-                        }
-                        float coverage = total / report.getElementsByTag("counter").size();
-                        coveragePercent = Math.round(coverage * 100.0f);
-                    } catch (IOException e) {
-                        System.out.println("Failed to find jacoco test report: " + e);
-                        taskResults.add(
-                            new TaskResult(student, builds.isSuccess(), testCount, failCount, skipCount, 0, CheckstyleResult.ERROR)
-                        );
-                        continue;
-                    }
+                    coveragePercent = getCoveragePercentage(connection, repoPrefix, student, task);
                 }
 
-                CheckstyleResult checkstyle = CheckstyleResult.CLEAN;
-                try {
-                    var outFile = "checkstyle.txt";
-                    int exitCode = catchSystemExit(() -> {
-                        try {
-                            String configPath = String.format("%s/%s/.github/google_checks.xml", repoPrefix, student.getNickname());
-                            var mainSourcePath = String.format("%s/%s/%s/src/main/java/", repoPrefix, student.getNickname(), task.getName());
-                            var testSourcePath = String.format("%s/%s/%s/src/test/java/", repoPrefix, student.getNickname(), task.getName());
-                            Main.main("-c", configPath, "-o", outFile, mainSourcePath, testSourcePath);
-                        } catch (IOException e) {
-                            System.out.println("Failed to call checkstyle: " + e);
-                        }
-                    });
-
-                    int warnCount = 0;
-                    try (var reader = new FileInputStream(outFile)) {
-                        var scanner = new Scanner(reader);
-                        int cnt = 0;
-                        while (scanner.hasNextLine()) {
-                            scanner.nextLine();
-                            cnt += 1;
-                        }
-                        warnCount = cnt - 2;
-                    } catch (IOException e) {
-                        System.out.println("Failed to read checkstyle's output");
-                    }
-                    if (exitCode != 0) {
-                        checkstyle = CheckstyleResult.ERROR;
-                    } else if (warnCount > 0) {
-                        checkstyle = CheckstyleResult.WARNING;
-                    }
-                } catch (Exception e) {
-                    System.out.println("Something weird happened... Exit should have been called... No checkstyle data, sry");
-                }
+                CheckstyleResult checkstyle = getCheckstyleResult(task, student, repoPrefix);
 
                 runTask(connection, new TaskRunConfig("javadoc"));
 
-                taskResults.add(new TaskResult(student, builds.isSuccess(), testCount, failCount, skipCount, coveragePercent, checkstyle));
+                taskResults.add(new TaskResult(student, builds.isSuccess(), counts.total(), counts.fail(), counts.skip(), coveragePercent, checkstyle));
                 connection.close();
             }
             results.add(taskResults);
         }
         System.out.println(results);
 
+        generateReport(results, config);
+    }
+
+    private static void generateReport(ArrayList<ArrayList<TaskResult>> results, CheckerConfigGroovy config) {
         var engine = new TemplateEngine();
         engine.setTemplateResolver(new FileTemplateResolver());
         var ctx = new Context();
@@ -203,6 +98,129 @@ public class Application {
         } catch (Exception e) {
             System.out.println("Failed to write report: " + e);
         }
+    }
+
+    private static CheckstyleResult getCheckstyleResult(Task task, Student student, String repoPrefix) {
+        CheckstyleResult checkstyle = CheckstyleResult.CLEAN;
+        try {
+            var outFile = "checkstyle.txt";
+            int exitCode = catchSystemExit(() -> {
+                try {
+                    String configPath = String.format("%s/%s/.github/google_checks.xml", repoPrefix, student.getNickname());
+                    var mainSourcePath = String.format("%s/%s/%s/src/main/java/", repoPrefix, student.getNickname(), task.getName());
+                    var testSourcePath = String.format("%s/%s/%s/src/test/java/", repoPrefix, student.getNickname(), task.getName());
+                    Main.main("-c", configPath, "-o", outFile, mainSourcePath, testSourcePath);
+                } catch (IOException e) {
+                    System.out.println("Failed to call checkstyle: " + e);
+                }
+            });
+
+            int warnCount = 0;
+            try (var reader = new FileInputStream(outFile)) {
+                var scanner = new Scanner(reader);
+                int cnt = 0;
+                while (scanner.hasNextLine()) {
+                    scanner.nextLine();
+                    cnt += 1;
+                }
+                warnCount = cnt - 2;
+            } catch (IOException e) {
+                System.out.println("Failed to read checkstyle's output");
+            }
+            if (exitCode != 0) {
+                checkstyle = CheckstyleResult.ERROR;
+            } else if (warnCount > 0) {
+                checkstyle = CheckstyleResult.WARNING;
+            }
+        } catch (Exception e) {
+            System.out.println("Something weird happened... Exit should have been called... No checkstyle data, sry");
+        }
+        return checkstyle;
+    }
+
+    private static int getCoveragePercentage(ProjectConnection connection, String repoPrefix, Student student, Task task ) {
+        runTask(connection, new TaskRunConfig("jacocoTestReport"));
+
+        File jacocoFile = new File(
+            String.format(
+                "%s/%s/%s/build/reports/jacoco/test/jacocoTestReport.xml",
+                repoPrefix,
+                student.getNickname(),
+                task.getName()
+            )
+        );
+
+        try {
+            Document report = Jsoup.parse(jacocoFile, "UTF-8", "", Parser.xmlParser());
+            report.getElementsByTag("package").remove();
+            float total = 0.0f;
+            for (var el : report.getElementsByTag("counter")) {
+                var cov = Integer.parseInt(el.attribute("covered").getValue());
+                var miss = Integer.parseInt(el.attribute("missed").getValue());
+                total += (float) cov / (cov + miss);
+            }
+            float coverage = total / report.getElementsByTag("counter").size();
+            return Math.round(coverage * 100.0f);
+        } catch (IOException e) {
+            System.out.println("Failed to find jacoco test report: " + e);
+            return 0;
+        }
+    }
+
+    private static TestCounts getTestCounts(String repoPrefix, Student student, Task task) {
+        File reportFile = new File(
+            String.format(
+                "%s/%s/%s/build/reports/tests/test/index.html",
+                repoPrefix,
+                student.getNickname(),
+                task.getName()
+            )
+        );
+        try {
+            Document report = Jsoup.parse(reportFile, "UTF-8");
+            Element el = report.getElementById("summary");
+            int testCount = Integer.parseInt(
+                report.getElementById("tests").getElementsByClass("counter").get(0).text()
+            );
+            int failCount = Integer.parseInt(
+                report.getElementById("failures").getElementsByClass("counter").get(0).text()
+            );
+            int skipCount = Integer.parseInt(
+                report.getElementById("ignored").getElementsByClass("counter").get(0).text()
+            );
+            return new TestCounts(testCount, failCount, skipCount);
+        } catch (IOException e) {
+            System.out.println("Failed to find test report file: " + reportFile);
+            return new TestCounts(0, 0, 0);
+        }
+    }
+
+    private static boolean updateStudentsRepos(CheckerConfigGroovy config, String repoPrefix) {
+        for (var student : config.getStudents()) {
+            /* Bring student repository up to date */
+            try {
+                var repoFile = new File(String.format("%s/%s", repoPrefix, student.getNickname()));
+                Git repo;
+                if (!repoFile.exists()) {
+                    repo = Git.cloneRepository()
+                        .setURI(String.format("https://github.com/%s/OOP.git", student.getNickname()))
+                        .setDirectory(repoFile)
+                        .call();
+                } else {
+                    try {
+                        repo = Git.open(repoFile);
+                    } catch (IOException e) {
+                        System.out.println("Uhhhhhhhhhh");
+                        return true;
+                    }
+                }
+                assert repo != null;
+                repo.pull().call();
+            } catch (GitAPIException e) {
+                System.out.println("Failed to clone: " + e);
+            }
+        }
+        return false;
     }
 
     private static TaskRunResult runTask(ProjectConnection conn, TaskRunConfig config) {
