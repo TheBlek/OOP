@@ -3,24 +3,84 @@ package ru.nsu.kuklin.parallelprime;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
+import java.net.*;
+import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.nio.channels.spi.SelectorProvider;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SocketException {
         int maxConcurrentSegments = 10000;
         int segmentSize = 10000;
+        int port = 28000;
+        InetAddress ip = null;
+        InetAddress localBroadcast = null;
+        switch (args.length) {
+            case 1:
+                try {
+                    ip = InetAddress.getByName(args[0]);
+                    for (var it = NetworkInterface.getNetworkInterfaces(); it.hasMoreElements(); ) {
+                        var netInterface = it.nextElement();
+                        for (var address : netInterface.getInterfaceAddresses()) {
+                            if (address.getAddress().equals(ip)) {
+                                localBroadcast = address.getBroadcast();
+                                break;
+                            }
+                        }
+                        if (localBroadcast != null) {
+                            break;
+                        }
+                    }
+                    if (localBroadcast == null) {
+                        System.out.println("Given address isn't an address on this machine");
+                        break;
+                    }
+                } catch (UnknownHostException e) {
+                    System.out.println("IP address specified in the first parameter is invalid");
+                    return;
+                }
+                break;
+            case 0:
+                var addresses = new ArrayList<InterfaceAddress>();
+                for (var it = NetworkInterface.getNetworkInterfaces(); it.hasMoreElements(); ) {
+                    addresses.addAll(it.nextElement().getInterfaceAddresses());
+                }
+                System.out.println("Choose which network to use for broadcast: ");
+                for (int i = 0; i < addresses.size(); i++) {
+                    System.out.printf("%d: %s\n", i, addresses.get(i));
+                }
+                var scanner = new Scanner(System.in);
+                var interfaceAddr = addresses.get(scanner.nextInt());
+                ip = interfaceAddr.getAddress();
+                localBroadcast = interfaceAddr.getBroadcast();
+                break;
+            default:
+                System.out.println("Too many parameters");
+                return;
+        }
         ArrayList<Segment> distributed = new ArrayList<>();
         BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
         ArrayList<Task> tasks = new ArrayList<>();
+        // TODO(theblek): broadcast on a startup
+        // TODO(theblek): receive broadcasts and connect to that machine
+        // TODO(theblek): think about scalability strategies to not have O(N) connections open
+
+        final DatagramChannel broadcast = getBroadcast(ip, port);
+        if (broadcast == null) {
+            return;
+        }
+
+        var broadcastSocket = new InetSocketAddress(localBroadcast, port);
+        try {
+            // Broadcast that we entered the network and accepting connections
+            System.out.println(broadcastSocket);
+            broadcast.send(ByteBuffer.allocate(1).put((byte) 0xf), broadcastSocket);
+        } catch (IOException e) {
+            System.out.println("Failed to write to broadcast: " + e);
+            return;
+        }
 
         // Stdin thread
         new Thread(() -> {
@@ -70,42 +130,65 @@ public class Main {
                 System.out.println("Failed to open selector");
                 return;
             }
-            HashMap<SocketAddress, AsynchronousSocketChannel> connections = new HashMap<>();
-            // Start listening for new connections
-            try (var server = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(28000))) {
-                server.accept(null, new CompletionHandler<AsynchronousSocketChannel, Void>() {
-                    @Override
-                    public void completed(AsynchronousSocketChannel result, Void attachment) {
-                        try {
-                            connections.put(result.getRemoteAddress(), result);
-                            System.out.println("New connection from " + result.getRemoteAddress());
-                        } catch (IOException e) {
-                            System.out.println("Failed to get remote addr");
-                        }
-                    }
+//            HashMap<SocketAddress, AsynchronousSocketChannel> connections = new HashMap<>();
+//            // Start listening for new connections
+//            try (var server = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(28000))) {
+//                server.accept(null, new CompletionHandler<AsynchronousSocketChannel, Void>() {
+//                    @Override
+//                    public void completed(AsynchronousSocketChannel result, Void attachment) {
+//                        try {
+//                            connections.put(result.getRemoteAddress(), result);
+//                            System.out.println("New connection from " + result.getRemoteAddress());
+//                        } catch (IOException e) {
+//                            System.out.println("Failed to get remote addr");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void failed(Throwable exc, Void attachment) {}
+//                });
+//            } catch (IOException e) {
+//                System.out.println("Failed to open server socket");
+//                return;
+//            }
 
-                    @Override
-                    public void failed(Throwable exc, Void attachment) {}
-                });
-            } catch (IOException e) {
-                System.out.println("Failed to open server socket");
-                return;
-            }
-
-            DatagramChannel broadcast = null;
+            SelectionKey broadcastKey = null;
             try {
-                broadcast = DatagramChannel.open().bind(new InetSocketAddress("0.0.0.0", 29000));
-                broadcast.configureBlocking(false);
-            } catch (IOException e) {
-                System.out.print("Failed to open broadcast datagram socket");
-                return;
-            }
-
-            try {
-                broadcast.register(selector, SelectionKey.OP_READ);
+                broadcastKey = broadcast.register(selector, SelectionKey.OP_READ);
             } catch (ClosedChannelException e) {
                 System.out.println("Channel closed?..");
+                return;
+            }
+
+            ByteBuffer receiving = ByteBuffer.allocate(1);
+            while (true) {
+                try {
+                    selector.select();
+                } catch (IOException e) {
+                    System.out.println("Failed to wait for new selection");
+                }
+                for (var key : selector.selectedKeys()) {
+                    if (key.equals(broadcastKey)) {
+                        try {
+                            var newAddress = broadcast.receive(receiving);
+                            System.out.println("New user detected: " + newAddress);
+                        } catch (IOException e) {
+                            System.out.println("Failed to receive broadcast message");
+                        }
+                    }
+                }
             }
         }).start();
+    }
+
+    private static DatagramChannel getBroadcast(InetAddress ip, int port) {
+        try {
+            DatagramChannel broadcast = DatagramChannel.open().bind(new InetSocketAddress(ip, port));
+            broadcast.configureBlocking(false);
+            return broadcast;
+        } catch (IOException e) {
+            System.out.print("Failed to open broadcast datagram socket");
+            return null;
+        }
     }
 }
