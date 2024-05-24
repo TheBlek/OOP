@@ -200,7 +200,7 @@ public class Main {
             for (var key : selector.selectedKeys()) {
                 if (key.isAcceptable()) {
                     try {
-                        var channel = server.accept();
+                        var channel = ((ServerSocketChannel) key.channel()).accept();
                         var address = ((InetSocketAddress)channel.getRemoteAddress()).getAddress();
                         connections.put(address, new Connection(channel));
                         channel.configureBlocking(false);
