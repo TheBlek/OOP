@@ -230,7 +230,10 @@ public class Main {
                 assert conn != null;
                 if (key.isReadable()) {
                     try {
-                        channel.read(conn.incoming);
+                        int cnt = channel.read(conn.incoming);
+                        if (cnt > 0) {
+                            System.out.println("Read " + cnt);
+                        }
                     } catch (IOException e) {
                         System.out.println("Failed to read from channel: " + e);
                         continue;
@@ -250,7 +253,7 @@ public class Main {
                     }
                 }
                 if (key.isWritable()) {
-                    if (!conn.outcoming.hasRemaining()) {
+                    if (conn.outcoming.hasRemaining()) {
                         if (toDistribute.isEmpty()) {
                             continue;
                         }
@@ -260,12 +263,17 @@ public class Main {
                             byte[] message = gson.toJson(toDistribute.take()).getBytes();
                             conn.outcoming.put(message);
                             conn.outcoming.putInt(0, message.length);
+                            conn.outcoming.limit(conn.outcoming.position());
+                            conn.outcoming.position(0);
                         } catch (InterruptedException e) {
                             System.out.println("Interrupted while getting a segment");
                         }
                     }
                     try {
-                        channel.write(conn.outcoming);
+                        int cnt = channel.write(conn.outcoming);
+                        if (cnt > 0) {
+                            System.out.println("Read " + cnt);
+                        }
                     } catch (IOException e) {
                         System.out.println("Failed to write to socket: " + e);
                     }
