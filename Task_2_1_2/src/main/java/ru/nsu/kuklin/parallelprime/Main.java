@@ -161,19 +161,17 @@ public class Main {
 
         ServerSocketChannel server = null;
         try {
-            server = ServerSocketChannel.open().bind(new InetSocketAddress("0.0.0.0", 8090));
+            server = ServerSocketChannel.open();
+            server.bind(new InetSocketAddress(8090));
             server.configureBlocking(false);
+            server.register(selector, SelectionKey.OP_ACCEPT);
         } catch (IOException e) {
             System.out.println("Failed to create server socket channel: " + e);
             return;
         }
-        SelectionKey serverKey = null;
-        try {
-            serverKey = server.register(selector, SelectionKey.OP_ACCEPT);
-        } catch (ClosedChannelException e) {
-            System.out.println("Channel was closed?... " + e);
-            return;
-        }
+
+        server.isOpen();
+
         while (true) {
             while (!newUsers.isEmpty()) {
                 InetAddress user;
@@ -187,8 +185,8 @@ public class Main {
                 try {
                     SocketChannel channel = SocketChannel.open();
                     channel.configureBlocking(false);
-                    channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ | SelectionKey.OP_WRITE);
                     channel.connect(new InetSocketAddress(user, 8090));
+                    channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ | SelectionKey.OP_WRITE);
                     System.out.println("Initiated a connection on " + user);
                 } catch (IOException e) {
                     System.out.println("Failed to initiate connection: " + e);
