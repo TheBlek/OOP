@@ -197,7 +197,10 @@ public class Main {
             } catch (IOException e) {
                 System.out.println("Failed to select: "  + e);
             }
-            for (var key : selector.selectedKeys()) {
+            var iter = selector.selectedKeys().iterator();
+            while (iter.hasNext()) {
+                var key = iter.next();
+                iter.remove();
                 if (key.isAcceptable()) {
                     try {
                         var channel = ((ServerSocketChannel) key.channel()).accept();
