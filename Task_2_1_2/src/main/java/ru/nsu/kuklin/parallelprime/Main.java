@@ -147,7 +147,6 @@ public class Main {
         new Thread(() -> {
             var receiving = new DatagramPacket(new byte[2048], 2048);
             while (true) {
-                System.out.println("Started listening");
                 try {
                     broadcast.receive(receiving);
                     if (!receiving.getAddress().equals(localIp)) {
@@ -197,7 +196,9 @@ public class Main {
                 }
             }
             try {
-                selector.select();
+                if (selector.selectNow() == 0) {
+                    continue;
+                }
             } catch (IOException e) {
                 System.out.println("Failed to select: "  + e);
             }
