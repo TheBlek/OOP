@@ -1,9 +1,13 @@
 package ru.nsu.kuklin.parallelprime;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
 import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
@@ -14,7 +18,7 @@ import java.util.concurrent.BlockingQueue;
 public class Main {
     public static void main(String[] args) throws SocketException {
         int maxConcurrentSegments = 10000;
-        int segmentSize = 10000;
+        int segmentSize = 100;
         int port = 8091;
         InetAddress ip = null;
         InetAddress localBroadcast = null;
@@ -61,23 +65,22 @@ public class Main {
                 System.out.println("Too many parameters");
                 return;
         }
+        // TODO(theblek): extract switch for getting ip and broadcast ip into a function
+        // TODO(theblek): test bigger segment sizes
+        // TODO(theblek): think about scalability strategies to not have O(N) connections open
+
+        Gson gson = new Gson();
         ArrayList<Segment> distributed = new ArrayList<>();
         BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
         ArrayList<Task> tasks = new ArrayList<>();
-        // TODO(theblek): broadcast on a startup
-        // TODO(theblek): receive broadcasts and connect to that machine
-        // TODO(theblek): think about scalability strategies to not have O(N) connections open
 
-        System.out.println(ip + ":" + port);
-        var broadcast = getBroadcast(ip, port);
+        var broadcast = getBroadcast(port);
         if (broadcast == null) {
             return;
         }
 
-        var broadcastSocket = new InetSocketAddress(localBroadcast, port);
         try {
             // Broadcast that we entered the network and accepting connections
-            System.out.println(broadcastSocket);
             var bytes = "hello".getBytes();
             broadcast.send(new DatagramPacket(bytes, bytes.length, localBroadcast, port));
         } catch (IOException e) {
@@ -89,7 +92,10 @@ public class Main {
         new Thread(() -> {
             var scanner = new Scanner(System.in);
             while (true) {
-                var line = scanner.nextLine();
+                String line = "";
+                try {
+                    line = scanner.nextLine();
+                } catch (NoSuchElementException ignored) {}
                 if (line.startsWith("/job")) {
                     var filename = line.split(" ", 2)[1];
                     try {
@@ -125,53 +131,128 @@ public class Main {
         }).start();
 
         // Server thread
-            Selector selector = null;
-            try {
-                selector = Selector.open();
-            } catch (IOException e) {
-                System.out.println("Failed to open selector");
-                return;
-            }
-            // Just a communication queue. Should not require much capacity
-//            BlockingQueue<InetAddress> newUsers = new ArrayBlockingQueue<>(10);
-//            HashMap<SocketAddress, SocketChannel> connections = new HashMap<>();
-//            ServerSocketChannel server = null;
-//            try {
-//                server = ServerSocketChannel.open().bind(new InetSocketAddress(port));
-//                server.set
-//            } catch (IOException e) {
-//                System.out.println("Failed to create server socket channel: " + e);
-//                return;
-//            }
-//            SelectionKey serverKey = null;
-//            try {
-//                serverKey = server.register(selector, SelectionKey.OP_ACCEPT);
-//            } catch (ClosedChannelException e) {
-//                System.out.println("Channel was closed?... " + e);
-//                return;
-//            }
+        Selector selector = null;
+        try {
+            selector = Selector.open();
+        } catch (IOException e) {
+            System.out.println("Failed to open selector");
+            return;
+        }
+        // Just a communication queue. Should not require much capacity
+        BlockingQueue<InetAddress> newUsers = new ArrayBlockingQueue<>(10);
+        HashMap<InetAddress, Connection> connections = new HashMap<>();
 
         // Udp listening thread
+        final var localIp = ip;
         new Thread(() -> {
             var receiving = new DatagramPacket(new byte[2048], 2048);
             while (true) {
                 System.out.println("Started listening");
                 try {
                     broadcast.receive(receiving);
-                    System.out.println("New user detected: " + receiving.getAddress());
-                    System.out.println("New user detected: " + receiving.getAddress());
+                    if (!receiving.getAddress().equals(localIp)) {
+                        System.out.println("New user detected: " + receiving.getAddress());
+                        newUsers.add(receiving.getAddress());
+                    }
                 } catch (IOException e) {
                     System.out.println("Failed to receive broadcast message");
                 }
             }
         }).start();
+
+        ServerSocketChannel server = null;
+        try {
+            server = ServerSocketChannel.open().bind(new InetSocketAddress(port));
+            server.configureBlocking(false);
+        } catch (IOException e) {
+            System.out.println("Failed to create server socket channel: " + e);
+            return;
+        }
+        SelectionKey serverKey = null;
+        try {
+            serverKey = server.register(selector, SelectionKey.OP_ACCEPT);
+        } catch (ClosedChannelException e) {
+            System.out.println("Channel was closed?... " + e);
+            return;
+        }
+        while (true) {
+            try {
+                selector.select();
+            } catch (IOException e) {
+                System.out.println("Failed to select: "  + e);
+            }
+            for (var key : selector.selectedKeys()) {
+                if (key.equals(serverKey)) {
+                    try {
+                        var channel = server.accept();
+                        var address = ((InetSocketAddress)channel.getRemoteAddress()).getAddress();
+                        connections.put(address, new Connection(channel));
+                        channel.configureBlocking(false);
+                        channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+                    } catch (IOException e) {
+                        System.out.println("Failed to accept connection: " + e);
+                    }
+                    continue;
+                }
+                var channel = (SocketChannel)key.channel();
+                Connection conn;
+                try {
+                    conn = connections.get(channel.getRemoteAddress());
+                    assert conn != null;
+                } catch (IOException e) {
+                    System.out.println("Failed to get remote address: " + e);
+                    continue;
+                }
+                if (key.isReadable()) {
+                    try {
+                        channel.read(conn.incoming);
+                    } catch (IOException e) {
+                        System.out.println("Failed to read from channel: " + e);
+                        continue;
+                    }
+                    if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 == conn.incoming.getInt(0)) {
+                        // Message is fully transmitted
+                        try {
+                            Segment s = gson.fromJson(
+                                new String(conn.incoming.array(), 4, conn.incoming.position() - 4),
+                                Segment.class
+                            );
+                            System.out.println("Received segment: " + s);
+                        } catch (JsonSyntaxException e) {
+                            System.out.println("it's not a segment i received: " + e);
+                        }
+                        conn.incoming.clear();
+                    }
+                }
+                if (key.isWritable()) {
+                    if (!conn.outcoming.hasRemaining()) {
+                        if (toDistribute.isEmpty()) {
+                            continue;
+                        }
+                        try {
+                            conn.outcoming.clear();
+                            conn.outcoming.putInt(0); // First int - length
+                            byte[] message = gson.toJson(toDistribute.take()).getBytes();
+                            conn.outcoming.put(message);
+                            conn.outcoming.putInt(0, message.length);
+                        } catch (InterruptedException e) {
+                            System.out.println("Interrupted while getting a segment");
+                        }
+                    }
+                    try {
+                        channel.write(conn.outcoming);
+                    } catch (IOException e) {
+                        System.out.println("Failed to write to socket: " + e);
+                    }
+                }
+            }
+        }
     }
 
-    private static DatagramSocket getBroadcast(InetAddress ip, int port) {
+    private static DatagramSocket getBroadcast(int port) {
         try {
             var broadcast = new DatagramSocket(port);
             broadcast.setBroadcast(true);
-//            broadcast.configureBlocking(false);
             return broadcast;
         } catch (IOException e) {
             System.out.print("Failed to open broadcast datagram socket: " + e);
