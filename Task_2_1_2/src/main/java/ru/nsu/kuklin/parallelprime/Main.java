@@ -78,7 +78,8 @@ public class Main {
         try {
             // Broadcast that we entered the network and accepting connections
             System.out.println(broadcastSocket);
-            broadcast.send(new DatagramPacket("hello".getBytes(), 5, localBroadcast, port));
+            var bytes = "hello".getBytes();
+            broadcast.send(new DatagramPacket(bytes, bytes.length, localBroadcast, port));
         } catch (IOException e) {
             System.out.println("Failed to write to broadcast: " + e);
             return;
@@ -154,8 +155,10 @@ public class Main {
         new Thread(() -> {
             var receiving = new DatagramPacket(new byte[2048], 2048);
             while (true) {
+                System.out.println("Started listening");
                 try {
                     broadcast.receive(receiving);
+                    System.out.println("New user detected: " + receiving.getAddress());
                     System.out.println("New user detected: " + receiving.getAddress());
                 } catch (IOException e) {
                     System.out.println("Failed to receive broadcast message");
@@ -166,7 +169,7 @@ public class Main {
 
     private static DatagramSocket getBroadcast(InetAddress ip, int port) {
         try {
-            var broadcast = new DatagramSocket(new InetSocketAddress(ip, port));
+            var broadcast = new DatagramSocket(port);
             broadcast.setBroadcast(true);
 //            broadcast.configureBlocking(false);
             return broadcast;
