@@ -161,7 +161,7 @@ public class Main {
 
         ServerSocketChannel server = null;
         try {
-            server = ServerSocketChannel.open().bind(new InetSocketAddress(8090));
+            server = ServerSocketChannel.open().bind(new InetSocketAddress(ip, 8090));
             server.configureBlocking(false);
         } catch (IOException e) {
             System.out.println("Failed to create server socket channel: " + e);
@@ -202,7 +202,7 @@ public class Main {
                 System.out.println("Failed to select: "  + e);
             }
             for (var key : selector.selectedKeys()) {
-                if (key.equals(serverKey)) {
+                if (key.isAcceptable()) {
                     try {
                         var channel = server.accept();
                         var address = ((InetSocketAddress)channel.getRemoteAddress()).getAddress();
