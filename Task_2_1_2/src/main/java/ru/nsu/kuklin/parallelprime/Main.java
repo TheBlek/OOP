@@ -79,15 +79,6 @@ public class Main {
             return;
         }
 
-        try {
-            // Broadcast that we entered the network and accepting connections
-            var bytes = "hello".getBytes();
-            broadcast.send(new DatagramPacket(bytes, bytes.length, localBroadcast, port));
-        } catch (IOException e) {
-            System.out.println("Failed to write to broadcast: " + e);
-            return;
-        }
-
         // Stdin thread
         new Thread(() -> {
             var scanner = new Scanner(System.in);
@@ -170,7 +161,14 @@ public class Main {
             return;
         }
 
-        server.isOpen();
+        try {
+            // Broadcast that we entered the network and accepting connections
+            var bytes = "hello".getBytes();
+            broadcast.send(new DatagramPacket(bytes, bytes.length, localBroadcast, port));
+        } catch (IOException e) {
+            System.out.println("Failed to write to broadcast: " + e);
+            return;
+        }
 
         while (true) {
             while (!newUsers.isEmpty()) {
