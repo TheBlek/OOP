@@ -162,7 +162,7 @@ public class Main {
 
         ServerSocketChannel server = null;
         try {
-            server = ServerSocketChannel.open().bind(new InetSocketAddress(port));
+            server = ServerSocketChannel.open().bind(new InetSocketAddress(8090));
             server.configureBlocking(false);
         } catch (IOException e) {
             System.out.println("Failed to create server socket channel: " + e);
