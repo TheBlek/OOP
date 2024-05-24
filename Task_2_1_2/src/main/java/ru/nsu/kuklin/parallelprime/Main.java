@@ -161,7 +161,7 @@ public class Main {
 
         ServerSocketChannel server = null;
         try {
-            server = ServerSocketChannel.open().bind(new InetSocketAddress(ip, 8090));
+            server = ServerSocketChannel.open().bind(new InetSocketAddress("0.0.0.0", 8090));
             server.configureBlocking(false);
         } catch (IOException e) {
             System.out.println("Failed to create server socket channel: " + e);
@@ -189,7 +189,7 @@ public class Main {
                     channel.configureBlocking(false);
                     channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ | SelectionKey.OP_WRITE);
                     channel.connect(new InetSocketAddress(user, 8090));
-                    System.out.println("Initiated a connection");
+                    System.out.println("Initiated a connection on " + user);
                 } catch (IOException e) {
                     System.out.println("Failed to initiate connection: " + e);
                 }
