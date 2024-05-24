@@ -261,7 +261,6 @@ public class Main {
                     }
                 }
                 if (key.isWritable()) {
-                    System.out.println("There is a writable key");
                     if (conn.outcoming.hasRemaining()) {
                         System.out.println("Updating outcoming buffer");
                         if (toDistribute.isEmpty()) {
