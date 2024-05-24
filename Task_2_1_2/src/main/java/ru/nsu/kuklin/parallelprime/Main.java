@@ -261,7 +261,6 @@ public class Main {
                     }
                 }
                 if (key.isWritable()) {
-                    System.out.println(conn.outcoming.position() + " " + conn.outcoming.limit());
                     if (!conn.outcoming.hasRemaining()) {
                         if (toDistribute.isEmpty()) {
                             continue;
