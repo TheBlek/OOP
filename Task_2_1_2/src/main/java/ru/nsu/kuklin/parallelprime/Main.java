@@ -131,33 +131,22 @@ public class Main {
                 System.out.println("Failed to open selector");
                 return;
             }
-//            HashMap<SocketAddress, AsynchronousSocketChannel> connections = new HashMap<>();
-//            // Start listening for new connections
-//            try (var server = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(28000))) {
-//                server.accept(null, new CompletionHandler<AsynchronousSocketChannel, Void>() {
-//                    @Override
-//                    public void completed(AsynchronousSocketChannel result, Void attachment) {
-//                        try {
-//                            connections.put(result.getRemoteAddress(), result);
-//                            System.out.println("New connection from " + result.getRemoteAddress());
-//                        } catch (IOException e) {
-//                            System.out.println("Failed to get remote addr");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void failed(Throwable exc, Void attachment) {}
-//                });
+            // Just a communication queue. Should not require much capacity
+//            BlockingQueue<InetAddress> newUsers = new ArrayBlockingQueue<>(10);
+//            HashMap<SocketAddress, SocketChannel> connections = new HashMap<>();
+//            ServerSocketChannel server = null;
+//            try {
+//                server = ServerSocketChannel.open().bind(new InetSocketAddress(port));
+//                server.set
 //            } catch (IOException e) {
-//                System.out.println("Failed to open server socket");
+//                System.out.println("Failed to create server socket channel: " + e);
 //                return;
 //            }
-
-//            SelectionKey broadcastKey = null;
+//            SelectionKey serverKey = null;
 //            try {
-//                broadcastKey = broadcast.getChannel().register(selector, SelectionKey.OP_READ);
+//                serverKey = server.register(selector, SelectionKey.OP_ACCEPT);
 //            } catch (ClosedChannelException e) {
-//                System.out.println("Channel closed?..");
+//                System.out.println("Channel was closed?... " + e);
 //                return;
 //            }
 
@@ -178,6 +167,7 @@ public class Main {
     private static DatagramSocket getBroadcast(InetAddress ip, int port) {
         try {
             var broadcast = new DatagramSocket(new InetSocketAddress(ip, port));
+            broadcast.setBroadcast(true);
 //            broadcast.configureBlocking(false);
             return broadcast;
         } catch (IOException e) {
