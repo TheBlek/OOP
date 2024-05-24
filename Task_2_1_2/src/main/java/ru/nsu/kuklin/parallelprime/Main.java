@@ -226,6 +226,9 @@ public class Main {
                     connections.put(remote.getAddress(), new Connection(channel));
                     System.out.println("New connection!");
                 }
+                if (!channel.isConnected()) {
+                    continue;
+                }
                 Connection conn = connections.get(remote.getAddress());
                 assert conn != null;
                 if (key.isReadable()) {
