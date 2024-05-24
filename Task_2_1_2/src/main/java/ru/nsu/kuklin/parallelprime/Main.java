@@ -239,6 +239,7 @@ public class Main {
                         continue;
                     }
                     if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 == conn.incoming.getInt(0)) {
+                        System.out.println("Trying to iterprete the full message");
                         // Message is fully transmitted
                         try {
                             Segment s = gson.fromJson(
@@ -254,7 +255,9 @@ public class Main {
                 }
                 if (key.isWritable()) {
                     if (conn.outcoming.hasRemaining()) {
+                        System.out.println("Updating outcoming buffer");
                         if (toDistribute.isEmpty()) {
+                            System.out.println("Nothing to distribute");
                             continue;
                         }
                         try {
