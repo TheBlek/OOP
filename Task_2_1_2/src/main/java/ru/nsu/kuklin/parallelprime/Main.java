@@ -1,5 +1,6 @@
 package ru.nsu.kuklin.parallelprime;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws SocketException {
         int maxConcurrentSegments = 10000;
         int segmentSize = 10000;
-        int port = 28000;
+        int port = 8091;
         InetAddress ip = null;
         InetAddress localBroadcast = null;
         switch (args.length) {
@@ -67,7 +68,8 @@ public class Main {
         // TODO(theblek): receive broadcasts and connect to that machine
         // TODO(theblek): think about scalability strategies to not have O(N) connections open
 
-        final DatagramChannel broadcast = getBroadcast(ip, port);
+        System.out.println(ip + ":" + port);
+        var broadcast = getBroadcast(ip, port);
         if (broadcast == null) {
             return;
         }
@@ -76,7 +78,7 @@ public class Main {
         try {
             // Broadcast that we entered the network and accepting connections
             System.out.println(broadcastSocket);
-            broadcast.send(ByteBuffer.allocate(1).put((byte) 0xf), broadcastSocket);
+            broadcast.send(new DatagramPacket("hello".getBytes(), 5, localBroadcast, port));
         } catch (IOException e) {
             System.out.println("Failed to write to broadcast: " + e);
             return;
@@ -122,7 +124,6 @@ public class Main {
         }).start();
 
         // Server thread
-        new Thread(() -> {
             Selector selector = null;
             try {
                 selector = Selector.open();
@@ -152,42 +153,35 @@ public class Main {
 //                return;
 //            }
 
-            SelectionKey broadcastKey = null;
-            try {
-                broadcastKey = broadcast.register(selector, SelectionKey.OP_READ);
-            } catch (ClosedChannelException e) {
-                System.out.println("Channel closed?..");
-                return;
-            }
+//            SelectionKey broadcastKey = null;
+//            try {
+//                broadcastKey = broadcast.getChannel().register(selector, SelectionKey.OP_READ);
+//            } catch (ClosedChannelException e) {
+//                System.out.println("Channel closed?..");
+//                return;
+//            }
 
-            ByteBuffer receiving = ByteBuffer.allocate(1);
+        // Udp listening thread
+        new Thread(() -> {
+            var receiving = new DatagramPacket(new byte[2048], 2048);
             while (true) {
                 try {
-                    selector.select();
+                    broadcast.receive(receiving);
+                    System.out.println("New user detected: " + receiving.getAddress());
                 } catch (IOException e) {
-                    System.out.println("Failed to wait for new selection");
-                }
-                for (var key : selector.selectedKeys()) {
-                    if (key.equals(broadcastKey)) {
-                        try {
-                            var newAddress = broadcast.receive(receiving);
-                            System.out.println("New user detected: " + newAddress);
-                        } catch (IOException e) {
-                            System.out.println("Failed to receive broadcast message");
-                        }
-                    }
+                    System.out.println("Failed to receive broadcast message");
                 }
             }
         }).start();
     }
 
-    private static DatagramChannel getBroadcast(InetAddress ip, int port) {
+    private static DatagramSocket getBroadcast(InetAddress ip, int port) {
         try {
-            DatagramChannel broadcast = DatagramChannel.open().bind(new InetSocketAddress(ip, port));
-            broadcast.configureBlocking(false);
+            var broadcast = new DatagramSocket(new InetSocketAddress(ip, port));
+//            broadcast.configureBlocking(false);
             return broadcast;
         } catch (IOException e) {
-            System.out.print("Failed to open broadcast datagram socket");
+            System.out.print("Failed to open broadcast datagram socket: " + e);
             return null;
         }
     }
