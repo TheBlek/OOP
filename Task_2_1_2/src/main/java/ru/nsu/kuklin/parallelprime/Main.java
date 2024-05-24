@@ -262,10 +262,8 @@ public class Main {
                 }
                 if (key.isWritable()) {
                     System.out.println(conn.outcoming.position() + " " + conn.outcoming.limit());
-                    if (conn.outcoming.hasRemaining()) {
-                        System.out.println("Updating outcoming buffer");
+                    if (!conn.outcoming.hasRemaining()) {
                         if (toDistribute.isEmpty()) {
-                            System.out.println("Nothing to distribute");
                             continue;
                         }
                         try {
