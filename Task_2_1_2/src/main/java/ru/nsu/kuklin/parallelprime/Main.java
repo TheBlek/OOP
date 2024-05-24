@@ -176,6 +176,16 @@ public class Main {
             return;
         }
         while (true) {
+            for (var user : newUsers) {
+                try {
+                    SocketChannel channel = SocketChannel.open();
+                    channel.configureBlocking(false);
+                    channel.register(selector, SelectionKey.OP_CONNECT);
+                    channel.connect(new InetSocketAddress(user, 8090));
+                } catch (IOException e) {
+                    System.out.println("Failed to initiate connection: " + e);
+                }
+            }
             try {
                 selector.select();
             } catch (IOException e) {
@@ -195,14 +205,17 @@ public class Main {
                     continue;
                 }
                 var channel = (SocketChannel)key.channel();
-                Connection conn;
+                InetSocketAddress remote = null;
                 try {
-                    conn = connections.get(channel.getRemoteAddress());
-                    assert conn != null;
+                    remote = (InetSocketAddress) channel.getRemoteAddress();
                 } catch (IOException e) {
                     System.out.println("Failed to get remote address: " + e);
-                    continue;
                 }
+                if (key.isConnectable()) {
+                    connections.put(remote.getAddress(), new Connection(channel));
+                }
+                Connection conn = connections.get(remote.getAddress());
+                assert conn != null;
                 if (key.isReadable()) {
                     try {
                         channel.read(conn.incoming);
