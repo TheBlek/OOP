@@ -11,5 +11,7 @@ public class Connection {
     public Connection(SocketChannel channel) {
         this.channel = channel;
         incoming = ByteBuffer.allocate(2048);
+        outcoming = ByteBuffer.allocate(2048);
+        outcoming.limit(0);
     }
 }
