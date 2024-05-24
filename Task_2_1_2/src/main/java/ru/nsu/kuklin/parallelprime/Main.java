@@ -182,6 +182,7 @@ public class Main {
                     channel.configureBlocking(false);
                     channel.register(selector, SelectionKey.OP_CONNECT);
                     channel.connect(new InetSocketAddress(user, 8090));
+                    System.out.println("Initiated a connection");
                 } catch (IOException e) {
                     System.out.println("Failed to initiate connection: " + e);
                 }
