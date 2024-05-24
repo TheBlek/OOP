@@ -176,7 +176,15 @@ public class Main {
             return;
         }
         while (true) {
-            for (var user : newUsers) {
+            while (!newUsers.isEmpty()) {
+                InetAddress user;
+                try {
+                    user = newUsers.take();
+                } catch (InterruptedException e) {
+                    System.out.println("Failed to take next user: " + e);
+                    continue;
+                }
+
                 try {
                     SocketChannel channel = SocketChannel.open();
                     channel.configureBlocking(false);
