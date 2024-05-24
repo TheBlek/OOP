@@ -13,5 +13,6 @@ public class Connection {
         incoming = ByteBuffer.allocate(2048);
         outcoming = ByteBuffer.allocate(2048);
         outcoming.limit(0);
+        assert !outcoming.hasRemaining();
     }
 }
