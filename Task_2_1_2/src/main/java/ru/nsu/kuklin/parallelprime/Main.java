@@ -199,6 +199,7 @@ public class Main {
                         connections.put(address, new Connection(channel));
                         channel.configureBlocking(false);
                         channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+                        System.out.println("New connection!");
                     } catch (IOException e) {
                         System.out.println("Failed to accept connection: " + e);
                     }
@@ -213,6 +214,7 @@ public class Main {
                 }
                 if (key.isConnectable()) {
                     connections.put(remote.getAddress(), new Connection(channel));
+                    System.out.println("New connection!");
                 }
                 Connection conn = connections.get(remote.getAddress());
                 assert conn != null;
