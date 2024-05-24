@@ -226,7 +226,7 @@ public class Main {
                     try {
                         channel.finishConnect();
                     } catch (IOException e) {
-                        System.out.println("Failed to finish connection");
+                        System.out.println("Failed to finish connection: " + e);
                     }
                     connections.put(remote.getAddress(), new Connection(channel));
                     System.out.println("New connection!");
