@@ -223,6 +223,11 @@ public class Main {
                     System.out.println("Failed to get remote address: " + e);
                 }
                 if (key.isConnectable()) {
+                    try {
+                        channel.finishConnect();
+                    } catch (IOException e) {
+                        System.out.println("Failed to finish connection");
+                    }
                     connections.put(remote.getAddress(), new Connection(channel));
                     System.out.println("New connection!");
                 }
