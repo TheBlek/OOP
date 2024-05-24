@@ -176,6 +176,7 @@ public class Main {
             return;
         }
         while (true) {
+            System.out.println(newUsers.isEmpty());
             while (!newUsers.isEmpty()) {
                 InetAddress user;
                 try {
