@@ -216,13 +216,13 @@ public class Client {
 
                 if (key.isReadable()) {
                     try {
-                        int cnt = channel.read(conn.incoming);
-                        if (cnt > 0) {
-                            System.out.println("Read " + cnt);
-                        }
+                        channel.read(conn.incoming);
                     } catch (IOException e) {
                         System.out.println("Failed to read from channel: " + e);
                         continue;
+                    }
+                    if (conn.incoming.position() >= 4) {
+                        System.out.println(conn.incoming.getInt(0) + " " + conn.incoming.position());
                     }
                     if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                         var size = conn.incoming.getInt(0);
@@ -281,7 +281,7 @@ public class Client {
                         conn.outcoming.position(0);
                     }
                     try {
-                        int cnt = channel.write(conn.outcoming);
+                        channel.write(conn.outcoming);
                     } catch (IOException e) {
                         System.out.println("Failed to write to socket: " + e);
                     }
