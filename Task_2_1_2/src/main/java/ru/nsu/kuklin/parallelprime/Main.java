@@ -236,12 +236,13 @@ public class Main {
                         System.out.println("Failed to read from channel: " + e);
                         continue;
                     }
-                    if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 == conn.incoming.getInt(0)) {
-                        System.out.println("Trying to iterprete the full message");
+                    if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
+                        var size = conn.incoming.getInt(0);
+                            System.out.println("Trying to iterprete the full message");
                         // Message is fully transmitted
                         try {
                             Segment segment = gson.fromJson(
-                                new String(conn.incoming.array(), 4, conn.incoming.position() - 4),
+                                new String(conn.incoming.array(), 4, size),
                                 Segment.class
                             );
                             if (!segment.master.equals(config.ip())) {
@@ -280,7 +281,10 @@ public class Main {
                         } catch (JsonSyntaxException e) {
                             System.out.println("it's not a segment i received: " + e);
                         }
+                        var bytes = conn.incoming.array();
+                        var left = conn.incoming.position() - 4 - size;
                         conn.incoming.clear();
+                        conn.incoming.put(bytes, 4 + size,  left);
                     }
                 }
                 if (key.isWritable()) {
