@@ -11,6 +11,7 @@ import java.nio.channels.*;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) throws SocketException {
@@ -37,13 +38,22 @@ public class Main {
             return;
         }
 
-        // Calculating thread
+        // Compute thread
         new Thread(() -> {
             while (true) {
                 try {
-                    Segment s = toCalculate.take();
-                    s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
-                    calculated.add(s);
+                    if (toCalculate.isEmpty()) {
+                        Segment s = toDistribute.poll(100, TimeUnit.MILLISECONDS);
+                        if (s != null) {
+                            toCalculate.put(s);
+                        }
+                    }
+                    Segment s = toCalculate.poll(100, TimeUnit.MILLISECONDS);
+                    if (s != null) {
+                        // Copy of an array, yeah, ineffective. But whatever. Who cares :)
+                        s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
+                        calculated.add(s);
+                    }
                 } catch (InterruptedException e) {
                     return;
                 }
@@ -239,7 +249,7 @@ public class Main {
                                 System.out.println("Received segment from " + segment.master + ": " + segment);
                             } else {
                                 if (segment.hasComposites) {
-                                    System.out.printf("Task %s finished. Primes found\n", segment.jobId);
+                                    System.out.printf("Task %s finished. Composites found\n", segment.jobId);
 //                                    distributed
 //                                        .entrySet()
 //                                        .stream()
@@ -261,7 +271,7 @@ public class Main {
                                         var task = taskM.get();
                                         task.segmentCount -= 1;
                                         if (task.segmentCount == 0) {
-                                            System.out.printf("Task %s finished. No primes found\n", task.id);
+                                            System.out.printf("Task %s finished. No composite numbers found\n", task.id);
                                         }
                                     }
                                 }
