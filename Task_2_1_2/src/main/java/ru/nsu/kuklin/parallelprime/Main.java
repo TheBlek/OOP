@@ -3,13 +3,10 @@ package ru.nsu.kuklin.parallelprime;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -20,57 +17,18 @@ public class Main {
         int maxConcurrentSegments = 10000;
         int segmentSize = 100;
         int port = 8091;
-        InetAddress ip = null;
-        InetAddress localBroadcast = null;
-        switch (args.length) {
-            case 1:
-                try {
-                    ip = InetAddress.getByName(args[0]);
-                    for (var it = NetworkInterface.getNetworkInterfaces(); it.hasMoreElements(); ) {
-                        var netInterface = it.nextElement();
-                        for (var address : netInterface.getInterfaceAddresses()) {
-                            if (address.getAddress().equals(ip)) {
-                                localBroadcast = address.getBroadcast();
-                                break;
-                            }
-                        }
-                        if (localBroadcast != null) {
-                            break;
-                        }
-                    }
-                    if (localBroadcast == null) {
-                        System.out.println("Given address isn't an address on this machine");
-                        break;
-                    }
-                } catch (UnknownHostException e) {
-                    System.out.println("IP address specified in the first parameter is invalid");
-                    return;
-                }
-                break;
-            case 0:
-                var addresses = new ArrayList<InterfaceAddress>();
-                for (var it = NetworkInterface.getNetworkInterfaces(); it.hasMoreElements(); ) {
-                    addresses.addAll(it.nextElement().getInterfaceAddresses());
-                }
-                System.out.println("Choose which network to use for broadcast: ");
-                for (int i = 0; i < addresses.size(); i++) {
-                    System.out.printf("%d: %s\n", i, addresses.get(i));
-                }
-                var scanner = new Scanner(System.in);
-                var interfaceAddr = addresses.get(scanner.nextInt());
-                ip = interfaceAddr.getAddress();
-                localBroadcast = interfaceAddr.getBroadcast();
-                break;
-            default:
-                System.out.println("Too many parameters");
-                return;
+        IPConfig config = IPConfig.getFromArgs(args);
+        if (config == null) {
+            return;
         }
-        // TODO(theblek): extract switch for getting ip and broadcast ip into a function
         // TODO(theblek): test bigger segment sizes
         // TODO(theblek): think about scalability strategies to not have O(N) connections open
+        // TODO(theblek): ping clients to check if they are alive
 
         Gson gson = new Gson();
-        ArrayList<Segment> distributed = new ArrayList<>();
+        HashMap<Segment, InetAddress> distributed = new HashMap<>();
+        BlockingQueue<Segment> toCalculate = new ArrayBlockingQueue<>(maxConcurrentSegments);
+        BlockingQueue<Segment> calculated = new ArrayBlockingQueue<>(maxConcurrentSegments);
         BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -78,6 +36,19 @@ public class Main {
         if (broadcast == null) {
             return;
         }
+
+        // Calculating thread
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Segment s = toCalculate.take();
+                    s.hasPrimes = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
+                    calculated.add(s);
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+        }).start();
 
         // Stdin thread
         new Thread(() -> {
@@ -92,7 +63,7 @@ public class Main {
                     try {
                         var fileScanner = new Scanner(new File(filename));
                         var id = java.util.UUID.randomUUID();
-                        var segment = new Segment(segmentSize, id);
+                        var segment = new Segment(segmentSize, id, config.ip());
                         int segmentCount = 0;
                         while (fileScanner.hasNextInt()) {
                             segment.nums[segment.numCount] = fileScanner.nextInt();
@@ -100,7 +71,7 @@ public class Main {
                             if (segment.numCount == segmentSize) {
                                 toDistribute.add(segment);
                                 segmentCount += 1;
-                                segment = new Segment(segmentSize, id);
+                                segment = new Segment(segmentSize, id, config.ip());
                             }
                         }
                         if (segment.numCount > 0) {
@@ -134,15 +105,19 @@ public class Main {
         HashMap<InetAddress, Connection> connections = new HashMap<>();
 
         // Udp listening thread
-        final var localIp = ip;
+        final var localIp = config.ip();
         new Thread(() -> {
             var receiving = new DatagramPacket(new byte[2048], 2048);
             while (true) {
                 try {
                     broadcast.receive(receiving);
                     if (!receiving.getAddress().equals(localIp)) {
-                        System.out.println("New user detected: " + receiving.getAddress());
-                        newUsers.add(receiving.getAddress());
+//                        if (receiving.getData().length == 1) {
+                            System.out.println("New user detected: " + receiving.getAddress());
+                            newUsers.add(receiving.getAddress());
+//                        } else {
+//
+//                        }
                     }
                 } catch (IOException e) {
                     System.out.println("Failed to receive broadcast message");
@@ -163,8 +138,8 @@ public class Main {
 
         try {
             // Broadcast that we entered the network and accepting connections
-            var bytes = "hello".getBytes();
-            broadcast.send(new DatagramPacket(bytes, bytes.length, localBroadcast, port));
+            var bytes = "h".getBytes();
+            broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
         } catch (IOException e) {
             System.out.println("Failed to write to broadcast: " + e);
             return;
@@ -190,6 +165,7 @@ public class Main {
                     System.out.println("Failed to initiate connection: " + e);
                 }
             }
+
             try {
                 if (selector.selectNow() == 0) {
                     continue;
@@ -197,6 +173,7 @@ public class Main {
             } catch (IOException e) {
                 System.out.println("Failed to select: "  + e);
             }
+
             var iter = selector.selectedKeys().iterator();
             while (iter.hasNext()) {
                 var key = iter.next();
@@ -218,9 +195,11 @@ public class Main {
                 InetSocketAddress remote = null;
                 try {
                     remote = (InetSocketAddress) channel.getRemoteAddress();
+                    assert remote != null;
                 } catch (IOException e) {
                     System.out.println("Failed to get remote address: " + e);
                 }
+
                 if (key.isConnectable()) {
                     try {
                         channel.finishConnect();
@@ -233,8 +212,10 @@ public class Main {
                 if (!channel.isConnected()) {
                     continue;
                 }
+                assert remote.getAddress() != null;
                 Connection conn = connections.get(remote.getAddress());
                 assert conn != null;
+
                 if (key.isReadable()) {
                     try {
                         int cnt = channel.read(conn.incoming);
@@ -249,11 +230,42 @@ public class Main {
                         System.out.println("Trying to iterprete the full message");
                         // Message is fully transmitted
                         try {
-                            Segment s = gson.fromJson(
+                            Segment segment = gson.fromJson(
                                 new String(conn.incoming.array(), 4, conn.incoming.position() - 4),
                                 Segment.class
                             );
-                            System.out.println("Received segment: " + s);
+                            if (segment.master != config.ip()) {
+                                toCalculate.add(segment);
+                                System.out.println("Received segment: " + segment);
+                            } else {
+                                if (segment.hasPrimes) {
+//                                    System.out.printf("Task %s finished. Primes found\n", segment.jobId);
+//                                    distributed
+//                                        .entrySet()
+//                                        .stream()
+//                                        .filter((s) -> s.getKey().jobId == segment.jobId)
+//                                        .forEach((s) -> {
+//                                            try {
+//                                                var bytes = s.getKey().jobId.toString().getBytes();
+//                                                broadcast.send(new DatagramPacket(bytes, bytes.length, s.getValue(), port));
+//                                            } catch (IOException e) {
+//                                                System.out.println("Failed to send cancellation message");
+//                                            }
+//                                        });
+                                    // TODO(theblek): cancel the job somehow
+                                } else {
+                                    segment.hasPrimes = false;
+                                    distributed.remove(segment);
+                                    var taskM = tasks.stream().filter((t) -> t.id.equals(segment.jobId)).findFirst();
+                                    if (taskM.isPresent()) {
+                                        var task = taskM.get();
+                                        task.segmentCount -= 1;
+                                        if (task.segmentCount == 0) {
+                                            System.out.printf("Task %s finished. No primes found\n", task.id);
+                                        }
+                                    }
+                                }
+                            }
                         } catch (JsonSyntaxException e) {
                             System.out.println("it's not a segment i received: " + e);
                         }
@@ -262,20 +274,31 @@ public class Main {
                 }
                 if (key.isWritable()) {
                     if (!conn.outcoming.hasRemaining()) {
-                        if (toDistribute.isEmpty()) {
+                        Segment data = null;
+                        if (!toDistribute.isEmpty()) {
+                            try {
+                                data = toDistribute.take();
+                                distributed.put(data, remote.getAddress());
+                            } catch (InterruptedException e) {
+                                System.out.println("Interrupted while getting a segment");
+                            }
+                        } else if (!calculated.isEmpty()) {
+                            try {
+                                data = calculated.take();
+                            } catch (InterruptedException e) {
+                                System.out.println("Interrupted while getting a segment");
+                            }
+                        }
+                        if (data == null) {
                             continue;
                         }
-                        try {
-                            conn.outcoming.clear();
-                            conn.outcoming.putInt(0); // First int - length
-                            byte[] message = gson.toJson(toDistribute.take()).getBytes();
-                            conn.outcoming.put(message);
-                            conn.outcoming.putInt(0, message.length);
-                            conn.outcoming.limit(conn.outcoming.position());
-                            conn.outcoming.position(0);
-                        } catch (InterruptedException e) {
-                            System.out.println("Interrupted while getting a segment");
-                        }
+                        conn.outcoming.clear();
+                        conn.outcoming.putInt(0); // First int - length
+                        byte[] message = gson.toJson(data).getBytes();
+                        conn.outcoming.put(message);
+                        conn.outcoming.putInt(0, message.length);
+                        conn.outcoming.limit(conn.outcoming.position());
+                        conn.outcoming.position(0);
                     }
                     try {
                         int cnt = channel.write(conn.outcoming);
