@@ -50,6 +50,7 @@ public class Main {
                     }
                     Segment s = toCalculate.poll(100, TimeUnit.MILLISECONDS);
                     if (s != null) {
+                        System.out.println("Calculating on my own!!!");
                         // Copy of an array, yeah, ineffective. But whatever. Who cares :)
                         s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
                         calculated.add(s);
