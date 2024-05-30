@@ -270,6 +270,7 @@ public class Main {
                                     if (taskM.isPresent()) {
                                         var task = taskM.get();
                                         task.segmentCount -= 1;
+                                        System.out.printf("%d segments left for task %s\n", task.segmentCount, task.id);
                                         if (task.segmentCount == 0) {
                                             System.out.printf("Task %s finished. No composite numbers found\n", task.id);
                                         }
