@@ -42,7 +42,7 @@ public class Main {
             while (true) {
                 try {
                     Segment s = toCalculate.take();
-                    s.hasPrimes = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
+                    s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
                     calculated.add(s);
                 } catch (InterruptedException e) {
                     return;
@@ -185,7 +185,7 @@ public class Main {
                         connections.put(address, new Connection(channel));
                         channel.configureBlocking(false);
                         channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-                        System.out.println("New connection!");
+                        System.out.println("Accepted new connection!");
                     } catch (IOException e) {
                         System.out.println("Failed to accept connection: " + e);
                     }
@@ -207,7 +207,7 @@ public class Main {
                         System.out.println("Failed to finish connection: " + e);
                     }
                     connections.put(remote.getAddress(), new Connection(channel));
-                    System.out.println("New connection!");
+                    System.out.println("Finished new connection!");
                 }
                 if (!channel.isConnected()) {
                     continue;
@@ -238,7 +238,7 @@ public class Main {
                                 toCalculate.add(segment);
                                 System.out.println("Received segment: " + segment);
                             } else {
-                                if (segment.hasPrimes) {
+                                if (segment.hasComposites) {
 //                                    System.out.printf("Task %s finished. Primes found\n", segment.jobId);
 //                                    distributed
 //                                        .entrySet()
@@ -254,7 +254,7 @@ public class Main {
 //                                        });
                                     // TODO(theblek): cancel the job somehow
                                 } else {
-                                    segment.hasPrimes = false;
+                                    segment.hasComposites = false;
                                     distributed.remove(segment);
                                     var taskM = tasks.stream().filter((t) -> t.id.equals(segment.jobId)).findFirst();
                                     if (taskM.isPresent()) {

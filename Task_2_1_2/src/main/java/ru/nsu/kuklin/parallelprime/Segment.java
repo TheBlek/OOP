@@ -12,7 +12,7 @@ class Segment implements Serializable {
     int numCount;
     int[] nums;
     InetAddress master;
-    boolean hasPrimes;
+    boolean hasComposites = false;
 
     public Segment(int size, UUID jobId, InetAddress master) {
         nums = new int[size];
