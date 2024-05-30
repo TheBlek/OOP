@@ -234,12 +234,12 @@ public class Main {
                                 new String(conn.incoming.array(), 4, conn.incoming.position() - 4),
                                 Segment.class
                             );
-                            if (segment.master != config.ip()) {
+                            if (!segment.master.equals(config.ip())) {
                                 toCalculate.add(segment);
-                                System.out.println("Received segment: " + segment);
+                                System.out.println("Received segment from " + segment.master + ": " + segment);
                             } else {
                                 if (segment.hasComposites) {
-//                                    System.out.printf("Task %s finished. Primes found\n", segment.jobId);
+                                    System.out.printf("Task %s finished. Primes found\n", segment.jobId);
 //                                    distributed
 //                                        .entrySet()
 //                                        .stream()
