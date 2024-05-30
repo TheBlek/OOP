@@ -179,6 +179,7 @@ public class Client {
                 if (key.isAcceptable()) {
                     try {
                         var channel = ((ServerSocketChannel) key.channel()).accept();
+                        channel.socket().setOption(StandardSocketOptions.TCP_NODELAY, true);
                         var address = ((InetSocketAddress)channel.getRemoteAddress()).getAddress();
                         connections.put(address, new Connection(channel));
                         channel.configureBlocking(false);
@@ -201,6 +202,7 @@ public class Client {
                 if (key.isConnectable()) {
                     try {
                         channel.finishConnect();
+                        channel.socket().setOption(StandardSocketOptions.TCP_NODELAY, true);
                     } catch (IOException e) {
                         System.out.println("Failed to finish connection: " + e);
                     }
@@ -221,9 +223,7 @@ public class Client {
                         System.out.println("Failed to read from channel: " + e);
                         continue;
                     }
-                    if (conn.incoming.position() >= 4) {
-                        System.out.println(conn.incoming.getInt(0) + " " + conn.incoming.position());
-                    }
+
                     if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                         var size = conn.incoming.getInt(0);
                         System.out.println("Trying to iterprete the full message");
