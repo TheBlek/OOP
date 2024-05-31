@@ -155,7 +155,7 @@ public class Client {
 
         // Healthcheck thread
         new Thread(() -> {
-            var broadcast = getBroadcast(port - 1);
+            var broadcast = getBroadcast(port + 1);
             if (broadcast == null) {
                 return;
             }
