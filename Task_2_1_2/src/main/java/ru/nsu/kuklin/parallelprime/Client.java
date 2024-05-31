@@ -291,7 +291,6 @@ public class Client {
 
                         if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                             var size = conn.incoming.getInt(0);
-                            System.out.println(conn.incoming.position() + " " + size);
                             // Message is fully transmitted
                             try {
                                 Segment segment = gson.fromJson(
@@ -451,6 +450,7 @@ public class Client {
                 removeFromDistributed(segment, from);
             }
             if (!tasks.containsKey(segment.jobId)) {
+                System.out.println("Task " + segment.jobId + " does not have a valid entry");
                return;
             }
             var task = tasks.get(segment.jobId);

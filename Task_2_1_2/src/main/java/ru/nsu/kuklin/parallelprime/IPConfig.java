@@ -43,6 +43,10 @@ public record IPConfig(InetAddress ip, InetAddress broadcast) {
                     System.out.printf("%d: %s\n", i, addresses.get(i));
                 }
                 var scanner = new Scanner(System.in);
+                int index = scanner.nextInt();
+                while (index < 0 || index >= addresses.size()) {
+                    index = scanner.nextInt();
+                }
                 var interfaceAddr = addresses.get(scanner.nextInt());
                 ip = interfaceAddr.getAddress();
                 localBroadcast = interfaceAddr.getBroadcast();
