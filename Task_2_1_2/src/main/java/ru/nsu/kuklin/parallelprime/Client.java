@@ -194,20 +194,23 @@ public class Client {
                     System.out.println("Failed to initiate connection: " + e);
                 }
             }
+            // Self-calculated segments and
             // Calculated segments which master died
-            while (!calculated.isEmpty() && !connections.containsKey(calculated.peek().master)) {
-                try {
-                    calculated.take();
-                } catch (InterruptedException e) {
-                    System.out.println("My take was interrupted");
-                }
-            }
-            // Self-calculated segments
-            while (!calculated.isEmpty() && calculated.peek().master.equals(config.ip())) {
-                try {
-                    handleCalculatedSegment(calculated.take());
-                } catch (InterruptedException e) {
-                    System.out.println("My take was interrupted");
+            while (!calculated.isEmpty()) {
+                if (calculated.peek().master.equals(config.ip())) {
+                    try {
+                        handleCalculatedSegment(calculated.take());
+                    } catch (InterruptedException e) {
+                        System.out.println("My take was interrupted");
+                    }
+                } else if (!connections.containsKey(calculated.peek().master)) {
+                    try {
+                        calculated.take();
+                    } catch (InterruptedException e) {
+                        System.out.println("My take was interrupted");
+                    }
+                } else {
+                    break;
                 }
             }
 
