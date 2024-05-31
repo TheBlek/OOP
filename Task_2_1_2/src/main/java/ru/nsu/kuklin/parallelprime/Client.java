@@ -132,11 +132,11 @@ public class Client {
             while (true) {
                 try {
                     broadcast.receive(receiving);
+                    var message = new String(receiving.getData());
+                    System.out.println("Got message from udp: " + message);
+                    System.out.println("Got message from udp: " + message);
+                    System.out.println("-----");
                     if (!receiving.getAddress().equals(config.ip())) {
-                        var message = new String(receiving.getData());
-                        System.out.println("Got message from udp: " + message);
-                        System.out.println("Got message from udp: " + message);
-                        System.out.println("-----");
                         switch (message) {
                             case "h" -> {
                                 System.out.println("New user detected: " + receiving.getAddress());
@@ -162,7 +162,7 @@ public class Client {
             var bytes = "hc".getBytes();
             while (true) {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     resetHealthCheck();
                     try {
                         broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
