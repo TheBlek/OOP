@@ -119,7 +119,7 @@ public class Client {
 
             try {
                 // Broadcast that we entered the network and accepting connections
-                var bytes = "h".getBytes();
+                var bytes = "h".getBytes(StandardCharsets.UTF_8);
                 broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
                 System.out.println("Sent hello broadcast");
             } catch (IOException e) {
@@ -133,12 +133,12 @@ public class Client {
             while (true) {
                 try {
                     broadcast.receive(receiving);
-                    var message = new String(receiving.getData(), StandardCharsets.UTF_8);
-                    System.out.println("Got message from udp: " + message);
-                    System.out.println("Got message from udp: " + message);
-                    System.out.println("-----");
-                    System.out.println(message.equals("h"));
+                    String message = new String(receiving.getData(), StandardCharsets.UTF_8);
                     if (!receiving.getAddress().equals(config.ip())) {
+                        System.out.println("Got message from udp: " + message);
+                        System.out.println("Got message from udp: " + message);
+                        System.out.println("-----");
+                        System.out.println(message.equals("h"));
                         switch (message) {
                             case "h" -> {
                                 System.out.println("New user detected: " + receiving.getAddress());
