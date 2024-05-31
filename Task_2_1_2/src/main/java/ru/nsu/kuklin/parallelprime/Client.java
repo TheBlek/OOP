@@ -228,6 +228,7 @@ public class Client {
             while (iter.hasNext()) {
                 var key = iter.next();
                 iter.remove();
+
                 if (key.isAcceptable()) {
                     try {
                         var channel = ((ServerSocketChannel) key.channel()).accept();
@@ -242,6 +243,7 @@ public class Client {
                     }
                     continue;
                 }
+
                 var channel = (SocketChannel)key.channel();
                 InetSocketAddress remote;
                 try {
@@ -265,9 +267,11 @@ public class Client {
                     submitNewConnection(remote.getAddress(), new Connection(channel));
                     System.out.println("Finished new connection!");
                 }
+
                 if (!channel.isConnected()) {
                     continue;
                 }
+
                 assert remote.getAddress() != null;
                 Connection conn = connections.get(remote.getAddress());
                 if (conn == null) {
@@ -294,7 +298,7 @@ public class Client {
                             );
                             if (!segment.master.equals(config.ip())) {
                                 toCalculate.add(segment);
-                                System.out.println("Received segment from " + segment.master + ": " + segment);
+                                System.out.println("Received segment from " + segment.master);
                             } else {
                                 handleCalculatedSegment(segment, remote.getAddress());
                             }
