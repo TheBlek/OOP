@@ -280,89 +280,87 @@ public class Client {
                 }
 
                 assert remote.getAddress() != null;
-                synchronized(this) {
-                    Connection conn = connections.get(remote.getAddress());
-                    if (conn == null) {
-                        // This remote is dead
-                        key.cancel();
+                Connection conn = connections.get(remote.getAddress());
+                if (conn == null) {
+                    // This remote is dead
+                    key.cancel();
+                    continue;
+                }
+
+                if (key.isReadable()) {
+                    try {
+                        channel.read(conn.incoming);
+                    } catch (IOException e) {
+                        System.out.println("Failed to read from channel: " + e);
                         continue;
                     }
 
-                    if (key.isReadable()) {
+                    if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
+                        var size = conn.incoming.getInt(0);
+                        // Message is fully transmitted
                         try {
-                            channel.read(conn.incoming);
-                        } catch (IOException e) {
-                            System.out.println("Failed to read from channel: " + e);
-                            continue;
-                        }
-
-                        if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
-                            var size = conn.incoming.getInt(0);
-                            // Message is fully transmitted
-                            try {
-                                Segment segment = gson.fromJson(
-                                    new String(conn.incoming.array(), 4, size),
-                                    Segment.class
-                                );
-                                if (!segment.master.equals(config.ip())) {
-                                    try {
-                                        toCalculate.put(segment);
-                                    } catch (InterruptedException e) {
-                                        System.out.println("Put interrupted...");
-                                    }
-                                } else {
-                                    handleCalculatedSegment(segment, remote.getAddress());
+                            Segment segment = gson.fromJson(
+                                new String(conn.incoming.array(), 4, size),
+                                Segment.class
+                            );
+                            if (!segment.master.equals(config.ip())) {
+                                try {
+                                    toCalculate.put(segment);
+                                } catch (InterruptedException e) {
+                                    System.out.println("Put interrupted...");
                                 }
-                            } catch (JsonSyntaxException e) {
-                                System.out.println("it's not a segment i received: " + e);
+                            } else {
+                                handleCalculatedSegment(segment, remote.getAddress());
                             }
-                            var bytes = conn.incoming.array();
-                            var left = conn.incoming.position() - 4 - size;
-                            conn.incoming.clear();
-                            conn.incoming.put(bytes, 4 + size, left);
+                        } catch (JsonSyntaxException e) {
+                            System.out.println("it's not a segment i received: " + e);
                         }
+                        var bytes = conn.incoming.array();
+                        var left = conn.incoming.position() - 4 - size;
+                        conn.incoming.clear();
+                        conn.incoming.put(bytes, 4 + size, left);
                     }
-                    if (key.isWritable()) {
-                        if (!conn.outcoming.hasRemaining()) {
-                            Segment data = null;
-                            if (!toDistribute.isEmpty()) {
-                                try {
-                                    data = getSegmentFor(remote.getAddress());
-                                } catch (InterruptedException e) {
-                                    // Either this remote is already dead
-                                    // Or we were interrupted
-                                    continue;
-                                }
-                                addToDistributed(data, remote.getAddress());
-                            } else if (!calculated.isEmpty()) {
-                                try {
-                                    data = calculated.peek();
-                                    if (data.master.equals(remote.getAddress())) {
-                                        data = calculated.take();
-                                    } else {
-                                        data = null;
-                                    }
-                                } catch (InterruptedException e) {
-                                    System.out.println("Interrupted while getting a segment");
-                                }
-                                assert !data.master.equals(config.ip());
-                            }
-                            if (data == null) {
+                }
+                if (key.isWritable()) {
+                    if (!conn.outcoming.hasRemaining()) {
+                        Segment data = null;
+                        if (!toDistribute.isEmpty()) {
+                            try {
+                                data = getSegmentFor(remote.getAddress());
+                            } catch (InterruptedException e) {
+                                // Either this remote is already dead
+                                // Or we were interrupted
                                 continue;
                             }
-                            conn.outcoming.clear();
-                            conn.outcoming.putInt(0); // First int - length
-                            byte[] message = gson.toJson(data).getBytes();
-                            conn.outcoming.put(message);
-                            conn.outcoming.putInt(0, message.length);
-                            conn.outcoming.limit(conn.outcoming.position());
-                            conn.outcoming.position(0);
+                            addToDistributed(data, remote.getAddress());
+                        } else if (!calculated.isEmpty()) {
+                            try {
+                                data = calculated.peek();
+                                if (data.master.equals(remote.getAddress())) {
+                                    data = calculated.take();
+                                } else {
+                                    data = null;
+                                }
+                            } catch (InterruptedException e) {
+                                System.out.println("Interrupted while getting a segment");
+                            }
+                            assert !data.master.equals(config.ip());
                         }
-                        try {
-                            channel.write(conn.outcoming);
-                        } catch (IOException e) {
-                            System.out.println("Failed to write to socket: " + e);
+                        if (data == null) {
+                            continue;
                         }
+                        conn.outcoming.clear();
+                        conn.outcoming.putInt(0); // First int - length
+                        byte[] message = gson.toJson(data).getBytes();
+                        conn.outcoming.put(message);
+                        conn.outcoming.putInt(0, message.length);
+                        conn.outcoming.limit(conn.outcoming.position());
+                        conn.outcoming.position(0);
+                    }
+                    try {
+                        channel.write(conn.outcoming);
+                    } catch (IOException e) {
+                        System.out.println("Failed to write to socket: " + e);
                     }
                 }
             }
