@@ -198,7 +198,7 @@ public class Client {
             while (!calculated.isEmpty()) {
                 if (calculated.peek().master.equals(config.ip())) {
                     try {
-                        handleCalculatedSegment(calculated.take());
+                        handleCalculatedSegment(calculated.take(), null);
                     } catch (InterruptedException e) {
                         System.out.println("My take was interrupted");
                     }
@@ -292,7 +292,7 @@ public class Client {
                                 toCalculate.add(segment);
                                 System.out.println("Received segment from " + segment.master + ": " + segment);
                             } else {
-                                handleCalculatedSegment(segment);
+                                handleCalculatedSegment(segment, remote.getAddress());
                             }
                         } catch (JsonSyntaxException e) {
                             System.out.println("it's not a segment i received: " + e);
@@ -320,14 +320,13 @@ public class Client {
                             try {
                                 data = calculated.peek();
                                 if (data.master.equals(remote.getAddress())) {
-                                    System.out.println("Taking next segment to send it");
                                     data = calculated.take();
                                 }
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
                             if (data.master.equals(config.ip())) {
-                                handleCalculatedSegment(data);
+                                handleCalculatedSegment(data, null);
                                 continue;
                             }
                         }
