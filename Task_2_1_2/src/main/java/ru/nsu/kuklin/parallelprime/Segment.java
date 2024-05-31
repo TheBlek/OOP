@@ -20,5 +20,6 @@ class Segment implements Serializable {
         numCount = 0;
         this.master = master;
         this.jobId = jobId;
+        this.id = id;
     }
 }
