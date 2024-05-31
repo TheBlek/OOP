@@ -281,7 +281,6 @@ public class Client {
 
                     if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                         var size = conn.incoming.getInt(0);
-                        System.out.println("Trying to iterprete the full message");
                         // Message is fully transmitted
                         try {
                             Segment segment = gson.fromJson(
@@ -313,6 +312,7 @@ public class Client {
                                     distributed.put(remote.getAddress(), new ArrayList<>());
                                 }
                                 distributed.get(remote.getAddress()).add(data);
+                                System.out.println("Giving a segment to remote");
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
