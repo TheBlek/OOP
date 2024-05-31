@@ -23,8 +23,23 @@ public class Client {
         // TODO(theblek): think about scalability strategies to not have O(N) connections open
         // TODO(theblek): ping clients to check if they are alive
 
-        var broadcast = getBroadcast(port);
-        if (broadcast == null) {
+        // Server thread
+        Selector selector = null;
+        try {
+            selector = Selector.open();
+        } catch (IOException e) {
+            System.out.println("Failed to open selector");
+            return;
+        }
+
+        ServerSocketChannel server = null;
+        try {
+            server = ServerSocketChannel.open();
+            server.bind(new InetSocketAddress(8090));
+            server.configureBlocking(false);
+            server.register(selector, SelectionKey.OP_ACCEPT);
+        } catch (IOException e) {
+            System.out.println("Failed to create server socket channel: " + e);
             return;
         }
 
@@ -96,17 +111,35 @@ public class Client {
 
         // Udp listening thread
         new Thread(() -> {
+            var broadcast = getBroadcast(port);
+            if (broadcast == null) {
+                return;
+            }
+
+            try {
+                // Broadcast that we entered the network and accepting connections
+                var bytes = "h".getBytes();
+                broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
+            } catch (IOException e) {
+                System.out.println("Failed to write to broadcast: " + e);
+                return;
+            }
+
+            var ackBytes = "a".getBytes();
+
             var receiving = new DatagramPacket(new byte[2048], 2048);
             while (true) {
                 try {
                     broadcast.receive(receiving);
                     if (!receiving.getAddress().equals(config.ip())) {
-//                        if (receiving.getData().length == 1) {
-                        System.out.println("New user detected: " + receiving.getAddress());
-                        newUsers.add(receiving.getAddress());
-//                        } else {
-//
-//                        }
+                        if ((receiving.getData().length == 1) && (receiving.getData()[0] == 'h')) {
+                            System.out.println("New user detected: " + receiving.getAddress());
+                            newUsers.add(receiving.getAddress());
+                        } else if ((receiving.getData().length == 2) && (receiving.getData()[0] == 'h') && (receiving.getData()[1] == 'c')) {
+                            broadcast.send(new DatagramPacket(ackBytes, ackBytes.length, receiving.getAddress(), port));
+                        } else if ((receiving.getData().length == 1) && (receiving.getData()[0] == 'a')) {
+                            submitHealthCheck(receiving.getAddress());
+                        }
                     }
                 } catch (IOException e) {
                     System.out.println("Failed to receive broadcast message");
@@ -114,34 +147,29 @@ public class Client {
             }
         }).start();
 
-        // Server thread
-        Selector selector = null;
-        try {
-            selector = Selector.open();
-        } catch (IOException e) {
-            System.out.println("Failed to open selector");
-            return;
-        }
-
-        ServerSocketChannel server = null;
-        try {
-            server = ServerSocketChannel.open();
-            server.bind(new InetSocketAddress(8090));
-            server.configureBlocking(false);
-            server.register(selector, SelectionKey.OP_ACCEPT);
-        } catch (IOException e) {
-            System.out.println("Failed to create server socket channel: " + e);
-            return;
-        }
-
-        try {
-            // Broadcast that we entered the network and accepting connections
-            var bytes = "h".getBytes();
-            broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
-        } catch (IOException e) {
-            System.out.println("Failed to write to broadcast: " + e);
-            return;
-        }
+        // Healthcheck thread
+        new Thread(() -> {
+            var broadcast = getBroadcast(port);
+            if (broadcast == null) {
+                return;
+            }
+            var bytes = "hc".getBytes();
+            while (true) {
+                try {
+                    Thread.sleep(500);
+                    resetHealthCheck();
+                    try {
+                        broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
+                    } catch (IOException e) {
+                        System.out.println("Failed to write to broadcast: " + e);
+                        return;
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println("Who interrupted my sleep??!");
+                    return;
+                }
+            }
+        }).start();
 
         while (true) {
             while (!newUsers.isEmpty()) {
@@ -163,6 +191,14 @@ public class Client {
                     System.out.println("Failed to initiate connection: " + e);
                 }
             }
+            while (!calculated.isEmpty() && !connections.containsKey(calculated.peek().master)) {
+                // Calculated segments which master died
+                try {
+                    calculated.take();
+                } catch (InterruptedException e) {
+                    System.out.println("My take was interrupted");
+                }
+            }
 
             try {
                 if (selector.selectNow() == 0) {
@@ -179,11 +215,11 @@ public class Client {
                 if (key.isAcceptable()) {
                     try {
                         var channel = ((ServerSocketChannel) key.channel()).accept();
-                        channel.socket().setOption(StandardSocketOptions.TCP_NODELAY, true);
+                        channel.socket().setTcpNoDelay(true);
                         var address = ((InetSocketAddress)channel.getRemoteAddress()).getAddress();
-                        connections.put(address, new Connection(channel));
                         channel.configureBlocking(false);
                         channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+                        submitNewConnection(address, new Connection(channel));
                         System.out.println("Accepted new connection!");
                     } catch (IOException e) {
                         System.out.println("Failed to accept connection: " + e);
@@ -197,16 +233,17 @@ public class Client {
                     assert remote != null;
                 } catch (IOException e) {
                     System.out.println("Failed to get remote address: " + e);
+                    continue;
                 }
 
                 if (key.isConnectable()) {
                     try {
                         channel.finishConnect();
-                        channel.socket().setOption(StandardSocketOptions.TCP_NODELAY, true);
+                        channel.socket().setTcpNoDelay(true);
                     } catch (IOException e) {
                         System.out.println("Failed to finish connection: " + e);
                     }
-                    connections.put(remote.getAddress(), new Connection(channel));
+                    submitNewConnection(remote.getAddress(), new Connection(channel));
                     System.out.println("Finished new connection!");
                 }
                 if (!channel.isConnected()) {
@@ -214,6 +251,11 @@ public class Client {
                 }
                 assert remote.getAddress() != null;
                 Connection conn = connections.get(remote.getAddress());
+                if (conn == null) {
+                    // This remote is dead
+                    key.cancel();
+                    continue;
+                }
                 assert conn != null;
 
                 if (key.isReadable()) {
@@ -260,7 +302,10 @@ public class Client {
                             }
                         } else if (!calculated.isEmpty()) {
                             try {
-                                data = calculated.take();
+                                data = calculated.peek();
+                                if (data.master.equals(remote.getAddress())) {
+                                    data = calculated.take();
+                                }
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
@@ -288,6 +333,28 @@ public class Client {
                 }
             }
         }
+    }
+
+    private synchronized void resetHealthCheck() {
+        var toRemove = new ArrayList<InetAddress>();
+        for (var entry : connections.entrySet()) {
+            if (!entry.getValue().health) {
+                toRemove.add(entry.getKey());
+            }
+            entry.getValue().health = false;
+        }
+        for (var addr : toRemove) {
+            System.out.println("Connection with " + addr + "is dead. or they are");
+            connections.remove(addr);
+        }
+    }
+
+    private synchronized void submitHealthCheck(InetAddress addr) {
+        connections.get(addr).health = true;
+    }
+
+    private synchronized void submitNewConnection(InetAddress addr, Connection conn) {
+        connections.put(addr, conn);
     }
 
     private static DatagramSocket getBroadcast(int port) {
@@ -336,7 +403,7 @@ public class Client {
     int segmentSize = 100;
     int port = 8091;
     BlockingQueue<InetAddress> newUsers = new ArrayBlockingQueue<>(10);
-    HashMap<InetAddress, Connection> connections = new HashMap<>();
+    volatile HashMap<InetAddress, Connection> connections = new HashMap<>();
     Gson gson = new Gson();
     HashMap<Segment, InetAddress> distributed = new HashMap<>();
     BlockingQueue<Segment> toCalculate = new ArrayBlockingQueue<>(maxConcurrentSegments);

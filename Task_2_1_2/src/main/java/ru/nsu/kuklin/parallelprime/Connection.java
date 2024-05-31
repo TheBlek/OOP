@@ -7,6 +7,7 @@ public class Connection {
     public SocketChannel channel;
     public ByteBuffer incoming;
     public ByteBuffer outcoming;
+    boolean health = true;
 
     public Connection(SocketChannel channel) {
         this.channel = channel;
