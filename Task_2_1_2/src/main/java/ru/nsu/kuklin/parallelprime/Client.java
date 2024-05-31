@@ -324,10 +324,7 @@ public class Client {
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
-                            if (data.master.equals(config.ip())) {
-                                handleCalculatedSegment(data, null);
-                                continue;
-                            }
+                            assert !data.master.equals(config.ip());
                         }
                         if (data == null) {
                             continue;
