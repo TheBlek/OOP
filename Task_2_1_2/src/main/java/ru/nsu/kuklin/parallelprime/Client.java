@@ -291,7 +291,6 @@ public class Client {
 
                         if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                             var size = conn.incoming.getInt(0);
-                            System.out.println(conn.incoming.position() + " " + size);
                             // Message is fully transmitted
                             try {
                                 Segment segment = gson.fromJson(
@@ -315,7 +314,6 @@ public class Client {
                             var left = conn.incoming.position() - 4 - size;
                             conn.incoming.clear();
                             conn.incoming.put(bytes, 4 + size, left);
-                            System.out.println(left + " bytes left");
                         }
                     }
                     if (key.isWritable()) {
@@ -347,7 +345,6 @@ public class Client {
                             if (data == null) {
                                 continue;
                             }
-                            System.out.println("Sending segment " + data.id + " to " + remote.getAddress());
                             conn.outcoming.clear();
                             conn.outcoming.putInt(0); // First int - length
                             byte[] message = gson.toJson(data).getBytes();
