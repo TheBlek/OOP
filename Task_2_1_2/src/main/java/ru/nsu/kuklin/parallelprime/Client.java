@@ -294,7 +294,11 @@ public class Client {
                                 Segment.class
                             );
                             if (!segment.master.equals(config.ip())) {
-                                toCalculate.add(segment);
+                                try {
+                                    toCalculate.put(segment);
+                                } catch (InterruptedException e) {
+                                    System.out.println("Put interrupted...");
+                                }
                                 System.out.println("Received segment from " + segment.master);
                             } else {
                                 handleCalculatedSegment(segment, remote.getAddress());
@@ -307,6 +311,7 @@ public class Client {
                             var left = conn.incoming.position() - 4 - size;
                             conn.incoming.clear();
                             conn.incoming.put(bytes, 4 + size, left);
+                            System.out.println(left + " bytes left");
                         }
                     }
                 }
