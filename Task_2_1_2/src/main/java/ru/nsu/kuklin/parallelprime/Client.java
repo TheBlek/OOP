@@ -302,7 +302,7 @@ public class Client {
                                     } catch (InterruptedException e) {
                                         System.out.println("Put interrupted...");
                                     }
-                                    System.out.println("Received segment " + segment.id + " from " + segment.master);
+                                    System.out.println("Received segment " + segment.id + " from " + remote.getAddress() + " with master " + segment.master);
                                 } else {
                                     handleCalculatedSegment(segment, remote.getAddress());
                                 }
