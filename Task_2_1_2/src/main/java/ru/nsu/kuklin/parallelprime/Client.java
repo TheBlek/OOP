@@ -382,6 +382,9 @@ public class Client {
         for (var addr : toRemove) {
             System.out.println("Connection with " + addr + " is dead. or they are");
             connections.remove(addr);
+            if (!distributed.containsKey(addr)) {
+                return;
+            }
             for (var segment : distributed.get(addr)) {
                 try {
                     toDistribute.put(segment);
