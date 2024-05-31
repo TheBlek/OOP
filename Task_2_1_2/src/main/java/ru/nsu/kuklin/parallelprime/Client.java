@@ -151,28 +151,28 @@ public class Client {
         }).start();
 
         // Healthcheck thread
-//        new Thread(() -> {
-//            var broadcast = getBroadcast(port + 1);
-//            if (broadcast == null) {
-//                return;
-//            }
-//            var bytes = "hc".getBytes();
-//            while (true) {
-//                try {
-//                    Thread.sleep(1000);
-//                    resetHealthCheck();
-//                    try {
-//                        broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
-//                    } catch (IOException e) {
-//                        System.out.println("Failed to write to broadcast: " + e);
-//                        return;
-//                    }
-//                } catch (InterruptedException e) {
-//                    System.out.println("Who interrupted my sleep??!");
-//                    return;
-//                }
-//            }
-//        }).start();
+        new Thread(() -> {
+            var broadcast = getBroadcast(8100);
+            if (broadcast == null) {
+                return;
+            }
+            var bytes = "hc".getBytes();
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    resetHealthCheck();
+                    try {
+                        broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
+                    } catch (IOException e) {
+                        System.out.println("Failed to write to broadcast: " + e);
+                        return;
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println("Who interrupted my sleep??!");
+                    return;
+                }
+            }
+        }).start();
 
         while (true) {
             while (!newUsers.isEmpty()) {
