@@ -312,10 +312,11 @@ public class Client {
                         Segment data = null;
                         if (!toDistribute.isEmpty()) {
                             try {
-                                data = toDistribute.take();
-                                System.out.println("Giving a segment " + data.id + " to remote");
+                                data = getSegmentFor(remote.getAddress());
                             } catch (InterruptedException e) {
-                                System.out.println("Interrupted while getting a segment");
+                                // Either this remote is already dead
+                                // Or we were interrupted
+                                continue;
                             }
                             addToDistributed(data, remote.getAddress());
                         } else if (!calculated.isEmpty()) {
@@ -350,6 +351,14 @@ public class Client {
         }
     }
 
+    private synchronized Segment getSegmentFor(InetAddress remote) throws InterruptedException {
+        if (!connections.containsKey(remote)) {
+            throw new InterruptedException();
+        }
+        var data = toDistribute.take();
+        System.out.println("Giving a segment " + data.id + " to remote");
+        return data;
+    }
     private synchronized void resetHealthCheck() {
         var toRemove = new ArrayList<InetAddress>();
         for (var entry : connections.entrySet()) {
