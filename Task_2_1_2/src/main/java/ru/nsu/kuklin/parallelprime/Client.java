@@ -254,7 +254,10 @@ public class Client {
 
                 if (key.isConnectable()) {
                     try {
-                        channel.finishConnect();
+                        if (!channel.finishConnect()) {
+                            key.cancel();
+                            continue;
+                        }
                         channel.socket().setTcpNoDelay(true);
                     } catch (IOException e) {
                         System.out.println("Failed to finish connection: " + e);
