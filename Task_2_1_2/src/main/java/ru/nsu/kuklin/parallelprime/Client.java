@@ -281,7 +281,7 @@ public class Client {
                     if (key.isReadable()) {
                         try {
                             int cnt = channel.read(conn.incoming);
-                            System.out.println("Read " + cnt + " bytes");
+                            System.out.println("Read " + cnt + " bytes from " + remote.getAddress());
                         } catch (IOException e) {
                             System.out.println("Failed to read from channel: " + e);
                             continue;
