@@ -133,6 +133,7 @@ public class Client {
                     broadcast.receive(receiving);
                     if (!receiving.getAddress().equals(config.ip())) {
                         var message = new String(receiving.getData());
+                        System.out.println("Got message from udp: " + message);
                         if (message.equals("h")) {
                             System.out.println("New user detected: " + receiving.getAddress());
                             newUsers.add(receiving.getAddress());
