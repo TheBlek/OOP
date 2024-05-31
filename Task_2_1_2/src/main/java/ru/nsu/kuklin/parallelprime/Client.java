@@ -80,7 +80,7 @@ public class Client {
                     try {
                         var fileScanner = new Scanner(new File(filename));
                         var id = java.util.UUID.randomUUID();
-                        var segment = new Segment(segmentSize, id, config.ip());
+                        var segment = new Segment(segmentSize, id, 0, config.ip());
                         int segmentCount = 0;
                         while (fileScanner.hasNextInt()) {
                             segment.nums[segment.numCount] = fileScanner.nextInt();
@@ -88,14 +88,18 @@ public class Client {
                             if (segment.numCount == segmentSize) {
                                 toDistribute.add(segment);
                                 segmentCount += 1;
-                                segment = new Segment(segmentSize, id, config.ip());
+                                segment = new Segment(segmentSize, id, segmentCount, config.ip());
                             }
                         }
                         if (segment.numCount > 0) {
                             toDistribute.add(segment);
                             segmentCount += 1;
                         }
-                        tasks.add(new Task(id, segmentCount));
+                        var segments = new HashSet<Integer>();
+                        for (int i = 0; i < segmentCount; i++) {
+                            segments.add(i);
+                        }
+                        tasks.put(id, segments);
                     } catch (FileNotFoundException e) {
                         System.out.println("File not found");
                     }
@@ -412,14 +416,15 @@ public class Client {
             if (from != null) {
                 distributed.get(from).remove(segment);
             }
-            var taskM = tasks.stream().filter((t) -> t.id.equals(segment.jobId)).findFirst();
-            if (taskM.isPresent()) {
-                var task = taskM.get();
-                task.segmentCount -= 1;
-                System.out.printf("%d segments left for task %s\n", task.segmentCount, task.id);
-                if (task.segmentCount == 0) {
-                    System.out.printf("Task %s finished. No composite numbers found\n", task.id);
-                }
+            if (!tasks.containsKey(segment.jobId)) {
+               return;
+            }
+            var task = tasks.get(segment.jobId);
+            task.remove(segment.id);
+            System.out.printf("%d segments left for task %s\n", task.size(), segment.jobId);
+            if (task.isEmpty()) {
+                System.out.printf("Task %s finished. No composite numbers found\n", segment.jobId);
+                tasks.remove(segment.jobId);
             }
         }
     }
@@ -434,5 +439,5 @@ public class Client {
     BlockingQueue<Segment> toCalculate = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> calculated = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
-    ArrayList<Task> tasks = new ArrayList<>();
+    Map<UUID, Set<Integer>> tasks = new HashMap<>();
 }
