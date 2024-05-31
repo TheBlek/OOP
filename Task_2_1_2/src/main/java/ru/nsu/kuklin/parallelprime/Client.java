@@ -336,6 +336,8 @@ public class Client {
                                     if (data.master.equals(remote.getAddress())) {
                                         data = calculated.take();
                                         System.out.println("Sending answer for seg " + data.id + " to " + remote.getAddress() + " with master " + data.master);
+                                    } else {
+                                        data = null;
                                     }
                                 } catch (InterruptedException e) {
                                     System.out.println("Interrupted while getting a segment");
