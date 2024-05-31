@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.*;
 import java.nio.channels.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -132,7 +133,7 @@ public class Client {
             while (true) {
                 try {
                     broadcast.receive(receiving);
-                    var message = new String(receiving.getData());
+                    var message = new String(receiving.getData(), StandardCharsets.UTF_8);
                     System.out.println("Got message from udp: " + message);
                     System.out.println("Got message from udp: " + message);
                     System.out.println("-----");
