@@ -82,24 +82,34 @@ public class Client {
                         var id = java.util.UUID.randomUUID();
                         var segment = new Segment(segmentSize, id, 0, config.ip());
                         int segmentCount = 0;
-                        while (fileScanner.hasNextInt()) {
-                            segment.nums[segment.numCount] = fileScanner.nextInt();
-                            segment.numCount += 1;
-                            if (segment.numCount == segmentSize) {
-                                toDistribute.add(segment);
-                                segmentCount += 1;
-                                segment = new Segment(segmentSize, id, segmentCount, config.ip());
+                        synchronized (this) {
+                            while (fileScanner.hasNextInt()) {
+                                segment.nums[segment.numCount] = fileScanner.nextInt();
+                                segment.numCount += 1;
+                                if (segment.numCount == segmentSize) {
+                                    try {
+                                        toDistribute.put(segment);
+                                    } catch (InterruptedException e) {
+                                        System.out.println("Put interrupted");
+                                    }
+                                    segmentCount += 1;
+                                    segment = new Segment(segmentSize, id, segmentCount, config.ip());
+                                }
                             }
+                            if (segment.numCount > 0) {
+                                try {
+                                    toDistribute.put(segment);
+                                } catch (InterruptedException e) {
+                                    System.out.println("Put interrupted");
+                                }
+                                segmentCount += 1;
+                            }
+                            var segments = new HashSet<Integer>();
+                            for (int i = 0; i < segmentCount; i++) {
+                                segments.add(i);
+                            }
+                            tasks.put(id, segments);
                         }
-                        if (segment.numCount > 0) {
-                            toDistribute.add(segment);
-                            segmentCount += 1;
-                        }
-                        var segments = new HashSet<Integer>();
-                        for (int i = 0; i < segmentCount; i++) {
-                            segments.add(i);
-                        }
-                        tasks.put(id, segments);
                     } catch (FileNotFoundException e) {
                         System.out.println("File not found");
                     }
