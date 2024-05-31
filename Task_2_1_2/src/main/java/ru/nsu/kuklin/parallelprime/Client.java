@@ -333,7 +333,6 @@ public class Client {
                                     data = calculated.peek();
                                     if (data.master.equals(remote.getAddress())) {
                                         data = calculated.take();
-                                        System.out.println("Sending answer for segment " + data.id + " to " + remote.getAddress());
                                     }
                                 } catch (InterruptedException e) {
                                     System.out.println("Interrupted while getting a segment");
@@ -343,6 +342,7 @@ public class Client {
                             if (data == null) {
                                 continue;
                             }
+                            System.out.println("Sending segment " + data.id + " to " + remote.getAddress());
                             conn.outcoming.clear();
                             conn.outcoming.putInt(0); // First int - length
                             byte[] message = gson.toJson(data).getBytes();
