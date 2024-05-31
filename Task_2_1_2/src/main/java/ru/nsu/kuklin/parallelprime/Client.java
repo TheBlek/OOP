@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.*;
 import java.nio.channels.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -50,7 +49,6 @@ public class Client {
                     if (toCalculate.isEmpty()) {
                         Segment s = toDistribute.poll(100, TimeUnit.MILLISECONDS);
                         if (s != null) {
-                            System.out.println("Taken segment " + s.id + " for self-calculating");
                             s.master = config.ip();
                             toCalculate.put(s);
                         }
@@ -58,6 +56,7 @@ public class Client {
                     Segment s = toCalculate.poll(100, TimeUnit.MILLISECONDS);
                     if (s != null) {
                         // Copy of an array, yeah, ineffective. But whatever. Who cares :)
+                        // imho slices are a cool feature in other languages
                         s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
                         calculated.put(s);
                     }
@@ -184,6 +183,7 @@ public class Client {
         }).start();
 
         while (true) {
+            // Initiate connection with new users
             while (!newUsers.isEmpty()) {
                 InetAddress user;
                 try {
@@ -290,10 +290,7 @@ public class Client {
 
                     if (key.isReadable()) {
                         try {
-                            int cnt = channel.read(conn.incoming);
-                            if (cnt > 0) {
-                                System.out.println("Read " + cnt + " bytes from " + remote.getAddress());
-                            }
+                            channel.read(conn.incoming);
                         } catch (IOException e) {
                             System.out.println("Failed to read from channel: " + e);
                             continue;
@@ -314,7 +311,6 @@ public class Client {
                                     } catch (InterruptedException e) {
                                         System.out.println("Put interrupted...");
                                     }
-                                    System.out.println("Received segment " + segment.id + " from " + remote.getAddress() + " with master " + segment.master);
                                 } else {
                                     handleCalculatedSegment(segment, remote.getAddress());
                                 }
@@ -344,7 +340,6 @@ public class Client {
                                     data = calculated.peek();
                                     if (data.master.equals(remote.getAddress())) {
                                         data = calculated.take();
-                                        System.out.println("Sending answer for seg " + data.id + " to " + remote.getAddress() + " with master " + data.master);
                                     } else {
                                         data = null;
                                     }
@@ -365,8 +360,7 @@ public class Client {
                             conn.outcoming.position(0);
                         }
                         try {
-                            int cnt = channel.write(conn.outcoming);
-                            System.out.println("Wrote " + cnt + " bytes");
+                            channel.write(conn.outcoming);
                         } catch (IOException e) {
                             System.out.println("Failed to write to socket: " + e);
                         }
@@ -381,7 +375,6 @@ public class Client {
             throw new InterruptedException();
         }
         var data = toDistribute.take();
-        System.out.println("Giving a segment " + data.id + " to " + remote);
         return data;
     }
     private synchronized void resetHealthCheck() {
