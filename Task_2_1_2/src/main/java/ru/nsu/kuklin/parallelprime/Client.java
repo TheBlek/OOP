@@ -302,10 +302,12 @@ public class Client {
                         } catch (JsonSyntaxException e) {
                             System.out.println("it's not a segment i received: " + e);
                         }
-                        var bytes = conn.incoming.array();
-                        var left = conn.incoming.position() - 4 - size;
-                        conn.incoming.clear();
-                        conn.incoming.put(bytes, 4 + size,  left);
+                        synchronized {
+                            var bytes = conn.incoming.array();
+                            var left = conn.incoming.position() - 4 - size;
+                            conn.incoming.clear();
+                            conn.incoming.put(bytes, 4 + size, left);
+                        }
                     }
                 }
                 if (key.isWritable()) {
