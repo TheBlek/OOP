@@ -120,6 +120,7 @@ public class Client {
                 // Broadcast that we entered the network and accepting connections
                 var bytes = "h".getBytes();
                 broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
+                System.out.println("Sent hello broadcast");
             } catch (IOException e) {
                 System.out.println("Failed to write to broadcast: " + e);
                 return;
@@ -134,13 +135,16 @@ public class Client {
                     if (!receiving.getAddress().equals(config.ip())) {
                         var message = new String(receiving.getData());
                         System.out.println("Got message from udp: " + message);
-                        if (message.equals("h")) {
-                            System.out.println("New user detected: " + receiving.getAddress());
-                            newUsers.add(receiving.getAddress());
-                        } else if (message.equals("hc")) {
-                            broadcast.send(new DatagramPacket(ackBytes, ackBytes.length, receiving.getAddress(), port));
-                        } else if (message.equals("a")) {
-                            submitHealthCheck(receiving.getAddress());
+                        System.out.println("Got message from udp: " + message);
+                        System.out.println("-----");
+                        switch (message) {
+                            case "h" -> {
+                                System.out.println("New user detected: " + receiving.getAddress());
+                                newUsers.add(receiving.getAddress());
+                            }
+                            case "hc" ->
+                                broadcast.send(new DatagramPacket(ackBytes, ackBytes.length, receiving.getAddress(), port));
+                            case "a" -> submitHealthCheck(receiving.getAddress());
                         }
                     }
                 } catch (IOException e) {
