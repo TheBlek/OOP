@@ -47,7 +47,7 @@ public record IPConfig(InetAddress ip, InetAddress broadcast) {
                 while (index < 0 || index >= addresses.size()) {
                     index = scanner.nextInt();
                 }
-                var interfaceAddr = addresses.get(scanner.nextInt());
+                var interfaceAddr = addresses.get(index);
                 ip = interfaceAddr.getAddress();
                 localBroadcast = interfaceAddr.getBroadcast();
                 return new IPConfig(ip, localBroadcast);
