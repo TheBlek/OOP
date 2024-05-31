@@ -60,7 +60,7 @@ public class Client {
                         System.out.println("Calculating on my own!!!");
                         // Copy of an array, yeah, ineffective. But whatever. Who cares :)
                         s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
-                        calculated.add(s);
+                        calculated.put(s);
                     }
                 } catch (InterruptedException e) {
                     return;
@@ -320,6 +320,7 @@ public class Client {
                             try {
                                 data = calculated.peek();
                                 if (data.master.equals(remote.getAddress())) {
+                                    System.out.println("Taking next segment to send it");
                                     data = calculated.take();
                                 }
                             } catch (InterruptedException e) {
