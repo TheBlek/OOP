@@ -119,9 +119,8 @@ public class Client {
 
             try {
                 // Broadcast that we entered the network and accepting connections
-                var bytes = "h".getBytes(StandardCharsets.UTF_8);
+                var bytes = "h".getBytes();
                 broadcast.send(new DatagramPacket(bytes, bytes.length, config.broadcast(), port));
-                System.out.println("Sent hello broadcast");
             } catch (IOException e) {
                 System.out.println("Failed to write to broadcast: " + e);
                 return;
@@ -133,13 +132,8 @@ public class Client {
             while (true) {
                 try {
                     broadcast.receive(receiving);
-                    String message = new String(receiving.getData(), StandardCharsets.UTF_8);
+                    String message = new String(receiving.getData(), receiving.getOffset(), receiving.getLength());
                     if (!receiving.getAddress().equals(config.ip())) {
-                        System.out.println("Got message from udp: " + message);
-                        System.out.println("Got message from udp: " + message);
-                        System.out.println(message.equals("h"));
-                        System.out.println(message.length());
-                        System.out.println("-----");
                         switch (message) {
                             case "h" -> {
                                 System.out.println("New user detected: " + receiving.getAddress());
