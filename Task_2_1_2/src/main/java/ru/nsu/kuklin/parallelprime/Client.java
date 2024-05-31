@@ -136,6 +136,7 @@ public class Client {
                     System.out.println("Got message from udp: " + message);
                     System.out.println("Got message from udp: " + message);
                     System.out.println("-----");
+                    System.out.println(message.equals("h"));
                     if (!receiving.getAddress().equals(config.ip())) {
                         switch (message) {
                             case "h" -> {
@@ -197,10 +198,18 @@ public class Client {
                     System.out.println("Failed to initiate connection: " + e);
                 }
             }
+            // Calculated segments which master died
             while (!calculated.isEmpty() && !connections.containsKey(calculated.peek().master)) {
-                // Calculated segments which master died
                 try {
                     calculated.take();
+                } catch (InterruptedException e) {
+                    System.out.println("My take was interrupted");
+                }
+            }
+            // Self-calculated segments
+            while (!calculated.isEmpty() && calculated.peek().master.equals(config.ip())) {
+                try {
+                    handleCalculatedSegment(calculated.take());
                 } catch (InterruptedException e) {
                     System.out.println("My take was interrupted");
                 }
