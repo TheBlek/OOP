@@ -291,12 +291,14 @@ public class Client {
 
                         if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                             var size = conn.incoming.getInt(0);
+                            System.out.println(conn.incoming.position() + " " + size);
                             // Message is fully transmitted
                             try {
                                 Segment segment = gson.fromJson(
                                     new String(conn.incoming.array(), 4, size),
                                     Segment.class
                                 );
+                                System.out.println("Segment: " + segment.id + " from " + remote.getAddress());
                                 if (!segment.master.equals(config.ip())) {
                                     try {
                                         toCalculate.put(segment);
@@ -472,5 +474,5 @@ public class Client {
     BlockingQueue<Segment> toCalculate = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> calculated = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
-    Map<UUID, Set<Integer>> tasks = new HashMap<>();
+    volatile Map<UUID, Set<Integer>> tasks = new HashMap<>();
 }
