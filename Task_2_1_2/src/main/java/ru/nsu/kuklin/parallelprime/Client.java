@@ -50,6 +50,7 @@ public class Client {
                     if (toCalculate.isEmpty()) {
                         Segment s = toDistribute.poll(100, TimeUnit.MILLISECONDS);
                         if (s != null) {
+                            System.out.println("Taken segment " + s.id + " for self-calculating");
                             s.master = config.ip();
                             toCalculate.put(s);
                         }
@@ -101,10 +102,6 @@ public class Client {
                         tasks.put(id, segments);
                     } catch (FileNotFoundException e) {
                         System.out.println("File not found");
-                    }
-                } else if (line.startsWith("/status")) {
-                    for (var segment : toDistribute) {
-                        System.out.println(segment);
                     }
                 } else if (line.startsWith("/quit")) {
                     return;
