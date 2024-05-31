@@ -22,7 +22,6 @@ public class Client {
         }
         // TODO(theblek): test bigger segment sizes
         // TODO(theblek): think about scalability strategies to not have O(N) connections open
-        // TODO(theblek): ping clients to check if they are alive
 
         // Server thread
         Selector selector = null;
@@ -198,14 +197,12 @@ public class Client {
             // Calculated segments which master died
             while (!calculated.isEmpty()) {
                 if (calculated.peek().master.equals(config.ip())) {
-                    System.out.println("Found segment for myself");
                     try {
                         handleCalculatedSegment(calculated.take());
                     } catch (InterruptedException e) {
                         System.out.println("My take was interrupted");
                     }
                 } else if (!connections.containsKey(calculated.peek().master)) {
-                    System.out.println("Found segment for dead master");
                     try {
                         calculated.take();
                     } catch (InterruptedException e) {
@@ -312,7 +309,10 @@ public class Client {
                         if (!toDistribute.isEmpty()) {
                             try {
                                 data = toDistribute.take();
-                                distributed.put(data, remote.getAddress());
+                                if (!distributed.containsKey(remote.getAddress())) {
+                                    distributed.put(remote.getAddress(), new ArrayList<>());
+                                }
+                                distributed.get(remote.getAddress()).add(data);
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
@@ -361,8 +361,16 @@ public class Client {
             entry.getValue().health = false;
         }
         for (var addr : toRemove) {
-            System.out.println("Connection with " + addr + "is dead. or they are");
+            System.out.println("Connection with " + addr + " is dead. or they are");
             connections.remove(addr);
+            for (var segment : distributed.get(addr)) {
+                try {
+                    toDistribute.put(segment);
+                } catch (InterruptedException e) {
+                    System.out.println("Redistributing was interrupted");
+                }
+            }
+            distributed.remove(addr);
         }
     }
 
@@ -385,7 +393,7 @@ public class Client {
         }
     }
 
-    private void handleCalculatedSegment(Segment segment) {
+    private void handleCalculatedSegment(Segment segment, InetAddress from) {
         if (segment.hasComposites) {
             System.out.printf("Task %s finished. Composites found\n", segment.jobId);
 //                                    distributed
@@ -402,7 +410,9 @@ public class Client {
 //                                        });
             // TODO(theblek): cancel the job somehow
         } else {
-            distributed.remove(segment);
+            if (from != null) {
+                distributed.get(from).remove(segment);
+            }
             var taskM = tasks.stream().filter((t) -> t.id.equals(segment.jobId)).findFirst();
             if (taskM.isPresent()) {
                 var task = taskM.get();
@@ -421,7 +431,7 @@ public class Client {
     BlockingQueue<InetAddress> newUsers = new ArrayBlockingQueue<>(10);
     volatile HashMap<InetAddress, Connection> connections = new HashMap<>();
     Gson gson = new Gson();
-    HashMap<Segment, InetAddress> distributed = new HashMap<>();
+    HashMap<InetAddress, ArrayList<Segment>> distributed = new HashMap<>();
     BlockingQueue<Segment> toCalculate = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> calculated = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
