@@ -198,12 +198,14 @@ public class Client {
             // Calculated segments which master died
             while (!calculated.isEmpty()) {
                 if (calculated.peek().master.equals(config.ip())) {
+                    System.out.println("Found segment for myself");
                     try {
                         handleCalculatedSegment(calculated.take());
                     } catch (InterruptedException e) {
                         System.out.println("My take was interrupted");
                     }
                 } else if (!connections.containsKey(calculated.peek().master)) {
+                    System.out.println("Found segment for dead master");
                     try {
                         calculated.take();
                     } catch (InterruptedException e) {
@@ -399,7 +401,6 @@ public class Client {
 //                                        });
             // TODO(theblek): cancel the job somehow
         } else {
-            segment.hasComposites = false;
             distributed.remove(segment);
             var taskM = tasks.stream().filter((t) -> t.id.equals(segment.jobId)).findFirst();
             if (taskM.isPresent()) {
