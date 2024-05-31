@@ -279,7 +279,8 @@ public class Client {
 
                 if (key.isReadable()) {
                     try {
-                        channel.read(conn.incoming);
+                        int cnt = channel.read(conn.incoming);
+                        System.out.println("Read " + cnt + " bytes");
                     } catch (IOException e) {
                         System.out.println("Failed to read from channel: " + e);
                         continue;
@@ -300,7 +301,7 @@ public class Client {
                                 } catch (InterruptedException e) {
                                     System.out.println("Put interrupted...");
                                 }
-                                System.out.println("Received segment from " + segment.master);
+                                System.out.println("Received segment " + segment.id + " from " + segment.master);
                             } else {
                                 handleCalculatedSegment(segment, remote.getAddress());
                             }
