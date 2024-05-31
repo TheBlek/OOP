@@ -328,6 +328,7 @@ public class Client {
                                 data = calculated.peek();
                                 if (data.master.equals(remote.getAddress())) {
                                     data = calculated.take();
+                                    System.out.println("Sending answer for segment " + data.id);
                                 }
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
