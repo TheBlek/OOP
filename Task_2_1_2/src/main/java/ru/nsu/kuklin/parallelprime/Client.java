@@ -304,7 +304,6 @@ public class Client {
                                     new String(conn.incoming.array(), 4, size),
                                     Segment.class
                                 );
-                                System.out.println("Segment: " + segment.id + " from " + remote.getAddress());
                                 if (!segment.master.equals(config.ip())) {
                                     try {
                                         toCalculate.put(segment);
@@ -458,7 +457,6 @@ public class Client {
             }
             var task = tasks.get(segment.jobId);
             task.remove(segment.id);
-            System.out.println("Received segment with id = " + segment.id + " from " + from);
             System.out.printf("%d segments left for task %s\n", task.size(), segment.jobId);
             if (task.isEmpty()) {
                 System.out.printf("Task %s finished. No composite numbers found\n", segment.jobId);
