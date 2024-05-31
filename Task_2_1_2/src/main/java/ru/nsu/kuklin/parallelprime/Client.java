@@ -287,6 +287,7 @@ public class Client {
 
                     if (conn.incoming.position() >= 4 && conn.incoming.position() - 4 >= conn.incoming.getInt(0)) {
                         var size = conn.incoming.getInt(0);
+                        System.out.println(conn.incoming.position() + " " + size);
                         // Message is fully transmitted
                         try {
                             Segment segment = gson.fromJson(
