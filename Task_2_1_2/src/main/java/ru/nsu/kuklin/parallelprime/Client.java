@@ -353,7 +353,8 @@ public class Client {
                         conn.outcoming.position(0);
                     }
                     try {
-                        channel.write(conn.outcoming);
+                        int cnt = channel.write(conn.outcoming);
+                        System.out.println("Wrote " + cnt + " bytes");
                     } catch (IOException e) {
                         System.out.println("Failed to write to socket: " + e);
                     }
