@@ -313,7 +313,7 @@ public class Client {
                         if (!toDistribute.isEmpty()) {
                             try {
                                 data = toDistribute.take();
-                                System.out.println("Giving a segment to remote");
+                                System.out.println("Giving a segment " + data.id + " to remote");
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
