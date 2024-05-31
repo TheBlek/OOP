@@ -348,7 +348,7 @@ public class Client {
                             byte[] message = gson.toJson(data).getBytes();
                             conn.outcoming.put(message);
                             conn.outcoming.putInt(0, message.length);
-                            conn.outcoming.limit(message.length);
+                            conn.outcoming.limit(conn.outcoming.position());
                             conn.outcoming.position(0);
                         }
                         try {
