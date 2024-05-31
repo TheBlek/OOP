@@ -137,8 +137,9 @@ public class Client {
                     if (!receiving.getAddress().equals(config.ip())) {
                         System.out.println("Got message from udp: " + message);
                         System.out.println("Got message from udp: " + message);
-                        System.out.println("-----");
                         System.out.println(message.equals("h"));
+                        System.out.println(message.length());
+                        System.out.println("-----");
                         switch (message) {
                             case "h" -> {
                                 System.out.println("New user detected: " + receiving.getAddress());
