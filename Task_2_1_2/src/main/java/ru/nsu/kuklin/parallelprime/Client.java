@@ -335,6 +335,7 @@ public class Client {
                                     data = calculated.peek();
                                     if (data.master.equals(remote.getAddress())) {
                                         data = calculated.take();
+                                        System.out.println("Sending answer for seg " + data.id + " to " + remote.getAddress() + " with master " + data.master);
                                     }
                                 } catch (InterruptedException e) {
                                     System.out.println("Interrupted while getting a segment");
@@ -370,7 +371,7 @@ public class Client {
             throw new InterruptedException();
         }
         var data = toDistribute.take();
-        System.out.println("Giving a segment " + data.id + " to remote");
+        System.out.println("Giving a segment " + data.id + " to " + remote);
         return data;
     }
     private synchronized void resetHealthCheck() {
