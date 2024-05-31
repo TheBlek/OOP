@@ -56,7 +56,6 @@ public class Client {
                     }
                     Segment s = toCalculate.poll(100, TimeUnit.MILLISECONDS);
                     if (s != null) {
-                        System.out.println("Calculating on my own!!!");
                         // Copy of an array, yeah, ineffective. But whatever. Who cares :)
                         s.hasComposites = (new SequentialDetector()).detect(Arrays.copyOfRange(s.nums, 0, s.numCount));
                         calculated.put(s);
@@ -244,7 +243,7 @@ public class Client {
                     continue;
                 }
                 var channel = (SocketChannel)key.channel();
-                InetSocketAddress remote = null;
+                InetSocketAddress remote;
                 try {
                     remote = (InetSocketAddress) channel.getRemoteAddress();
                     assert remote != null;
@@ -273,7 +272,6 @@ public class Client {
                     key.cancel();
                     continue;
                 }
-                assert conn != null;
 
                 if (key.isReadable()) {
                     try {
@@ -312,14 +310,11 @@ public class Client {
                         if (!toDistribute.isEmpty()) {
                             try {
                                 data = toDistribute.take();
-                                if (!distributed.containsKey(remote.getAddress())) {
-                                    distributed.put(remote.getAddress(), new ArrayList<>());
-                                }
-                                distributed.get(remote.getAddress()).add(data);
                                 System.out.println("Giving a segment to remote");
                             } catch (InterruptedException e) {
                                 System.out.println("Interrupted while getting a segment");
                             }
+                            addToDistributed(data, remote.getAddress());
                         } else if (!calculated.isEmpty()) {
                             try {
                                 data = calculated.peek();
@@ -396,6 +391,17 @@ public class Client {
         }
     }
 
+    private synchronized void removeFromDistributed(Segment segment, InetAddress addr) {
+        distributed.get(addr).remove(segment);
+    }
+
+    private synchronized void addToDistributed(Segment segment, InetAddress addr) {
+        if (!distributed.containsKey(addr)) {
+            distributed.put(addr, new ArrayList<>());
+        }
+        distributed.get(addr).add(segment);
+    }
+
     private void handleCalculatedSegment(Segment segment, InetAddress from) {
         if (segment.hasComposites) {
             System.out.printf("Task %s finished. Composites found\n", segment.jobId);
@@ -414,14 +420,14 @@ public class Client {
             // TODO(theblek): cancel the job somehow
         } else {
             if (from != null) {
-                distributed.get(from).remove(segment);
+                removeFromDistributed(segment, from);
             }
             if (!tasks.containsKey(segment.jobId)) {
                return;
             }
             var task = tasks.get(segment.jobId);
             task.remove(segment.id);
-            System.out.println("Received segment with id = " + segment.id);
+            System.out.println("Received segment with id = " + segment.id + " from " + from);
             System.out.printf("%d segments left for task %s\n", task.size(), segment.jobId);
             if (task.isEmpty()) {
                 System.out.printf("Task %s finished. No composite numbers found\n", segment.jobId);
@@ -436,7 +442,7 @@ public class Client {
     BlockingQueue<InetAddress> newUsers = new ArrayBlockingQueue<>(10);
     volatile HashMap<InetAddress, Connection> connections = new HashMap<>();
     Gson gson = new Gson();
-    HashMap<InetAddress, ArrayList<Segment>> distributed = new HashMap<>();
+    volatile HashMap<InetAddress, ArrayList<Segment>> distributed = new HashMap<>();
     BlockingQueue<Segment> toCalculate = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> calculated = new ArrayBlockingQueue<>(maxConcurrentSegments);
     BlockingQueue<Segment> toDistribute = new ArrayBlockingQueue<>(maxConcurrentSegments);
