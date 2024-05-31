@@ -132,12 +132,13 @@ public class Client {
                 try {
                     broadcast.receive(receiving);
                     if (!receiving.getAddress().equals(config.ip())) {
-                        if ((receiving.getData().length == 1) && (receiving.getData()[0] == 'h')) {
+                        var message = new String(receiving.getData());
+                        if (message.equals("h")) {
                             System.out.println("New user detected: " + receiving.getAddress());
                             newUsers.add(receiving.getAddress());
-                        } else if ((receiving.getData().length == 2) && (receiving.getData()[0] == 'h') && (receiving.getData()[1] == 'c')) {
+                        } else if (message.equals("hc")) {
                             broadcast.send(new DatagramPacket(ackBytes, ackBytes.length, receiving.getAddress(), port));
-                        } else if ((receiving.getData().length == 1) && (receiving.getData()[0] == 'a')) {
+                        } else if (message.equals("a")) {
                             submitHealthCheck(receiving.getAddress());
                         }
                     }
