@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <div th:each="task_id : ${#numbers.sequence(0, tasks.size()-1)}">
+       <h2 th:text="${tasks.get(task_id).getName()}"></h2>
+       <table>
+           <tr>
+               <th>STUDENT</th>
+               <th>BUILDS</th>
+               <th>TESTS</th>
+               <th>COVERAGE</th>
+               <th>CHECKSTYLE</th>
+               <th>SOFT</th>
+               <th>HARD</th>
+           </tr>
+           <tr th:each="result : ${results.get(task_id)}">
+               <td th:text="|${result.student().getName()} (${result.student().getNickname()})|"></td>
+               <td th:text="${result.builds()} ? 'Yes' : 'No'"></td>
+               <td th:text="|${result.testCount()-result.failCount()-result.skipCount()}/${result.failCount()}/${result.skipCount()}|"></td>
+               <td th:text="|${result.coverage()}%|"></td>
+               <td th:text="${result.checkstyle()}"></td>
+               <td th:text="${result.softPass()} ? 'Yes' : 'No'"></td>
+               <td th:text="${result.hardPass()} ? 'Yes' : 'No'"></td>
+           </tr>
+       </table>
+    </div>
+</table>
+</body>
+</html>
